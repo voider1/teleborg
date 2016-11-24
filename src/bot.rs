@@ -3,6 +3,7 @@ extern crate json;
 use std::io::Read;
 
 use reqwest;
+use reqwest::Client;
 
 /// A struct which contains things associated with the bot.
 pub struct Bot {
@@ -10,14 +11,16 @@ pub struct Bot {
     first_name: String,
     last_name: String,
     username: String,
-    bot_url: String,
+	client: Client,
+    pub bot_url: String,
 }
 
 impl Bot {
     /// Return a new bot struct.
     /// Panic! if something goes wrong.
 	pub fn new(bot_url: String) -> Bot {
-	    let mut resp = Bot::get_me(&bot_url);
+		let client = Client::new().unwrap();
+	    let mut resp = Bot::get_me(&bot_url, &client);
 
 	    if resp.status().is_success() {
             let mut body = String::new();
@@ -44,6 +47,7 @@ impl Bot {
                 first_name: rjson["first_name"].take_string().unwrap(),
                 last_name: last_name,
                 username: username,
+				client: client,
                 bot_url: bot_url,
             }
         } else {
@@ -52,15 +56,9 @@ impl Bot {
 	}
 
     /// Gets the information about the bot.
-	fn get_me(bot_url: &str) -> reqwest::Response {
+	fn get_me(bot_url: &str, client: &Client) -> reqwest::Response {
 	    let path = ["getMe"];
-	    let url = construct_api_url(bot_url, &path);
-	    reqwest::get(&url).unwrap()
+	    let url = ::construct_api_url(bot_url, &path);
+	    client.get(&url).send().unwrap()
     }
-}
-
-/// Construct an API URL with the base bot URL and an
-/// array of strings which will construct the path.
-fn construct_api_url(bot_url: &str, path: &[&str]) -> String {
-    format!("{}/{}", bot_url, path.join("/"))
 }
