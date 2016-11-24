@@ -24,7 +24,6 @@ impl Bot {
             resp.read_to_string(&mut body).unwrap();
             let mut rjson = json::parse(&body).unwrap();
             let rjson = &mut rjson["result"];
-            println!("{}", rjson);
             let last_name: String;
             let username: String;
 
