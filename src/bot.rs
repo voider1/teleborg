@@ -9,8 +9,8 @@ use reqwest::Client;
 pub struct Bot {
     id: i32,
     first_name: String,
-    last_name: String,
-    username: String,
+    last_name: Option<String>,
+    username: Option<String>,
 	client: Client,
     pub bot_url: String,
 }
@@ -20,45 +20,31 @@ impl Bot {
     /// Panic! if something goes wrong.
 	pub fn new(bot_url: String) -> Bot {
 		let client = Client::new().unwrap();
-	    let mut resp = Bot::get_me(&bot_url, &client);
+	    let mut rjson = Bot::get_me(&client, &bot_url);
 
-	    if resp.status().is_success() {
-            let mut body = String::new();
-            resp.read_to_string(&mut body).unwrap();
-            let mut rjson = json::parse(&body).unwrap();
-            let rjson = &mut rjson["result"];
-            let last_name: String;
-            let username: String;
-
-            if let Some(l_name) = rjson["last_name"].take_string() {
-                last_name = l_name;
-            } else {
-                last_name = "".to_string();
-            }
-
-            if let Some(u_name) = rjson["username"].take_string() {
-                username = u_name;
-            } else {
-                username = "".to_string();
-            }
-
-            Bot {
-                id: rjson["id"].as_i32().unwrap(),
-                first_name: rjson["first_name"].take_string().unwrap(),
-                last_name: last_name,
-                username: username,
-				client: client,
-                bot_url: bot_url,
-            }
-        } else {
-            panic!("An error has occured");
+        Bot {
+            id: rjson["id"].as_i32().unwrap(),
+            first_name: rjson["first_name"].take_string().unwrap(),
+            last_name: rjson["last_name"].take_string(),
+            username: rjson["username"].take_string(),
+            client: client,
+            bot_url: bot_url,
         }
 	}
 
     /// Gets the information about the bot.
-	fn get_me(bot_url: &str, client: &Client) -> reqwest::Response {
+	fn get_me(client: &Client, bot_url: &str) -> json::JsonValue {
 	    let path = ["getMe"];
 	    let url = ::construct_api_url(bot_url, &path);
-	    client.get(&url).send().unwrap()
+	    let mut resp = client.get(&url).send().unwrap();
+
+	    if resp.status().is_success() {
+	        let mut body = String::new();
+	        resp.read_to_string(&mut body).unwrap();
+	        let rjson = json::parse(&body).unwrap();
+	        rjson["result"].clone()
+        } else {
+            panic!("An error has occured");
+        }
     }
 }

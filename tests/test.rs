@@ -8,11 +8,10 @@ mod tests {
 
     use teleborg::updater::*;
 
-    const BOT_ID: &'static str = "";
-
     #[test]
     fn create_bot() {
-        let updater = Updater::new(BOT_ID.to_string());
-        let mut resp = updater.get_updates();
+        let updater = Updater::new(None);
+        let rjson = Updater::start_polling(updater.clone());
+        println!("{}", updater.get_updates());
     }
 }
