@@ -1,6 +1,6 @@
 use json;
 
-struct Message {
+pub struct Message {
     pub message_id: i32,
     pub from: Option<String>,  // TODO: Change to User struct
     pub date: i32,
