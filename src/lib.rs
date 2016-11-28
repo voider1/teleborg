@@ -1,4 +1,5 @@
 extern crate reqwest;
+extern crate json;
 
 mod bot;
 pub mod updater;
