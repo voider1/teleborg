@@ -1,6 +1,6 @@
 use json;
 
-use message;
+use message::Message;
 
 struct Update {
     update_id: i32,
@@ -12,7 +12,16 @@ struct Update {
 }
 
 impl Update {
-    pub fn new(rjson: json::JsonValue) {
-        let update_id = rjson["update_id"];
+    pub fn new(rjson: json::JsonValue) -> Update {
+        let update_id = rjson["update_id"].as_i32().unwrap();
+
+        Update {
+            update_id: update_id,
+            message: None,
+            edited_message: None,
+            inline_query: None,
+            chosen_inline_result: None,
+            callback_query: None,
+        }
     }
 }
