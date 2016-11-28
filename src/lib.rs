@@ -3,6 +3,7 @@ extern crate json;
 
 mod bot;
 mod message;
+mod update;
 pub mod updater;
 
 /// Construct an API URL with the base bot URL and an
