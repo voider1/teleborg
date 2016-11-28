@@ -55,7 +55,7 @@ impl Updater {
     }
 
     /// Function to get all the messages for the bot.
-    pub fn get_updates(&self) -> json::JsonValue {
+    pub fn get_updates(&self) -> String {
     	let path = ["getUpdates"];
     	let url = ::construct_api_url(&self.bot.bot_url, &path);
     	let params = [("timeout", 30)];
@@ -67,8 +67,9 @@ impl Updater {
 		resp.read_to_string(&mut body).unwrap();
 
     	if resp.status().is_success() {
-    		let rjson = json::parse(&body).unwrap();
-    		rjson["result"].clone()
+    		body
+    		/*let rjson = json::parse(&body).unwrap();
+    		rjson["result"].clone()*/
     	} else {
     		panic!(body);
     	}

@@ -32,6 +32,10 @@ impl Bot {
         }
 	}
 
+	pub fn handle_updates(&self) {
+		
+	}
+
     /// Gets the information about the bot.
 	fn get_me(client: &Client, bot_url: &str) -> json::JsonValue {
 	    let path = ["getMe"];
