@@ -11,6 +11,10 @@ use bot;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
 
+struct JsonWrapper {
+    response_json: json::JsonValue,
+}
+
 pub struct Updater {
 	token: String,
 	bot: bot::Bot,

@@ -2,6 +2,7 @@ extern crate reqwest;
 extern crate json;
 
 mod bot;
+mod message;
 pub mod updater;
 
 /// Construct an API URL with the base bot URL and an
