@@ -1,4 +1,4 @@
-extern crate json;
+use json;
 
 struct Message {
     pub message_id: i32,
@@ -9,7 +9,7 @@ struct Message {
     pub forward_from_chat: Option<String>,  // TODO: Change to Chat struct
     pub forward_from_message_id: Option<i32>,
     pub forward_date: Option<i32>,
-    pub reply_to_message: Option<Message>,
+    pub reply_to_message: Option<Box<Message>>,
     pub edit_date: Option<i32>,
     pub text: Option<String>,
     pub entities: Option<String>,  // TODO: Change to MessageEntity struct
@@ -35,4 +35,10 @@ struct Message {
     pub migrate_to_chat_id: Option<i32>,
     pub migrate_from_chat_id: Option<i32>,
     pub pinned_message: Option<String>,  // TODO: Change to Message struct
+}
+
+impl Message {
+    pub fn new(rjson: json::JsonValue) -> Message {
+        unimplemented!();
+    }
 }
