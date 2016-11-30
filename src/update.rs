@@ -2,7 +2,7 @@ use json;
 
 use message::Message;
 
-struct Update {
+pub struct Update {
     update_id: i32,
     message: Option<Message>,  // TODO: Change this into a Message struct
     edited_message: Option<Message>,  // TODO: Change this into a Message struct

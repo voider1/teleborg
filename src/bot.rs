@@ -1,9 +1,11 @@
+use std::result::Result;
 use std::io::Read;
 use std::sync::mpsc;
 
-use reqwest;
 use reqwest::Client;
 use json;
+
+use errors::boterror::BotError;
 
 /// A struct which contains things associated with the bot.
 pub struct Bot {
@@ -18,18 +20,18 @@ pub struct Bot {
 impl Bot {
     /// Return a new bot struct.
     /// Panic! if something goes wrong.
-    pub fn new(bot_url: String) -> Bot {
-        let client = Client::new().unwrap();
-        let mut rjson = Bot::get_me(&client, &bot_url);
+    pub fn new(bot_url: String) -> Result<Bot, BotError> {
+        let client = Client::new()?;
+        let mut rjson = Bot::get_me(&client, &bot_url)?;
 
-        Bot {
+        Ok(Bot {
             id: rjson["id"].as_i32().unwrap(),
             first_name: rjson["first_name"].take_string().unwrap(),
             last_name: rjson["last_name"].take_string(),
             username: rjson["username"].take_string(),
             client: client,
             bot_url: bot_url,
-        }
+        })
     }
 
     pub fn handle_updates(&self, rx: mpsc::Receiver<String>) {
@@ -44,18 +46,18 @@ impl Bot {
     }
 
     /// Gets the information about the bot.
-    fn get_me(client: &Client, bot_url: &str) -> json::JsonValue {
+    fn get_me(client: &Client, bot_url: &str) -> Result<json::JsonValue, BotError> {
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
-        let mut resp = client.get(&url).send().unwrap();
+        let mut resp = client.get(&url).send()?;
 
         if resp.status().is_success() {
-            let mut body = String::new();
-            resp.read_to_string(&mut body).unwrap();
-            let rjson = json::parse(&body).unwrap();
-            rjson["result"].clone()
-        } else {
-            panic!("An error has occured");
-        }
+	        let mut body = String::new();
+	        resp.read_to_string(&mut body)?;
+	        let rjson = json::parse(&body)?;
+	        Ok(rjson["result"].clone())
+	    } else {
+	    	Err(BotError::BadRequest("The request was unsuccessful".to_string()))
+	    }
     }
 }

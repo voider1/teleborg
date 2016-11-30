@@ -14,6 +14,5 @@ mod tests {
     fn create_bot() {
         let token = Some(BOT_TOKEN.to_string());
         let updater = Updater::new(token);
-        println!("{}", updater.get_updates());
     }
 }
