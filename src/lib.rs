@@ -1,10 +1,11 @@
 extern crate reqwest;
-extern crate json;
+extern crate serde_json;
+pub use reqwest::StatusCode;
 
 mod bot;
 mod message;
 mod update;
-mod errors;
+mod error;
 pub mod updater;
 
 /// Construct an API URL with the base bot URL and an
