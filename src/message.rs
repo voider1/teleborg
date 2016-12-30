@@ -1,5 +1,3 @@
-use json;
-
 pub struct Message {
     pub message_id: i32,
     pub from: Option<String>,  // TODO: Change to User struct
@@ -38,7 +36,7 @@ pub struct Message {
 }
 
 impl Message {
-    pub fn new(rjson: json::JsonValue) -> Message {
+    pub fn new() -> Message {
         unimplemented!();
     }
 }

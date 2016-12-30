@@ -9,16 +9,18 @@ pub type Result<T> = result::Result<T, Error>;
 
 #[derive(Debug)]
 pub enum Error {
-    IOError(io::Error),
+    IoError(io::Error),
     RequestError(reqwest::Error),
-    InvalidJSONError(serde_json::error::Error),
+    InvalidJsonError(serde_json::error::Error),
     /// Contains the status code of the request
     RequestFailed(StatusCode),
+    /// Indicates the JSON couldn't be found
+    JsonNotFound,
 }
 
 impl From<io::Error> for Error {
     fn from(err: io::Error) -> Error {
-        Error::IOError(err)
+        Error::IoError(err)
     }
 }
 
@@ -30,6 +32,6 @@ impl From<reqwest::Error> for Error {
 
 impl From<serde_json::error::Error> for Error {
     fn from(err: serde_json::error::Error) -> Error {
-        Error::InvalidJSONError(err)
+        Error::InvalidJsonError(err)
     }
 }
