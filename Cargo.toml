@@ -7,3 +7,5 @@ authors = ["Wesley Gahr <wesleyey0408@gmail.com>"]
 reqwest = "0.2.0"
 serde = "0.8.21"
 serde_json = "0.8.4"
+serde_derive = "0.8.21"
+chrono = "0.2.25"
