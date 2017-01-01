@@ -1,7 +1,16 @@
+use serde_json;
+use chrono::NaiveDateTime;
+
+use error::Result;
+use error::Error;
+use user::User;
+use chat::Chat;
+use ::ValueExtension;
+
 pub struct Message {
-    pub message_id: i32,
-    pub from: Option<String>,  // TODO: Change to User struct
-    pub date: i32,
+    pub message_id: i64,
+    pub from_user: Option<User>,  // TODO: Change to User struct
+    pub date: NaiveDateTime,
     pub chat: String,  // TODO: Change to Chat struct
     pub forward_from: Option<String>,  // TODO: Change to User struct
     pub forward_from_chat: Option<String>,  // TODO: Change to Chat struct
@@ -36,7 +45,12 @@ pub struct Message {
 }
 
 impl Message {
-    pub fn new() -> Message {
-        unimplemented!();
+    pub fn new(message: &serde_json::Value) -> Result<i32> {
+        let message_id = message.as_required_i64("message_id")?;
+        let from_user = User::new(message.find("from").ok_or(Error::JsonNotFound)?)?;
+        let date = message.as_required_date("date")?;
+        let chat = Chat::new(message.find("chat").ok_or(Error::JsonNotFound)?)?;
+
+        Ok(0)
     }
 }
