@@ -41,14 +41,9 @@ impl Updater {
         unimplemented!();
     }
 
-    /// Function to get all the messages for the bot.
-    pub fn get_updates<E>(&self) -> Result<Update> {
-    	let path = ["getUpdates"];
-    	let url = ::construct_api_url(&self.bot.bot_url, &path);
-    	let params = [("timeout", 30)];
-    	let mut data = self.client.get(&url).form(&params).send()?;
-    	let rjson: serde_json::Value = data.json()?;
-
-		Ok(Update::new())
+    fn start_polling_thread(&self) {
+        loop {
+            unimplemented!();
+        }
     }
 }
