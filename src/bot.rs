@@ -3,11 +3,14 @@ use std::thread;
 use std::sync::mpsc;
 
 use reqwest::Client;
-use serde_json;
+use serde_json::Value;
 use serde_json::value::Map;
 
 use error::Result;
 use error::Error::{RequestFailed, JsonNotFound};
+use update::Update;
+use user::User;
+use ::ValueExtension;
 
 /// A struct which contains things associated with the bot.
 #[derive(Debug)]
@@ -22,14 +25,13 @@ pub struct Bot {
 
 impl Bot {
     /// Return a new bot struct.
-    /// Panic! if something goes wrong.
     pub fn new(bot_url: String) -> Result<Bot> {
         let client = Client::new()?;
         let rjson = Bot::get_me(&client, &bot_url)?;
-        let id = rjson.find("id").ok_or(JsonNotFound)?.as_i64().unwrap();
-        let first_name = ::string_from_json(&rjson, "first_name").ok_or(JsonNotFound)?;
-        let last_name = ::string_from_json(&rjson, "last_name");
-        let username = ::string_from_json(&rjson, "username");
+        let id = rjson.as_required_i64("id")?;
+        let first_name = rjson.as_required_string("first_name")?;
+        let last_name = rjson.as_optional_string("last_name");
+        let username = rjson.as_optional_string("username");
 
         Ok(Bot {
             id: id,
@@ -41,22 +43,24 @@ impl Bot {
         })
     }
 
-    pub fn get_updates(&self, rx: mpsc::Receiver<String>) {
-        thread::spawn(|| {
-            loop {
-                unimplemented!();
-            }
-        });
+    pub fn get_updates(&self) -> Result<Update> {
+    	let path = ["getUpdates"];
+    	let url = ::construct_api_url(&self.bot_url, &path);
+    	let params = [("timeout", 30)];
+    	let mut data = self.client.get(&url).form(&params).send()?;
+    	let rjson: Value = data.json()?;
+
+		Update::new(&rjson)
     }
 
     /// Gets the information about the bot.
-    fn get_me(client: &Client, bot_url: &str) -> Result<serde_json::Value> {
+    fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
         let mut resp = client.get(&url).send()?;
 
         if resp.status().is_success() {
-            let rjson: serde_json::Value = resp.json()?;
+            let rjson: Value = resp.json()?;
 	        rjson.find("result").cloned().ok_or(JsonNotFound)
 	    } else {
 	        Err(RequestFailed(*resp.status()))
