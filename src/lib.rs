@@ -29,6 +29,8 @@ trait ValueExtension {
 
     fn as_required_i64(&self, field: &str) -> Result<i64>;
 
+    fn as_optional_date(&self, field: &str) -> Option<NaiveDateTime>;
+
     fn as_required_date(&self, field: &str) -> Result<NaiveDateTime>;
 }
 
@@ -47,6 +49,10 @@ impl ValueExtension for Value {
 
     fn as_required_i64(&self, field: &str) -> Result<i64> {
         self.find(field).and_then(|v| v.as_i64()).ok_or(Error::JsonNotFound)
+    }
+
+    fn as_optional_date(&self, field: &str) -> Option<NaiveDateTime> {
+        self.as_optional_i64(field).map(|v| NaiveDateTime::from_timestamp(0, v as u32))
     }
 
     fn as_required_date(&self, field: &str) -> Result<NaiveDateTime> {
