@@ -9,15 +9,15 @@ use ::ValueExtension;
 
 pub struct Message {
     pub message_id: i64,
-    pub from_user: Option<User>,  // TODO: Change to User struct
+    pub from_user: Option<User>,
     pub date: NaiveDateTime,
-    pub chat: String,  // TODO: Change to Chat struct
-    pub forward_from: Option<String>,  // TODO: Change to User struct
-    pub forward_from_chat: Option<String>,  // TODO: Change to Chat struct
-    pub forward_from_message_id: Option<i32>,
-    pub forward_date: Option<i32>,
+    pub chat: Chat,
+    pub forward_from: Option<User>,
+    pub forward_from_chat: Option<Chat>,
+    pub forward_from_message_id: Option<i64>,
+    pub forward_date: Option<NaiveDateTime>,
     pub reply_to_message: Option<Box<Message>>,
-    pub edit_date: Option<i32>,
+    pub edit_date: Option<i64>,
     pub text: Option<String>,
     pub entities: Option<String>,  // TODO: Change to MessageEntity struct
     pub audio: Option<String>,  // TODO: Change to audio struct
@@ -47,9 +47,13 @@ pub struct Message {
 impl Message {
     pub fn new(message: &serde_json::Value) -> Result<i32> {
         let message_id = message.as_required_i64("message_id")?;
-        let from_user = User::new(message.find("from").ok_or(Error::JsonNotFound)?)?;
+        let from_user = message.find("from").map(User::new);
         let date = message.as_required_date("date")?;
         let chat = Chat::new(message.find("chat").ok_or(Error::JsonNotFound)?)?;
+        let forward_from = message.find("forward_from").map(User::new);
+        let forward_from_chat = message.find("forward_from_chat").map(Chat::new);
+        let forward_from_message_id = message.as_required_i64("forward_from_message_id");
+        let forward_date = message.as_optional_date("forward_date");
 
         Ok(0)
     }
