@@ -43,16 +43,6 @@ impl Bot {
         })
     }
 
-    pub fn get_updates(&self) -> Result<Update> {
-    	let path = ["getUpdates"];
-    	let url = ::construct_api_url(&self.bot_url, &path);
-    	let params = [("timeout", 30)];
-    	let mut data = self.client.get(&url).form(&params).send()?;
-    	let rjson: Value = data.json()?;
-
-		Update::new(&rjson)
-    }
-
     /// Gets the information about the bot.
     fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
         let path = ["getMe"];
@@ -61,9 +51,33 @@ impl Bot {
 
         if resp.status().is_success() {
             let rjson: Value = resp.json()?;
-	        rjson.find("result").cloned().ok_or(JsonNotFound)
-	    } else {
-	        Err(RequestFailed(*resp.status()))
+            rjson.find("result").cloned().ok_or(JsonNotFound)
+        } else {
+            Err(RequestFailed(*resp.status()))
         }
-	}
+    }
+
+    pub fn get_updates(&self,
+                       offset: i32,
+                       limit: Option<i32>,
+                       timeout: Option<i32>,
+                       network_delay: Option<i32>)
+                       -> Result<Option<Vec<Update>>> {
+        let limit = limit.unwrap_or(100);
+        let timeout = timeout.unwrap_or(0);
+        // Use network_delay when it gets implemented
+        let network_delay = network_delay.unwrap_or(5);
+        let path = ["getUpdates"];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("limit", limit), ("timeout", timeout)];
+        let mut data = self.client.get(&url).form(&params).send()?;
+        let rjson: Value = data.json()?;
+        let updates = rjson.find("result");
+
+        if let Some(result) = updates {
+            Ok(result.as_array().map(|vec| vec.iter().map(|u| Update::new(u).unwrap()).collect()))
+        } else {
+            Ok(None)
+        }
+    }
 }

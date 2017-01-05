@@ -10,6 +10,8 @@ pub type Result<T> = result::Result<T, Error>;
 #[derive(Debug)]
 pub enum Error {
     IoError(io::Error),
+    HttpError(reqwest::Error),
+    SerializeError(reqwest::Error),
     RequestError(reqwest::Error),
     InvalidJsonError(serde_json::error::Error),
     /// Contains the status code of the request
@@ -26,7 +28,11 @@ impl From<io::Error> for Error {
 
 impl From<reqwest::Error> for Error {
     fn from(err: reqwest::Error) -> Error {
-        Error::RequestError(err)
+        match err {
+            reqwest::Error::Http(..) => Error::HttpError(err),
+            reqwest::Error::Serialize(..) => Error::SerializeError(err),
+            _ => Error::RequestError(err),
+        }
     }
 }
 

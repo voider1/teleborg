@@ -1,6 +1,7 @@
 #![feature(proc_macro)]
 
 extern crate chrono;
+extern crate crossbeam;
 extern crate reqwest;
 #[macro_use]
 extern crate serde_derive;
@@ -16,9 +17,14 @@ mod message;
 mod update;
 mod error;
 mod user;
+mod message_entity;
 pub mod updater;
 
 use error::{Error, Result};
+
+pub trait Plugin {
+    fn execute(&mut self, update::Update);
+}
 
 trait ValueExtension {
     fn as_optional_string(&self, field: &str) -> Option<String>;
@@ -29,9 +35,17 @@ trait ValueExtension {
 
     fn as_required_i64(&self, field: &str) -> Result<i64>;
 
+    fn as_optional_bool(&self, field: &str) -> Option<bool>;
+
     fn as_optional_date(&self, field: &str) -> Option<NaiveDateTime>;
 
     fn as_required_date(&self, field: &str) -> Result<NaiveDateTime>;
+}
+
+impl<T: FnMut(update::Update)> Plugin for T {
+    fn execute(&mut self, update: update::Update) {
+        self(update);
+    }
 }
 
 impl ValueExtension for Value {
@@ -53,6 +67,10 @@ impl ValueExtension for Value {
 
     fn as_optional_date(&self, field: &str) -> Option<NaiveDateTime> {
         self.as_optional_i64(field).map(|v| NaiveDateTime::from_timestamp(0, v as u32))
+    }
+
+    fn as_optional_bool(&self, field: &str) -> Option<bool> {
+        self.find(field).and_then(|v| v.as_bool())
     }
 
     fn as_required_date(&self, field: &str) -> Result<NaiveDateTime> {
