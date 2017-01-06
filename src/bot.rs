@@ -3,14 +3,15 @@ use std::thread;
 use std::sync::mpsc;
 
 use reqwest::Client;
+use serde_json;
 use serde_json::Value;
 use serde_json::value::Map;
 
 use error::Result;
 use error::Error::{RequestFailed, JsonNotFound};
 use update::Update;
-use user::User;
-use ::ValueExtension;
+use objects::user::User;
+use value_extension::ValueExtension;
 
 /// A struct which contains things associated with the bot.
 #[derive(Debug)]
@@ -75,7 +76,8 @@ impl Bot {
         let updates = rjson.find("result");
 
         if let Some(result) = updates {
-            Ok(result.as_array().map(|vec| vec.iter().map(|u| Update::new(u).unwrap()).collect()))
+            let updates_vec: Vec<Update> = serde_json::from_value(result.clone())?;
+            Ok(Some(updates_vec))
         } else {
             Ok(None)
         }
