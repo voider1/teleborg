@@ -1,10 +1,9 @@
 use serde_json;
 
-use error::{Result, Error};
+use error::Result;
 use message::Message;
-use ::ValueExtension;
 
-#[derive(Debug)]
+#[derive(Deserialize, Debug)]
 pub struct Update {
     pub update_id: i64,
     pub message: Option<Message>,
@@ -16,22 +15,7 @@ pub struct Update {
 
 impl Update {
     pub fn new(update: &serde_json::Value) -> Result<Update> {
-        let id = update.as_required_i64("update_id")?;
-        let message = update.find("message")
-            .map_or(Ok(None), |v| Message::new(v).map(|m| Some(m)))?;
-        let edited_message = update.find("edited_message")
-            .map_or(Ok(None), |v| Message::new(v).map(|m| Some(m)))?;
-        let inline_query = None;
-        let chosen_inline_result = None;
-        let callback_query = None;
-
-        Ok(Update {
-            update_id: id,
-            message: message,
-            edited_message: edited_message,
-            inline_query: inline_query,
-            chosen_inline_result: chosen_inline_result,
-            callback_query: callback_query,
-        })
+        let update: Update = serde_json::from_value(update.clone())?;
+        Ok(update)
     }
 }

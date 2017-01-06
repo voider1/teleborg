@@ -1,9 +1,8 @@
-use serde_derive;
 use serde_json;
 
-use error::{Error, Result};
+use error::Result;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 pub struct Chat {
     id: i64,
     #[serde(rename="type")]

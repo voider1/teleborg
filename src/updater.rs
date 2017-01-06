@@ -87,6 +87,7 @@ impl Updater {
             };
 
             self.last_update_id.store((last_update.update_id + 1) as isize, Relaxed);
+            println!("{:?}", self.last_update_id.load(Relaxed));
             thread::sleep(poll_interval);
         }
     }
