@@ -3,14 +3,14 @@ use serde_json;
 use error::Result;
 use objects::message::Message;
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct Update {
     pub update_id: i64,
     pub message: Option<Message>,
     pub edited_message: Option<Message>,
-    pub inline_query: Option<String>, // TODO: Change this into an InlineQuery struct
-    pub chosen_inline_result: Option<String>, // TODO: Change this into a ChosenInlineResult struct
-    pub callback_query: Option<String>, // TODO: Change into a CallbackQuery struct
+    pub inline_query: Option<String>,
+    pub chosen_inline_result: Option<String>,
+    pub callback_query: Option<String>,
 }
 
 impl Update {

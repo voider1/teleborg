@@ -69,15 +69,20 @@ impl Bot {
         // Use network_delay when it gets implemented
         let network_delay = network_delay.unwrap_or(5);
         let path = ["getUpdates"];
-        let url = ::construct_api_url(&self.bot_url, &path);
-        let params = [("limit", limit), ("timeout", timeout)];
-        let mut data = self.client.get(&url).form(&params).send()?;
+        let path_url = ::construct_api_url(&self.bot_url, &path);
+        let url = format!("{}?offset={}&limit={}&timeout={}",
+                          path_url,
+                          offset,
+                          limit,
+                          timeout);
+        let params = [("offset", offset), ("limit", limit), ("timeout", timeout)];
+        let mut data = self.client.get(&url).send()?;
         let rjson: Value = data.json()?;
-        let updates = rjson.find("result");
+        let updates_json = rjson.find("result");
 
-        if let Some(result) = updates {
-            let updates_vec: Vec<Update> = serde_json::from_value(result.clone())?;
-            Ok(Some(updates_vec))
+        if let Some(result) = updates_json {
+            let updates: Vec<Update> = serde_json::from_value(result.clone())?;
+            Ok(Some(updates))
         } else {
             Ok(None)
         }

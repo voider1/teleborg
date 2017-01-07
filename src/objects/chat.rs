@@ -2,7 +2,7 @@ use serde_json;
 
 use error::Result;
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct Chat {
     id: i64,
     #[serde(rename="type")]

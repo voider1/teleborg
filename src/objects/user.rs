@@ -3,7 +3,7 @@ use serde_json;
 
 use error::{Error, Result};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct User {
     pub id: i64,
     pub first_name: String,

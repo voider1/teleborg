@@ -4,7 +4,7 @@ use serde_json;
 use objects::user::User;
 use error::Result;
 
-#[derive(Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct MessageEntity {
     #[serde(rename="type")]
     type_message_entity: String,
