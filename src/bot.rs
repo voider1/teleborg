@@ -1,6 +1,5 @@
 use std::io::Read;
 use std::thread;
-use std::sync::mpsc;
 
 use reqwest::Client;
 use serde_json;
@@ -26,7 +25,7 @@ pub struct Bot {
 
 impl Bot {
     /// Return a new bot struct.
-    pub fn new(bot_url: String) -> Result<Bot> {
+    pub fn new(bot_url: String) -> Result<Self> {
         let client = Client::new()?;
         let rjson = Bot::get_me(&client, &bot_url)?;
         let id = rjson.as_required_i64("id")?;

@@ -1,5 +1,7 @@
 #![feature(proc_macro)]
 
+use std::marker::{Sync, Send};
+
 extern crate crossbeam;
 extern crate reqwest;
 #[macro_use]
@@ -10,19 +12,20 @@ pub use reqwest::StatusCode;
 use serde_json::Value;
 
 pub mod updater;
+pub mod command_handler;
 mod command;
 mod value_extension;
-mod objects;
-mod bot;
+pub mod objects;
+pub mod bot;
 mod error;
 
 use error::{Error, Result};
 use command::Command;
 use objects::update;
 
-impl<T: FnMut(update::Update)> Command for T {
-    fn execute(&mut self, update: update::Update) {
-        self(update);
+impl<T: Sync + Send + 'static + FnMut(&bot::Bot, &update::Update)> Command for T {
+    fn execute(&mut self, bot: &bot::Bot, update: &update::Update) {
+        self(bot, update);
     }
 }
 

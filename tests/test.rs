@@ -4,18 +4,19 @@ extern crate teleborg;
 mod tests {
     use super::*;
 
-    use std::io::Read;
-    use std::thread::sleep;
-    use std::time::Duration;
-
-    use teleborg::updater::*;
+    use teleborg::updater::Updater;
+    use teleborg::bot;
+    use teleborg::objects::update;
+    use teleborg::command_handler::CommandHandler;
 
     #[test]
     fn create_updater() {
-        let updater = Updater::new(None);
-        updater.unwrap().start_polling(None, None, None);
-        println!("asd");
-        sleep(Duration::from_secs(10));
-        assert!(true);
+        let mut command_handler = CommandHandler::new();
+        command_handler.add("foo", foo);
+        Updater::start(None, None, None, None, command_handler);
+    }
+
+    fn foo(bot: &bot::Bot, update: &update::Update) {
+        println!("IT WORKS OMG");
     }
 }

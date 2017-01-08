@@ -1,4 +1,3 @@
-use serde_derive;
 use serde_json;
 
 use objects::user::User;
@@ -15,7 +14,7 @@ pub struct MessageEntity {
 }
 
 impl MessageEntity {
-    pub fn new(json: &serde_json::Value) -> Result<MessageEntity> {
+    pub fn new(json: &serde_json::Value) -> Result<Self> {
         let message_entity: MessageEntity = serde_json::from_value(json.clone())?;
         Ok(message_entity)
     }

@@ -16,7 +16,7 @@ pub struct Chat {
 }
 
 impl Chat {
-    pub fn new(json: &serde_json::Value) -> Result<Chat> {
+    pub fn new(json: &serde_json::Value) -> Result<Self> {
         let chat: Chat = serde_json::from_value(json.clone())?;
         Ok(chat)
     }

@@ -44,7 +44,7 @@ pub struct Message {
 }
 
 impl Message {
-    pub fn new(message: &serde_json::Value) -> Result<Message> {
+    pub fn new(message: &serde_json::Value) -> Result<Self> {
         let message: Message = serde_json::from_value(message.clone())?;
         Ok(message)
     }

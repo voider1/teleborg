@@ -14,7 +14,7 @@ pub struct Update {
 }
 
 impl Update {
-    pub fn new(update: &serde_json::Value) -> Result<Update> {
+    pub fn new(update: &serde_json::Value) -> Result<Self> {
         let update: Update = serde_json::from_value(update.clone())?;
         Ok(update)
     }

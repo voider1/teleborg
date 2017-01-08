@@ -12,7 +12,7 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(json: &serde_json::Value) -> Result<User> {
+    pub fn new(json: &serde_json::Value) -> Result<Self> {
         let user: User = serde_json::from_value(json.clone())?;
         Ok(user)
     }
