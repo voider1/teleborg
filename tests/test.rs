@@ -10,23 +10,21 @@ mod tests {
     use teleborg::command_handler::CommandHandler;
     use teleborg::command::Command;
 
-    struct Test;
-
-    impl Command for Test {
-        fn execute(&mut self, bot: &bot::Bot, update: &update::Update) {
-            println!("Hello");
-        }
-    }
-
     #[test]
     fn create_updater() {
         let mut command_handler = CommandHandler::new();
         command_handler.add("foo", foo);
-        command_handler.add("test", Test);
+        command_handler.add("hitler", hitler);
         Updater::start(None, None, None, None, command_handler);
     }
 
-    fn foo(bot: &bot::Bot, update: &update::Update) {
+    fn foo(bot: &bot::Bot, update: update::Update) {
+        let chat_id = &update.message.unwrap().chat.id;
+        bot.send_message(chat_id, "Test!!!", None, None, None, None).unwrap();
         println!("IT WORKS OMG");
+    }
+
+    fn hitler(bot: &bot::Bot, update: update::Update) {
+        bot.reply_to_message(&update, "SIEG HEIL").unwrap();
     }
 }

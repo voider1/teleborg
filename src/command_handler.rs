@@ -33,7 +33,7 @@ impl CommandHandler {
                     println!("{}", bot_command);
 
                     if let Some(c) = command {
-                        c.execute(bot, &update);
+                        c.execute(bot, update);
                     }
                 }
             }

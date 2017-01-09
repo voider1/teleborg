@@ -88,17 +88,18 @@ impl Bot {
     }
 
     pub fn send_message(&self,
-                        chat_id: i32,
+                        chat_id: &i64,
                         text: &str,
                         parse_mode: Option<&str>,
-                        disable_web_page_preview: Option<bool>,
-                        disable_notification: Option<bool>,
-                        reply_to_message_id: Option<i32>)
+                        disable_web_page_preview: Option<&bool>,
+                        disable_notification: Option<&bool>,
+                        reply_to_message_id: Option<&i32>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = parse_mode.unwrap_or("None");
-        let disable_web_page_preview: &str = &disable_web_page_preview.unwrap_or(false).to_string();
-        let disable_notification: &str = &disable_notification.unwrap_or(false).to_string();
+        let disable_web_page_preview: &str = &disable_web_page_preview.unwrap_or(&false)
+            .to_string();
+        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
         let path = ["sendMessage"];
@@ -114,5 +115,10 @@ impl Bot {
         let message_json = rjson.find("result").ok_or(JsonNotFound)?;
         let message: Message = serde_json::from_value(message_json.clone())?;
         Ok(message)
+    }
+
+    pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
+        let chat_id = update.clone().message.unwrap().chat.id;
+        self.send_message(&chat_id, text, None, None, None, None)
     }
 }

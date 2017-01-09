@@ -4,15 +4,15 @@ use error::Result;
 
 #[derive(Clone, Deserialize, Debug)]
 pub struct Chat {
-    id: i64,
+    pub id: i64,
     #[serde(rename="type")]
-    type_chat: String,
-    title: Option<String>,
-    username: Option<String>,
-    first_name: Option<String>,
-    last_name: Option<String>,
+    pub type_chat: String,
+    pub title: Option<String>,
+    pub username: Option<String>,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
     #[serde(rename="all_members_are_administrators")]
-    all_members_are_admins: Option<bool>,
+    pub all_members_are_admins: Option<bool>,
 }
 
 impl Chat {
