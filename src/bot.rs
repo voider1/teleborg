@@ -8,8 +8,9 @@ use serde_json::value::Map;
 
 use error::Result;
 use error::Error::{RequestFailed, JsonNotFound};
-use update::Update;
+use objects::update::Update;
 use objects::user::User;
+use objects::message::Message;
 use value_extension::ValueExtension;
 
 /// A struct which contains things associated with the bot.
@@ -74,7 +75,6 @@ impl Bot {
                           offset,
                           limit,
                           timeout);
-        let params = [("offset", offset), ("limit", limit), ("timeout", timeout)];
         let mut data = self.client.get(&url).send()?;
         let rjson: Value = data.json()?;
         let updates_json = rjson.find("result");
@@ -85,5 +85,34 @@ impl Bot {
         } else {
             Ok(None)
         }
+    }
+
+    pub fn send_message(&self,
+                        chat_id: i32,
+                        text: &str,
+                        parse_mode: Option<&str>,
+                        disable_web_page_preview: Option<bool>,
+                        disable_notification: Option<bool>,
+                        reply_to_message_id: Option<i32>)
+                        -> Result<Message> {
+        let chat_id: &str = &chat_id.to_string();
+        let parse_mode = parse_mode.unwrap_or("None");
+        let disable_web_page_preview: &str = &disable_web_page_preview.unwrap_or(false).to_string();
+        let disable_notification: &str = &disable_notification.unwrap_or(false).to_string();
+        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
+            .unwrap_or("None".to_string());
+        let path = ["sendMessage"];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("chat_id", chat_id),
+                      ("text", text),
+                      ("parse_mode", parse_mode),
+                      ("disable_web_page_preview", disable_web_page_preview),
+                      ("disable_notification", disable_notification),
+                      ("reply_to_message_id", reply_to_message_id)];
+        let mut data = self.client.post(&url).form(&params).send()?;
+        let rjson: Value = data.json()?;
+        let message_json = rjson.find("result").ok_or(JsonNotFound)?;
+        let message: Message = serde_json::from_value(message_json.clone())?;
+        Ok(message)
     }
 }

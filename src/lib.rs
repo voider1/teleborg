@@ -13,7 +13,7 @@ use serde_json::Value;
 
 pub mod updater;
 pub mod command_handler;
-mod command;
+pub mod command;
 mod value_extension;
 pub mod objects;
 pub mod bot;
