@@ -25,7 +25,7 @@ use teleborg::updater;
 
 fn main() {
     let mut commands = command_handler::CommandHandler::new();
-    let bot_token = "bot_token.to_string();
+    let bot_token = "bot_token".to_string();
     commands.add("test", test);
     updater::Updater::start(Some(bot_token), None, None, None, commands);
 }
