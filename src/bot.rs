@@ -6,7 +6,7 @@ use serde_json;
 use serde_json::Value;
 use serde_json::value::Map;
 
-use error::Result;
+use error::{Result, check_for_error};
 use error::Error::{RequestFailed, JsonNotFound};
 use objects::update::Update;
 use objects::user::User;
@@ -66,10 +66,9 @@ impl Bot {
 
     fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
         match parse_mode {
-                &ParseMode::Text => "Text",
+                &ParseMode::Text => "None",
                 &ParseMode::Markdown => "Markdown",
-                &ParseMode::Html => "Html",
-                _ => "Text",
+                &ParseMode::Html => "HTML",
             }
             .to_string()
     }
@@ -92,7 +91,7 @@ impl Bot {
                           limit,
                           timeout);
         let mut data = self.client.get(&url).send()?;
-        let rjson: Value = data.json()?;
+        let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.find("result");
 
         if let Some(result) = updates_json {
@@ -127,7 +126,8 @@ impl Bot {
                       ("disable_notification", disable_notification),
                       ("reply_to_message_id", reply_to_message_id)];
         let mut data = self.client.post(&url).form(&params).send()?;
-        let rjson: Value = data.json()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        println!("{:?}", rjson);
         let message_json = rjson.find("result").ok_or(JsonNotFound)?;
         let message: Message = serde_json::from_value(message_json.clone())?;
         Ok(message)
