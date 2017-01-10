@@ -24,6 +24,12 @@ pub struct Bot {
     pub bot_url: String,
 }
 
+pub enum ParseMode {
+    Markdown,
+    Html,
+    Text,
+}
+
 impl Bot {
     /// Return a new bot struct.
     pub fn new(bot_url: String) -> Result<Self> {
@@ -58,6 +64,16 @@ impl Bot {
         }
     }
 
+    fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
+        match parse_mode {
+                &ParseMode::Text => "Text",
+                &ParseMode::Markdown => "Markdown",
+                &ParseMode::Html => "Html",
+                _ => "Text",
+            }
+            .to_string()
+    }
+
     pub fn get_updates(&self,
                        offset: i32,
                        limit: Option<i32>,
@@ -90,13 +106,13 @@ impl Bot {
     pub fn send_message(&self,
                         chat_id: &i64,
                         text: &str,
-                        parse_mode: Option<&str>,
+                        parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
                         reply_to_message_id: Option<&i32>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
-        let parse_mode = parse_mode.unwrap_or("None");
+        let parse_mode = &self.get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
         let disable_web_page_preview: &str = &disable_web_page_preview.unwrap_or(&false)
             .to_string();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
