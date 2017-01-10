@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::sync::mpsc;
-use std::collections::VecDeque;
 
 use command::Command;
 use updater::Updater;
@@ -27,10 +26,15 @@ impl CommandHandler {
             if let Some(t) = update.clone().message.and_then(|t| t.text) {
                 if t.starts_with("/") {
                     let (_, bot_command) = t.split_whitespace().next().unwrap().split_at(1);
-                    let command = self.commands.get_mut(bot_command);
+                    let name_command: Vec<&str> = bot_command.split("@").collect();
 
-                    if let Some(c) = command {
-                        c.execute(bot, update);
+                    if name_command.len() == 1 ||
+                       name_command.len() == 2 && name_command[1] == bot.username {
+                        let command = self.commands.get_mut(name_command[0]);
+
+                        if let Some(c) = command {
+                            c.execute(bot, update);
+                        }
                     }
                 }
             }
