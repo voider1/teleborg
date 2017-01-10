@@ -16,10 +16,10 @@ use value_extension::ValueExtension;
 /// A struct which contains things associated with the bot.
 #[derive(Debug)]
 pub struct Bot {
-    id: i64,
-    first_name: String,
-    last_name: Option<String>,
-    username: Option<String>,
+    pub id: i64,
+    pub first_name: String,
+    pub last_name: Option<String>,
+    pub username: String,
     client: Client,
     pub bot_url: String,
 }
@@ -32,7 +32,7 @@ impl Bot {
         let id = rjson.as_required_i64("id")?;
         let first_name = rjson.as_required_string("first_name")?;
         let last_name = rjson.as_optional_string("last_name");
-        let username = rjson.as_optional_string("username");
+        let username = rjson.as_required_string("username")?;
 
         Ok(Bot {
             id: id,
