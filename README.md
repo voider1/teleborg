@@ -25,8 +25,9 @@ use teleborg::updater;
 
 fn main() {
     let mut commands = command_handler::CommandHandler::new();
+    let bot_token = "bot_token".to_string();
     commands.add("test", test);
-    updater::Updater::start(None, None, None, None, commands);
+    updater::Updater::start(Some(bot_token), None, None, None, commands);
 }
 
 fn test(bot: &Bot, update: Update) {
@@ -35,3 +36,4 @@ fn test(bot: &Bot, update: Update) {
 ```
 
 Currently I only support send_message, reply_to_message and forward_message. More is to come.
+If you don't want to put your token in your code, just pass None for your bot token and export your token as environment variable with the name TELEGRAM_BOT_TOKEN. The library takes the environment variable out on its own.
