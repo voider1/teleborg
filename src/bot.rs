@@ -6,6 +6,7 @@ use error::{Result, check_for_error};
 use error::Error::{RequestFailed, JsonNotFound};
 use objects::update::Update;
 use objects::message::Message;
+use objects::inline_keyboard::Markup;
 use value_extension::ValueExtension;
 
 /// A struct which contains things associated with the bot.
@@ -103,7 +104,8 @@ impl Bot {
                         parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i32>)
+                        reply_to_message_id: Option<&i32>,
+                        reply_markup: Option<&Markup>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &self.get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
@@ -119,7 +121,9 @@ impl Bot {
                       ("parse_mode", parse_mode),
                       ("disable_web_page_preview", disable_web_page_preview),
                       ("disable_notification", disable_notification),
-                      ("reply_to_message_id", reply_to_message_id)];
+                      ("reply_to_message_id", reply_to_message_id),
+                      ("reply_markup", &serde_json::to_string(&reply_markup).unwrap())];
+        println!("{:?}", params);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let message_json = rjson.find("result").ok_or(JsonNotFound)?;
@@ -129,6 +133,6 @@ impl Bot {
 
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
         let chat_id = update.clone().message.unwrap().chat.id;
-        self.send_message(&chat_id, text, None, None, None, None)
+        self.send_message(&chat_id, text, None, None, None, None, None)
     }
 }
