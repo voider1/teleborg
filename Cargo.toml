@@ -5,8 +5,8 @@ authors = ["Wesley Gahr <wesleyey0408@gmail.com>"]
 
 [dependencies]
 reqwest = "0.2.0"
-serde = "0.8.21"
+serde = "0.8.22"
 serde_json = "0.8.4"
-serde_derive = "0.8.21"
+serde_derive = "0.8.22"
 chrono = "0.2.25"
 crossbeam = "0.2"

@@ -98,8 +98,10 @@ impl Bot {
     }
 
     pub fn send_message(&self,
+                        // Required
                         chat_id: &i64,
                         text: &str,
+                        // Optionals
                         parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
@@ -125,6 +127,35 @@ impl Bot {
         let message_json = rjson.find("result").ok_or(JsonNotFound)?;
         let message: Message = serde_json::from_value(message_json.clone())?;
         Ok(message)
+    }
+
+    pub fn send_contact(&self, 
+                        // Required
+                        chat_id: &i64,
+                        phone_number: &str,
+                        first_name: &str,
+                        // Optionals
+                        last_name: Option<&str>,
+                        disable_notification: Option<&bool>
+                        reply_to_message_id: Option<&i32>)
+                        -> Result<Contact> {
+        let chat_id: &str = &chat_id.to_string();
+        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string()
+        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
+            .unwrap_or("None".to_string());
+        let path = ["sendContact"];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("chat_id", chat_id),
+                      ("phone_number", phone_number),
+                      ("first_name", first_name),
+                      ("last_name", last_name),
+                      ("disable_notification", disable_notification),
+                      ("reply_to_message_id", reply_to_message_id)];
+        let mut data = self.client.post(&url).form(&params).send()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        let contact_json = rjson.find("result").ok_or(JsonNotFound)?;
+        let contact: Contact = serde_json::from_value(contact_json.clone())?;
+        Ok(contact)
     }
 
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
