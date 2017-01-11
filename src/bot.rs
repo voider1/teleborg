@@ -46,7 +46,7 @@ impl Bot {
     }
 
     /// Gets the information about the bot.
-    fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
+    pub fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
         let mut resp = client.get(&url).send()?;
@@ -57,15 +57,6 @@ impl Bot {
         } else {
             Err(RequestFailed(*resp.status()))
         }
-    }
-
-    fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
-        match parse_mode {
-                &ParseMode::Text => "None",
-                &ParseMode::Markdown => "Markdown",
-                &ParseMode::Html => "HTML",
-            }
-            .to_string()
     }
 
     pub fn get_updates(&self,
@@ -130,5 +121,14 @@ impl Bot {
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
         let chat_id = update.clone().message.unwrap().chat.id;
         self.send_message(&chat_id, text, None, None, None, None)
+    }
+
+    fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
+        match parse_mode {
+                &ParseMode::Text => "None",
+                &ParseMode::Markdown => "Markdown",
+                &ParseMode::Html => "HTML",
+            }
+            .to_string()
     }
 }
