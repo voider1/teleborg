@@ -1,5 +1,6 @@
 use objects::user::User;
 use objects::chat::Chat;
+use objects::contact::Contact;
 use objects::message_entity::MessageEntity;
 
 #[derive(Clone, Deserialize, Debug)]
@@ -24,7 +25,7 @@ pub struct Message {
     pub video: Option<String>,
     pub voice: Option<String>,
     pub caption: Option<String>,
-    pub contact: Option<String>,
+    pub contact: Option<Contact>,
     pub location: Option<String>,
     pub venue: Option<String>,
     pub new_chat_member: Option<User>,

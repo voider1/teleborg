@@ -1,7 +1,6 @@
 # teleborg
 A loose Telegram bot API for Rust based on the traiting system.
 
-
 How to use the project
 ======================
 Add this to your `Cargo.toml`
@@ -10,11 +9,11 @@ Add this to your `Cargo.toml`
 teleborg = { git = "https://github.com/voider1/teleborg" }
 ```
 I will add this project to crates.io in the future when I've developed it some more.
-Note that this project only works on Rust 1.16 or above, which currently is nightly.
+Note that this project only works on Rust 1.16 or above, which is currently in the nightly phase.
 
 A simple example
 ================
-Let's show you how Teleborg works at its simplest, it's not yet very full fledged, but it can respond to commands.
+This example shows you how Teleborg works in its simplest form. It's not yet very full fledged, but it can respond to commands.
 
 ```Rust
 extern crate teleborg;
@@ -36,4 +35,4 @@ fn test(bot: &Bot, update: Update) {
 ```
 
 Currently I only support send_message, reply_to_message and forward_message. More is to come.
-If you don't want to put your token in your code, just pass None for your bot token and export your token as environment variable with the name TELEGRAM_BOT_TOKEN. The library takes the environment variable out on its own.
+If you don't want to put your token in your code, just pass None for your bot token and export your token as an environment variable with the name TELEGRAM_BOT_TOKEN. The library takes the environment variable out on its own.
