@@ -27,7 +27,6 @@ impl Updater {
         let token = token.or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
             .expect("You should pass in a token to new or set TELEGRAM_BOT_TOKEN");
 
-        let bot_url = [BASE_URL, &token].concat();
         let updater = Updater {
             token: token,
             last_update_id: 0,
