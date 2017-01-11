@@ -1,5 +1,6 @@
 use std::{env, thread, time};
 use std::sync::mpsc;
+use std::cell::Cell;
 
 use crossbeam;
 
@@ -8,11 +9,11 @@ use command_handler::CommandHandler;
 use update::Update;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
+thread_local!(pub static RUNNING: Cell<bool> = Cell::new(false));
 
 pub struct Updater {
     token: String,
     last_update_id: i32,
-    pub running: bool,
     pub is_idle: bool,
 }
 
@@ -24,25 +25,28 @@ impl Updater {
                  network_delay: Option<i32>,
                  command_handler: CommandHandler) {
         let token = token.or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
-            .expect("You should pass in a token to new or set TELEGRAM_BOT_TOKEN");
+            .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
 
         let updater = Updater {
             token: token,
             last_update_id: 0,
-            running: false,
             is_idle: false,
         };
 
         updater.start_polling(poll_interval, timeout, network_delay, command_handler);
     }
 
-    pub fn start_polling(mut self,
-                         poll_interval: Option<u64>,
-                         timeout: Option<i32>,
-                         network_delay: Option<i32>,
-                         mut command_handler: CommandHandler) {
-        if !self.running {
-            self.running = true;
+    pub fn stop() {
+        RUNNING.with(|s| s.set(false));
+    }
+
+    fn start_polling(mut self,
+                     poll_interval: Option<u64>,
+                     timeout: Option<i32>,
+                     network_delay: Option<i32>,
+                     mut command_handler: CommandHandler) {
+        if !RUNNING.with(|s| s.get()) {
+            RUNNING.with(|s| s.set(true));
 
             let (tx, rx) = mpsc::channel();
             let bot = bot::Bot::new([BASE_URL, &self.token].concat()).unwrap();
@@ -67,7 +71,7 @@ impl Updater {
                             tx: mpsc::Sender<Update>) {
         let poll_interval = time::Duration::from_secs(poll_interval.unwrap_or(0));
 
-        while self.running {
+        while RUNNING.with(|s| s.get()) {
             let updates = bot.get_updates(self.last_update_id, None, timeout, network_delay);
 
             match updates {
