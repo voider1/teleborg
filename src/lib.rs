@@ -1,5 +1,3 @@
-#![feature(proc_macro)]
-
 use std::marker::{Sync, Send};
 
 extern crate crossbeam;
@@ -9,7 +7,6 @@ extern crate serde_derive;
 extern crate serde_json;
 
 pub use reqwest::StatusCode;
-use serde_json::Value;
 
 pub mod updater;
 pub mod command_handler;
@@ -19,7 +16,6 @@ pub mod objects;
 pub mod bot;
 mod error;
 
-use error::{Error, Result};
 use command::Command;
 use objects::update;
 

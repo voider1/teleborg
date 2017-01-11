@@ -14,10 +14,3 @@ pub struct Chat {
     #[serde(rename="all_members_are_administrators")]
     pub all_members_are_admins: Option<bool>,
 }
-
-impl Chat {
-    pub fn new(json: &serde_json::Value) -> Result<Self> {
-        let chat: Chat = serde_json::from_value(json.clone())?;
-        Ok(chat)
-    }
-}

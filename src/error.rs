@@ -54,7 +54,6 @@ impl From<serde_json::error::Error> for Error {
         match err {
             serde_json::error::Error::Syntax(..) => Error::InvalidJson(err),
             serde_json::error::Error::Io(..) => Error::JsonIo(err),
-            _ => Error::InvalidJson(err),
         }
     }
 }

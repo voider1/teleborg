@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::sync::mpsc;
 
 use command::Command;
-use updater::Updater;
 use objects::update::Update;
 use bot::Bot;
 

@@ -1,9 +1,5 @@
 use std::{env, thread, time};
 use std::sync::mpsc;
-use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, AtomicIsize, ATOMIC_BOOL_INIT, ATOMIC_ISIZE_INIT};
-use std::sync::atomic::Ordering::Relaxed;
-use std::collections::VecDeque;
 
 use reqwest;
 use crossbeam;
@@ -11,7 +7,6 @@ use crossbeam;
 use bot;
 use command_handler::CommandHandler;
 use update::Update;
-use error::Result;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
 
@@ -20,7 +15,6 @@ pub struct Updater {
     last_update_id: i32,
     pub running: bool,
     pub is_idle: bool,
-    client: reqwest::Client,
 }
 
 impl Updater {
@@ -34,13 +28,11 @@ impl Updater {
             .expect("You should pass in a token to new or set TELEGRAM_BOT_TOKEN");
 
         let bot_url = [BASE_URL, &token].concat();
-        let client = reqwest::Client::new().unwrap();
         let updater = Updater {
             token: token,
             last_update_id: 0,
             running: false,
             is_idle: false,
-            client: client,
         };
 
         updater.start_polling(poll_interval, timeout, network_delay, command_handler);
@@ -80,7 +72,7 @@ impl Updater {
         while self.running {
             let updates = bot.get_updates(self.last_update_id, None, timeout, network_delay);
 
-            let last_update = match updates {
+            match updates {
                 Ok(Some(ref v)) => {
                     if let Some(u) = v.last() {
                         for update in v {

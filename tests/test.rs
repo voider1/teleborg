@@ -3,28 +3,26 @@ extern crate teleborg;
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    use teleborg::updater::Updater;
-    use teleborg::bot;
-    use teleborg::objects::update;
-    use teleborg::command_handler::CommandHandler;
-    use teleborg::command::Command;
+    use teleborg::command_handler;
+    use teleborg::bot::{Bot, ParseMode};
+    use teleborg::objects::update::Update;
+    use teleborg::updater;
 
     #[test]
     fn create_updater() {
-        let mut command_handler = CommandHandler::new();
-        command_handler.add("foo", foo);
-        command_handler.add("hitler", hitler);
-        Updater::start(None, None, None, None, command_handler);
+        let mut commands = command_handler::CommandHandler::new();
+        commands.add("test", test);
+        updater::Updater::start(None, None, None, None, commands);
     }
 
-    fn foo(bot: &bot::Bot, update: update::Update) {
+    fn test(bot: &Bot, update: Update) {
         let chat_id = &update.message.unwrap().chat.id;
-        bot.send_message(chat_id, "Test!!!", None, None, None, None).unwrap();
-        println!("IT WORKS OMG");
-    }
-
-    fn hitler(bot: &bot::Bot, update: update::Update) {
-        bot.reply_to_message(&update, "SIEG HEIL").unwrap();
+        let x = bot.send_message(chat_id,
+                                 "<p>Test</p>",
+                                 Some(&ParseMode::Html),
+                                 None,
+                                 None,
+                                 None);
+        println!("{:?}", x);
     }
 }

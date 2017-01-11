@@ -1,6 +1,3 @@
-use serde_json;
-
-use error::Result;
 use objects::user::User;
 use objects::chat::Chat;
 use objects::message_entity::MessageEntity;
@@ -41,11 +38,4 @@ pub struct Message {
     pub migrate_to_chat_id: Option<i64>,
     pub migrate_from_chat_id: Option<i64>,
     pub pinned_message: Option<Box<Message>>,
-}
-
-impl Message {
-    pub fn new(message: &serde_json::Value) -> Result<Self> {
-        let message: Message = serde_json::from_value(message.clone())?;
-        Ok(message)
-    }
 }

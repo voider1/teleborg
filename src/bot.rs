@@ -1,15 +1,10 @@
-use std::io::Read;
-use std::thread;
-
 use reqwest::Client;
 use serde_json;
 use serde_json::Value;
-use serde_json::value::Map;
 
 use error::{Result, check_for_error};
 use error::Error::{RequestFailed, JsonNotFound};
 use objects::update::Update;
-use objects::user::User;
 use objects::message::Message;
 use value_extension::ValueExtension;
 
@@ -127,7 +122,6 @@ impl Bot {
                       ("reply_to_message_id", reply_to_message_id)];
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
-        println!("{:?}", rjson);
         let message_json = rjson.find("result").ok_or(JsonNotFound)?;
         let message: Message = serde_json::from_value(message_json.clone())?;
         Ok(message)
