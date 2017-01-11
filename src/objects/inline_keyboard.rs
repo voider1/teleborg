@@ -9,23 +9,31 @@ pub struct Markup {
 pub struct Button {
 	text: String,
 	url: Option<String>,
+	callback_data: Option<String>,
+	switch_inline_query: Option<String>,
+	switch_inline_query_current_chat: Option<String>,
 }
 
 impl Markup {
-	pub fn new(inline_keyboard: Vec<Button>) -> Markup {
-		let mut buttons = Vec::<Vec<Button>>::new();
-		buttons.push(inline_keyboard);
+	pub fn new(inline_keyboard: Vec<Vec<Button>>) -> Markup {
 		Markup {
-			inline_keyboard: buttons,
+			inline_keyboard: inline_keyboard,
 		}
 	}
 }
 
 impl Button {
-	pub fn new(text: String, url: Option<String>) -> Button {
+	pub fn new(text: String, 
+				url: Option<String>, 
+				callback_data: Option<String>, 
+				switch_inline_query: Option<String>, 
+				switch_inline_query_current_chat: Option<String>) -> Button {
 		Button {
 			text: text,
-			url: url,
+			url: Some(url.unwrap_or("".to_string())),
+			callback_data: Some(callback_data.unwrap_or("".to_string())),
+			switch_inline_query: Some(switch_inline_query.unwrap_or("".to_string())),
+			switch_inline_query_current_chat: Some(switch_inline_query_current_chat.unwrap_or("".to_string())),
 		}
 	}
 }

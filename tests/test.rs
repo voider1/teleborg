@@ -19,9 +19,11 @@ mod tests {
 
     fn test(bot: &Bot, update: Update) {
         let chat_id = &update.message.unwrap().chat.id;
-        let mut buttons = Vec::<Button>::new();
-        buttons.push(Button::new("TestButton".to_string(), Some("http://github.com/voider1/teleborg".to_string())));
-        let markup = Markup::new(buttons);
+        let mut row = Vec::<Button>::new();
+        row.push(Button::new("TestButton".to_string(), None, Some("test".to_string()), None, None));
+        let mut total = Vec::<Vec<Button>>::new();
+        total.push(row);
+        let markup = Markup::new(total);
         let x = bot.send_message(chat_id,
                                  "GET THE NEW TELEBORG API!!!",
                                  Some(&ParseMode::Html),

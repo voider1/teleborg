@@ -4,3 +4,4 @@ pub mod user;
 pub mod message;
 pub mod update;
 pub mod inline_keyboard;
+pub mod call_back_query;
