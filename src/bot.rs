@@ -5,6 +5,7 @@ use serde_json::Value;
 use error::{Result, check_for_error};
 use error::Error::{RequestFailed, JsonNotFound};
 use objects::update::Update;
+use objects::contact::Contact;
 use objects::message::Message;
 use value_extension::ValueExtension;
 
@@ -135,12 +136,12 @@ impl Bot {
                         phone_number: &str,
                         first_name: &str,
                         // Optionals
-                        last_name: Option<&str>,
-                        disable_notification: Option<&bool>
+                        last_name: &str,
+                        disable_notification: Option<&bool>,
                         reply_to_message_id: Option<&i32>)
                         -> Result<Contact> {
         let chat_id: &str = &chat_id.to_string();
-        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string()
+        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
         let path = ["sendContact"];
