@@ -1,7 +1,6 @@
 use std::{env, thread, time};
 use std::sync::mpsc;
 
-use reqwest;
 use crossbeam;
 
 use bot;
