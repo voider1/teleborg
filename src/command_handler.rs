@@ -4,6 +4,7 @@ use std::sync::mpsc;
 use command::Command;
 use objects::update::Update;
 use bot::Bot;
+use updater::RUNNING;
 
 pub struct CommandHandler {
     commands: HashMap<String, Box<Command>>,
@@ -19,7 +20,7 @@ impl CommandHandler {
     }
 
     pub fn start_command_handling(&mut self, rx: mpsc::Receiver<Update>, bot: &Bot) {
-        loop {
+        while RUNNING.with(|s| s.get()) {
             let update = rx.recv().unwrap();
 
             if let Some(t) = update.clone().message.and_then(|t| t.text) {
