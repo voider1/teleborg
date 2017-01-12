@@ -1,6 +1,6 @@
 # teleborg
-A loose Telegram bot API for Rust based on the traiting system.
-
+A loose Telegram bot API for Rust based on the traiting system. 
+This project is inspired by [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot).
 
 How to use the project
 ======================
