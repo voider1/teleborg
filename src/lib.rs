@@ -9,7 +9,7 @@ extern crate serde_json;
 pub use reqwest::StatusCode;
 
 pub mod updater;
-pub mod command_handler;
+pub mod dispatcher;
 pub mod command;
 mod value_extension;
 pub mod objects;
