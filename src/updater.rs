@@ -1,6 +1,10 @@
 use std::{env, thread, time};
 use std::sync::mpsc;
 use std::cell::Cell;
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, ATOMIC_BOOL_INIT, Ordering};
+use std::thread::JoinHandle;
+use std::io::Result;
 
 use crossbeam;
 
@@ -9,12 +13,13 @@ use command_handler::CommandHandler;
 use update::Update;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
-thread_local!(pub static RUNNING: Cell<bool> = Cell::new(false));
 
 pub struct Updater {
     token: String,
-    last_update_id: i32,
-    pub is_idle: bool,
+    updater_thread: Option<JoinHandle<()>>,
+    dispatch_thread: Option<JoinHandle<()>>,
+    pub is_running: Arc<AtomicBool>,
+    pub is_idle: Arc<AtomicBool>,
 }
 
 impl Updater {
@@ -23,75 +28,97 @@ impl Updater {
                  poll_interval: Option<u64>,
                  timeout: Option<i32>,
                  network_delay: Option<i32>,
-                 command_handler: CommandHandler) {
+                 command_handler: CommandHandler)
+                 -> Updater {
         let token = token.or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
             .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
 
-        let updater = Updater {
+        let mut updater = Updater {
             token: token,
-            last_update_id: 0,
-            is_idle: false,
+            updater_thread: None,
+            dispatch_thread: None,
+            is_running: Arc::new(ATOMIC_BOOL_INIT),
+            is_idle: Arc::new(ATOMIC_BOOL_INIT),
         };
 
         updater.start_polling(poll_interval, timeout, network_delay, command_handler);
+        updater
     }
 
-    pub fn stop() {
-        RUNNING.with(|s| s.set(false));
+    pub fn stop(&self) {
+        self.is_running.store(false, Ordering::SeqCst);
     }
 
-    fn start_polling(mut self,
+    fn start_polling(&mut self,
                      poll_interval: Option<u64>,
                      timeout: Option<i32>,
                      network_delay: Option<i32>,
                      mut command_handler: CommandHandler) {
-        if !RUNNING.with(|s| s.get()) {
-            RUNNING.with(|s| s.set(true));
+        if !self.is_running.load(Ordering::Relaxed) {
+            self.is_running.store(true, Ordering::SeqCst);
 
             let (tx, rx) = mpsc::channel();
-            let bot = bot::Bot::new([BASE_URL, &self.token].concat()).unwrap();
+            let bot = Arc::new(bot::Bot::new([BASE_URL, &self.token].concat()).unwrap());
+            let updater_running = self.is_running.clone();
+            let dispatcher_running = self.is_running.clone();
+            let updater_bot = bot.clone();
+            let dispatcher_bot = bot.clone();
 
+            println!("Going to run threads");
             // Spawn scoped threads
-            crossbeam::scope(|scope| {
-                scope.spawn(|| {
-                    self.start_polling_thread(poll_interval, timeout, network_delay, &bot, tx)
-                });
-                scope.spawn(|| {
-                    command_handler.start_command_handling(rx, &bot);
-                });
-            });
+            self.updater_thread = Some(thread::Builder::new()
+                .name("updater".to_string())
+                .spawn(move || {
+                    Self::start_polling_thread(updater_running,
+                                               poll_interval,
+                                               timeout,
+                                               network_delay,
+                                               updater_bot,
+                                               tx);
+                })
+                .unwrap());
+            self.dispatch_thread = Some(thread::Builder::new()
+                .name("dispatcher".to_string())
+                .spawn(move || {
+                    command_handler.start_command_handling(dispatcher_running, rx, dispatcher_bot);
+                })
+                .unwrap());
         }
     }
 
-    fn start_polling_thread(&mut self,
+    fn start_polling_thread(is_running: Arc<AtomicBool>,
                             poll_interval: Option<u64>,
                             timeout: Option<i32>,
                             network_delay: Option<i32>,
-                            bot: &bot::Bot,
+                            bot: Arc<bot::Bot>,
                             tx: mpsc::Sender<Update>) {
         let poll_interval = time::Duration::from_secs(poll_interval.unwrap_or(0));
+        let mut last_update_id = 0;
 
-        while RUNNING.with(|s| s.get()) {
-            let updates = bot.get_updates(self.last_update_id, None, timeout, network_delay);
+        while is_running.load(Ordering::SeqCst) {
+            let updates = bot.get_updates(last_update_id, None, timeout, network_delay);
 
             match updates {
                 Ok(Some(ref v)) => {
                     if let Some(u) = v.last() {
+                        println!("There is an update!");
                         for update in v {
                             tx.send(update.clone()).unwrap();
                         }
-                        let update_id_store = u.update_id + 1;
-                        self.last_update_id = update_id_store as i32;
+                        last_update_id = (u.update_id + 1) as i32;
                     } else {
+                        println!("There is no update!");
                         // Do nothing, the vector is empty
                         continue;
                     }
                 }
                 Ok(None) => {
+                    println!("There is nothing update!");
                     // Do nothing, we have nothing
                     continue;
                 }
                 Err(err) => {
+                    println!("There is an error!");
                     // Handle error
                     continue;
                 }
