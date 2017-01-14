@@ -9,7 +9,7 @@ use std::io::Result;
 use crossbeam;
 
 use bot;
-use command_handler::CommandHandler;
+use dispatcher::Dispatcher;
 use update::Update;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
@@ -28,7 +28,7 @@ impl Updater {
                  poll_interval: Option<u64>,
                  timeout: Option<i32>,
                  network_delay: Option<i32>,
-                 command_handler: CommandHandler)
+                 dispatcher: Dispatcher)
                  -> Updater {
         let token = token.or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
             .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
@@ -41,7 +41,7 @@ impl Updater {
             is_idle: Arc::new(ATOMIC_BOOL_INIT),
         };
 
-        updater.start_polling(poll_interval, timeout, network_delay, command_handler);
+        updater.start_polling(poll_interval, timeout, network_delay, dispatcher);
         updater
     }
 
@@ -53,7 +53,7 @@ impl Updater {
                      poll_interval: Option<u64>,
                      timeout: Option<i32>,
                      network_delay: Option<i32>,
-                     mut command_handler: CommandHandler) {
+                     mut dispatcher: Dispatcher) {
         if !self.is_running.load(Ordering::Relaxed) {
             self.is_running.store(true, Ordering::SeqCst);
 
@@ -64,8 +64,7 @@ impl Updater {
             let updater_bot = bot.clone();
             let dispatcher_bot = bot.clone();
 
-            println!("Going to run threads");
-            // Spawn scoped threads
+            // Spawn threads
             self.updater_thread = Some(thread::Builder::new()
                 .name("updater".to_string())
                 .spawn(move || {
@@ -80,7 +79,7 @@ impl Updater {
             self.dispatch_thread = Some(thread::Builder::new()
                 .name("dispatcher".to_string())
                 .spawn(move || {
-                    command_handler.start_command_handling(dispatcher_running, rx, dispatcher_bot);
+                    dispatcher.start_command_handling(dispatcher_running, rx, dispatcher_bot);
                 })
                 .unwrap());
         }
@@ -101,24 +100,20 @@ impl Updater {
             match updates {
                 Ok(Some(ref v)) => {
                     if let Some(u) = v.last() {
-                        println!("There is an update!");
                         for update in v {
                             tx.send(update.clone()).unwrap();
                         }
                         last_update_id = (u.update_id + 1) as i32;
                     } else {
-                        println!("There is no update!");
                         // Do nothing, the vector is empty
                         continue;
                     }
                 }
                 Ok(None) => {
-                    println!("There is nothing update!");
                     // Do nothing, we have nothing
                     continue;
                 }
                 Err(err) => {
-                    println!("There is an error!");
                     // Handle error
                     continue;
                 }
