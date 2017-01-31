@@ -6,7 +6,7 @@ use error::Result;
 pub struct Chat {
     pub id: i64,
     #[serde(rename="type")]
-    pub type_chat: String,
+    pub kind: String,
     pub title: Option<String>,
     pub username: Option<String>,
     pub first_name: Option<String>,
