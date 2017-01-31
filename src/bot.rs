@@ -94,7 +94,7 @@ impl Bot {
                         parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i32>)
+                        reply_to_message_id: Option<&i64>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &self.get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
@@ -119,8 +119,10 @@ impl Bot {
     }
 
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
-        let chat_id = update.clone().message.unwrap().chat.id;
-        self.send_message(&chat_id, text, None, None, None, None)
+        let message = update.clone().message.unwrap();
+        let message_id = message.message_id;
+        let chat_id = message.chat.id;
+        self.send_message(&chat_id, text, None, None, None, Some(&message_id))
     }
 
     fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
