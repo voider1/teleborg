@@ -4,11 +4,11 @@ extern crate teleborg;
 mod tests {
     use teleborg::dispatcher;
     use teleborg::updater::Updater;
+    use teleborg::bot::Bot;
+    use teleborg::objects::update::Update;
 
-    #[test]
     fn test_updater() {
-        let dispatcher = dispatcher::Dispatcher::new();
-        let updater = Updater::start(None, None, None, None, dispatcher);
-        updater.stop();
+        let mut dispatcher = dispatcher::Dispatcher::new();
+        Updater::start(None, None, None, None, dispatcher);
     }
 }

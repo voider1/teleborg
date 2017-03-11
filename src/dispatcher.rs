@@ -27,11 +27,8 @@ impl Dispatcher {
         self.message_handlers.push(Box::new(command));
     }
 
-    pub fn start_command_handling(&mut self,
-                                  is_running: Arc<AtomicBool>,
-                                  rx: mpsc::Receiver<Update>,
-                                  bot: Arc<Bot>) {
-        while is_running.load(Ordering::Relaxed) {
+    pub fn start_handling(&mut self, rx: mpsc::Receiver<Update>, bot: Arc<Bot>) {
+        loop {
             let update = rx.recv().unwrap();
 
             if let Some(t) = update.clone().message.and_then(|t| t.text) {
