@@ -1,7 +1,3 @@
-use serde_json;
-
-use error::Result;
-
 #[derive(Clone, Deserialize, Debug)]
 pub struct Chat {
     pub id: i64,
