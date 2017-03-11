@@ -1,6 +1,5 @@
 use std::marker::{Sync, Send};
 
-extern crate crossbeam;
 extern crate reqwest;
 #[macro_use]
 extern crate serde_derive;

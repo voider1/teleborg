@@ -6,8 +6,6 @@ use std::sync::atomic::{AtomicBool, ATOMIC_BOOL_INIT, Ordering};
 use std::thread::JoinHandle;
 use std::io::Result;
 
-use crossbeam;
-
 use bot;
 use dispatcher::Dispatcher;
 use update::Update;

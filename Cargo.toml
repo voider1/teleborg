@@ -4,9 +4,7 @@ version = "0.1.0"
 authors = ["Wesley Gahr <wesleyey0408@gmail.com>"]
 
 [dependencies]
-reqwest = "0.2.0"
-serde = "0.8.21"
-serde_json = "0.8.4"
-serde_derive = "0.8.21"
-chrono = "0.2.25"
-crossbeam = "0.2"
+reqwest = "0.4.0"
+serde = "0.9.5"
+serde_json = "0.9.4"
+serde_derive = "0.9.5"

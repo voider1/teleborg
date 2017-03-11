@@ -53,7 +53,7 @@ impl Bot {
 
         if resp.status().is_success() {
             let rjson: Value = resp.json()?;
-            rjson.find("result").cloned().ok_or(JsonNotFound)
+            rjson.get("result").cloned().ok_or(JsonNotFound)
         } else {
             Err(RequestFailed(*resp.status()))
         }
@@ -78,7 +78,7 @@ impl Bot {
                           timeout);
         let mut data = self.client.get(&url).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
-        let updates_json = rjson.find("result");
+        let updates_json = rjson.get("result");
 
         if let Some(result) = updates_json {
             let updates: Vec<Update> = serde_json::from_value(result.clone())?;
@@ -104,18 +104,13 @@ impl Bot {
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
         let path = ["sendMessage"];
-        let url = ::construct_api_url(&self.bot_url, &path);
         let params = [("chat_id", chat_id),
                       ("text", text),
                       ("parse_mode", parse_mode),
                       ("disable_web_page_preview", disable_web_page_preview),
                       ("disable_notification", disable_notification),
                       ("reply_to_message_id", reply_to_message_id)];
-        let mut data = self.client.post(&url).form(&params).send()?;
-        let rjson: Value = check_for_error(data.json()?)?;
-        let message_json = rjson.find("result").ok_or(JsonNotFound)?;
-        let message: Message = serde_json::from_value(message_json.clone())?;
-        Ok(message)
+        self.post_message(&path, &params)
     }
 
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
@@ -123,6 +118,33 @@ impl Bot {
         let message_id = message.message_id;
         let chat_id = message.chat.id;
         self.send_message(&chat_id, text, None, None, None, Some(&message_id))
+    }
+
+    pub fn forward_messge(&self,
+                          update: &Update,
+                          chat_id: &i32,
+                          disable_notification: Option<&bool>)
+                          -> Result<Message> {
+        let message = update.clone().message.unwrap();
+        let chat_id: &str = &chat_id.to_string();
+        let from_chat_id: &str = &message.chat.id.to_string();
+        let message_id: &str = &message.message_id.to_string();
+        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
+        let path = ["forwardMessage"];
+        let params = [("chat_id", chat_id),
+                      ("from_chat_id", from_chat_id),
+                      ("disable_notification", disable_notification),
+                      ("message_id", message_id)];
+        self.post_message(&path, &params)
+    }
+
+    fn post_message(&self, path: &[&str], params: &[(&str, &str)]) -> Result<Message> {
+        let url = ::construct_api_url(&self.bot_url, path);
+        let mut data = self.client.post(&url).form(&params).send()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        let message_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let message: Message = serde_json::from_value(message_json.clone())?;
+        Ok(message)
     }
 
     fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
