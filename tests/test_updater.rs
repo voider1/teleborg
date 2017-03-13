@@ -9,6 +9,11 @@ mod tests {
 
     fn test_updater() {
         let mut dispatcher = dispatcher::Dispatcher::new();
+        dispatcher.add_command_handler("test", test, false);
         Updater::start(None, None, None, None, dispatcher);
+    }
+
+    fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
+        println!("{:?}", args);
     }
 }

@@ -18,9 +18,9 @@ mod error;
 use command::Command;
 use objects::update;
 
-impl<T: Sync + Send + 'static + FnMut(&bot::Bot, update::Update)> Command for T {
-    fn execute(&mut self, bot: &bot::Bot, update: update::Update) {
-        self(bot, update);
+impl<T: Sync + Send + 'static + FnMut(&bot::Bot, update::Update, Option<Vec<&str>>)> Command for T {
+    fn execute(&mut self, bot: &bot::Bot, update: update::Update, args: Option<Vec<&str>>) {
+        self(bot, update, args);
     }
 }
 

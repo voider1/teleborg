@@ -7,7 +7,7 @@ use objects::update::Update;
 use bot::Bot;
 
 pub struct Dispatcher {
-    command_handlers: HashMap<String, Box<Command>>,
+    command_handlers: HashMap<String, (Box<Command>, bool)>,
     message_handlers: Vec<Box<Command>>,
 }
 
@@ -19,8 +19,8 @@ impl Dispatcher {
         }
     }
 
-    pub fn add_command_handler<C: Command>(&mut self, command_name: &str, command: C) {
-        self.command_handlers.insert(command_name.to_string(), Box::new(command));
+    pub fn add_command_handler<C: Command>(&mut self, command_name: &str, command: C, args: bool) {
+        self.command_handlers.insert(command_name.to_string(), (Box::new(command), args,));
     }
 
     pub fn add_message_handler<C: Command>(&mut self, command: C) {
@@ -33,22 +33,28 @@ impl Dispatcher {
 
             if let Some(t) = update.clone().message.and_then(|t| t.text) {
                 if t.starts_with("/") {
-                    let (_, bot_command) = t.split_whitespace().next().unwrap().split_at(1);
-                    let name_command: Vec<&str> = bot_command.split("@").collect();
+                    let msg = t.split_whitespace().collect::<Vec<&str>>();
+                    let (_, bot_command) = msg[0].split_at(1);
+                    let name_command = bot_command.split("@").collect::<Vec<&str>>();
 
                     if name_command.len() == 1 ||
                        name_command.len() == 2 && name_command[1] == bot.username {
                         let command = self.command_handlers.get_mut(name_command[0]);
 
                         if let Some(c) = command {
-                            c.execute(&bot, update);
+                            if c.1 {
+                                let args = msg.clone().split_off(1);
+                                c.0.execute(&bot, update, Some(args));
+                            } else {
+                                c.0.execute(&bot, update, None);
+                            }
                             continue;
                         }
                     }
                 }
             }
             for message_handler in self.message_handlers.iter_mut() {
-                message_handler.execute(&bot, update.clone());
+                message_handler.execute(&bot, update.clone(), None);
             }
         }
     }
