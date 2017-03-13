@@ -29,14 +29,14 @@ fn main() {
     // Creating a dispatcher which registers all the command and message handlers
     let mut dispatcher = dispatcher::Dispatcher::new();
     // Registering our command which we create below in the form as a function
-    dispatcher.add_command_handler("test", test);
+    dispatcher.add_command_handler("test", test, false);
     // Start the updater, this will start the Updater threads which will poll for updates
     // and send those to the Dispatcher's which will act upon it with the registered handlers
     let updater = updater::Updater::start(Some(bot_token), None, None, None, dispatcher);
 }
 
 // Our first command handler
-fn test(bot: &Bot, update: Update) {
+fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
     bot.reply_to_message(&update, "It works!").unwrap();
 }
 ```
