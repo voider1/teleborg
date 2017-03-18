@@ -10,7 +10,7 @@ Add this to your `Cargo.toml`
 teleborg = { git = "https://github.com/voider1/teleborg" }
 ```
 I will add this project to crates.io in the future when it's in a more complete state.
-Note that this project only works on Rust 1.16 or above, which is currently in the nightly phase.
+Note that this project only works on Rust 1.16 or above.
 
 An example
 ==========
