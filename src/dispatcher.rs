@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::sync::{Arc, mpsc};
-use std::sync::atomic::{AtomicBool, Ordering};
 
 use command::Command;
 use objects::update::Update;
