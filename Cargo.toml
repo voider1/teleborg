@@ -1,7 +1,12 @@
 [package]
 name = "teleborg"
 version = "0.1.0"
-authors = ["Wesley Gahr <wesleyey0408@gmail.com>"]
+authors = ["Wesley A. Gahr <wesleyey0408@gmail.com>"]
+license = "Apache 2.0"
+description = "A Telegram bot API."
+repository = "https://github.com/voider1/teleborg"
+readme = "README.md"
+keywords = ["telegram-bot", "rust", "telegram-api"]
 
 [dependencies]
 reqwest = "0.4.0"
