@@ -18,21 +18,19 @@ Here we'll show you the bare minimum needed to register a command which sends a 
 
 ```Rust
 extern crate teleborg;
-use teleborg::dispatcher;
-use teleborg::bot::Bot;
-use teleborg::objects::update::Update;
-use teleborg::updater;
+use teleborg::{Dispatcher, Bot, Updater};
+use teleborg::objects::Update;
 
 fn main() {
     // Make sure you have your token
     let bot_token = "bot_token".to_string();
     // Creating a dispatcher which registers all the command and message handlers
-    let mut dispatcher = dispatcher::Dispatcher::new();
+    let mut dispatcher = Dispatcher::new();
     // Registering our command which we create below in the form as a function
     dispatcher.add_command_handler("test", test, false);
     // Start the updater, the Updater will start the threads, one of which will poll for updates
     // and send those to the Dispatcher's thread which will act upon it with the registered handlers
-    let updater = updater::Updater::start(Some(bot_token), None, None, None, dispatcher);
+    Updater::start(Some(bot_token), None, None, None, dispatcher);
 }
 
 // Our first command handler
