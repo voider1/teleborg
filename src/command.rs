@@ -10,15 +10,24 @@ use bot;
 /// # Examples
 ///
 /// ```
-/// impl<T: Sync + Send + 'static + FnMut(&bot::Bot, update::Update, Option<Vec<&str>>)> Command for T {
-///     fn execute(&mut self, bot: &bot::Bot, update: update::Update, args: Option<Vec<&str>>) {
-///         self(bot, update, args);
+/// use teleborg::{Bot, Update, Command};
+///
+/// struct Test;
+///
+/// impl Test {
+///     fn test(&self, bot: &Bot, update: Update, args: Option<Vec<&str>>) {
+///         bot.reply_to_message(&update, "It works!");
+///     }
+/// }
+///
+/// impl Command for Test {
+///     fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>) {
+///         self.test(bot, update, args);
 ///     }
 /// }
 /// ```
 ///
-/// This implements the `Command` trait for all functions which take a reference
-/// to `Bot`, an `Update` and an optional `Vec` which contains `&str`.
+/// This implements the `Command` trait for the Test struct.
 pub trait Command: Sync + Send + 'static {
     fn execute(&mut self, bot: &bot::Bot, update: Update, args: Option<Vec<&str>>);
 }
