@@ -2,7 +2,8 @@ extern crate teleborg;
 
 #[cfg(test)]
 mod tests {
-    use teleborg::{Dispatcher, Updater, Bot, Update};
+    use teleborg::{Dispatcher, Updater, Bot};
+    use teleborg::objects::Update;
 
     fn test_updater() {
         let mut dispatcher = Dispatcher::new();
@@ -11,6 +12,6 @@ mod tests {
     }
 
     fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
-        println!("{:?}", args);
+        bot.reply_to_message(&update, "It works!").unwrap();
     }
 }

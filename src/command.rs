@@ -10,7 +10,8 @@ use bot;
 /// # Examples
 ///
 /// ```
-/// use teleborg::{Bot, Update, Command};
+/// use teleborg::{Bot, Command};
+/// use teleborg::objects::Update;
 ///
 /// struct Test;
 ///
