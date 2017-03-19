@@ -8,7 +8,10 @@ use objects::update::Update;
 use objects::message::Message;
 use value_extension::ValueExtension;
 
-/// A struct which contains things associated with the bot.
+/// A `Bot` which will do all the API calls.
+///
+/// The `Bot` will be given access to in a `Command` with which you can do all
+/// the API interactions in your `Command`s.
 #[derive(Debug)]
 pub struct Bot {
     pub id: i64,
@@ -19,6 +22,7 @@ pub struct Bot {
     pub bot_url: String,
 }
 
+/// The parse modes for messages.
 pub enum ParseMode {
     Markdown,
     Html,
@@ -26,7 +30,7 @@ pub enum ParseMode {
 }
 
 impl Bot {
-    /// Return a new bot struct.
+    /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
         let client = Client::new()?;
         let rjson = Bot::get_me(&client, &bot_url)?;
@@ -45,7 +49,7 @@ impl Bot {
         })
     }
 
-    /// Gets the information about the bot.
+    /// API call which gets the information about your bot.
     pub fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
@@ -59,6 +63,7 @@ impl Bot {
         }
     }
 
+    /// API call which will get called to get the updates for your bot.
     pub fn get_updates(&self,
                        offset: i32,
                        limit: Option<i32>,
@@ -88,6 +93,7 @@ impl Bot {
         }
     }
 
+    /// API call which will send a message to a chat which your bot participates in.
     pub fn send_message(&self,
                         chat_id: &i64,
                         text: &str,
@@ -113,6 +119,7 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
+    /// API call which will reply to a message directed to your bot.
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
         let message = update.clone().message.unwrap();
         let message_id = message.message_id;
@@ -120,6 +127,7 @@ impl Bot {
         self.send_message(&chat_id, text, None, None, None, Some(&message_id))
     }
 
+    /// API call which will forward a message.
     pub fn forward_messge(&self,
                           update: &Update,
                           chat_id: &i32,
@@ -138,6 +146,7 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
+    /// The actual networking done for sending messages.
     fn post_message(&self, path: &[&str], params: &[(&str, &str)]) -> Result<Message> {
         let url = ::construct_api_url(&self.bot_url, path);
         let mut data = self.client.post(&url).form(&params).send()?;
@@ -147,6 +156,7 @@ impl Bot {
         Ok(message)
     }
 
+    /// Does pattern matching on the `ParseMode` and gets the right `String`.
     fn get_parse_mode(&self, parse_mode: &ParseMode) -> String {
         match parse_mode {
                 &ParseMode::Text => "None",

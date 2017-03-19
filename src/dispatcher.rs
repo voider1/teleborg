@@ -5,12 +5,17 @@ use command::Command;
 use objects::update::Update;
 use bot::Bot;
 
+/// A `Dispatcher` which will receive updates from the `Updater` and dispatches
+/// them to the registered handlers.
+///
+/// You can add your command and message handlers to the `Dispatcher`.
 pub struct Dispatcher {
     command_handlers: HashMap<String, (Box<Command>, bool)>,
     message_handlers: Vec<Box<Command>>,
 }
 
 impl Dispatcher {
+    /// Constructs a new `Dispatcher`.
     pub fn new() -> Self {
         Dispatcher {
             command_handlers: HashMap::new(),
@@ -18,14 +23,17 @@ impl Dispatcher {
         }
     }
 
+    /// Add a function which implements the `Command` trait to the `Dispatcher.command_handlers`.
     pub fn add_command_handler<C: Command>(&mut self, command_name: &str, command: C, args: bool) {
         self.command_handlers.insert(command_name.to_string(), (Box::new(command), args,));
     }
 
+    /// Add a function which implements the `Command` trait to the `Dispatcher.message_handlers`.
     pub fn add_message_handler<C: Command>(&mut self, command: C) {
         self.message_handlers.push(Box::new(command));
     }
 
+    /// Starts the update handling process and dispatches all the updates to the assigned handlers.
     pub fn start_handling(&mut self, rx: mpsc::Receiver<Update>, bot: Arc<Bot>) {
         loop {
             let update = rx.recv().unwrap();

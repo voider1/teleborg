@@ -2,6 +2,7 @@ use serde_json;
 
 use error::{Error, Result};
 
+/// Extension for the `serde_json::Value`.
 pub trait ValueExtension {
     fn as_optional_string(&self, field: &str) -> Option<String>;
 

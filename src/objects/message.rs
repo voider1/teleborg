@@ -2,6 +2,7 @@ use objects::user::User;
 use objects::chat::Chat;
 use objects::message_entity::MessageEntity;
 
+/// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Message {
     pub message_id: i64,

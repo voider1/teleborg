@@ -1,5 +1,6 @@
 use objects::user::User;
 
+/// Represents a Telegram message entity.
 #[derive(Clone, Deserialize, Debug)]
 pub struct MessageEntity {
     #[serde(rename="type")]

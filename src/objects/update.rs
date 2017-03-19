@@ -1,5 +1,6 @@
 use objects::message::Message;
 
+/// Represents an update returned by the Telegram API.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Update {
     pub update_id: i64,

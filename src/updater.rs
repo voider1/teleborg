@@ -8,12 +8,16 @@ use update::Update;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
 
+/// An `Updater` which will request updates from the API.
+///
+/// The `Updater` is the entry point of this library and will start threads
+/// which will poll for updates and dispatch them to the handlers.
 pub struct Updater {
     token: String,
 }
 
 impl Updater {
-    /// Creates a new Updater struct.
+    /// Constructs a new `Updater` and starts the threads.
     pub fn start(token: Option<String>,
                  poll_interval: Option<u64>,
                  timeout: Option<i32>,
@@ -29,6 +33,7 @@ impl Updater {
         updater
     }
 
+    /// Starts the `Updater` and `Dispatcher` threads.
     fn start_polling(&mut self,
                      poll_interval: Option<u64>,
                      timeout: Option<i32>,
@@ -57,6 +62,7 @@ impl Updater {
             .unwrap();
     }
 
+    /// The method which will run in a thread and push the updates to the `Dispatcher`.
     fn start_polling_thread(poll_interval: Option<u64>,
                             timeout: Option<i32>,
                             network_delay: Option<i32>,

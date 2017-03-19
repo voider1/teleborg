@@ -1,3 +1,4 @@
+/// Represents a Telegram user.
 #[derive(Clone, Deserialize, Debug)]
 pub struct User {
     pub id: i64,

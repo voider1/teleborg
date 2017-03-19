@@ -6,6 +6,7 @@ use serde_json;
 
 pub type Result<T> = result::Result<T, Error>;
 
+/// The Errors which may occur when using the Telegram bot API.
 #[derive(Debug)]
 pub enum Error {
     Io(io::Error),
@@ -21,6 +22,7 @@ pub enum Error {
     TelegramError(String),
 }
 
+/// Check if there occured an error when querying the API.
 pub fn check_for_error(json: serde_json::Value) -> Result<serde_json::Value> {
     let status = json.get("ok").ok_or(Error::JsonNotFound)?.as_bool().unwrap();
 
