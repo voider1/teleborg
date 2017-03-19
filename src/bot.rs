@@ -4,8 +4,8 @@ use serde_json::Value;
 
 use error::{Result, check_for_error};
 use error::Error::{RequestFailed, JsonNotFound};
-use objects::update::Update;
-use objects::message::Message;
+use objects::Update;
+use objects::Message;
 use value_extension::ValueExtension;
 
 /// A `Bot` which will do all the API calls.

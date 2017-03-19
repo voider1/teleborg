@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use bot;
 use dispatcher::Dispatcher;
-use update::Update;
+use objects::Update;
 
 const BASE_URL: &'static str = "https://api.telegram.org/bot";
 

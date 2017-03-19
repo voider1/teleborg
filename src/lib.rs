@@ -7,19 +7,22 @@ extern crate serde_json;
 
 pub use reqwest::StatusCode;
 
-pub mod updater;
-pub mod dispatcher;
-pub mod command;
+pub use self::bot::{Bot, ParseMode};
+pub use self::dispatcher::Dispatcher;
+pub use self::updater::Updater;
+pub use self::command::Command;
+pub use objects::*;
+
+mod updater;
+mod dispatcher;
+mod command;
 mod value_extension;
-pub mod objects;
-pub mod bot;
-mod error;
+mod bot;
+mod objects;
+pub mod error;
 
-use command::Command;
-use objects::update;
-
-impl<T: Sync + Send + 'static + FnMut(&bot::Bot, update::Update, Option<Vec<&str>>)> Command for T {
-    fn execute(&mut self, bot: &bot::Bot, update: update::Update, args: Option<Vec<&str>>) {
+impl<T: Sync + Send + 'static + FnMut(&Bot, Update, Option<Vec<&str>>)> Command for T {
+    fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>) {
         self(bot, update, args);
     }
 }

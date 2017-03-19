@@ -1,6 +1,6 @@
 use std::marker::{Send, Sync};
 
-use objects::update;
+use objects::Update;
 use bot;
 
 /// A trait which has to be implemented for all handlers.
@@ -18,7 +18,7 @@ use bot;
 /// ```
 ///
 /// This implements the `Command` trait for all functions which take a reference
-/// to `Bot', an `Update` and an optional `Vec` which contains `&str`.
+/// to `Bot`, an `Update` and an optional `Vec` which contains `&str`.
 pub trait Command: Sync + Send + 'static {
-    fn execute(&mut self, &bot::Bot, update::Update, args: Option<Vec<&str>>);
+    fn execute(&mut self, bot: &bot::Bot, update: Update, args: Option<Vec<&str>>);
 }
