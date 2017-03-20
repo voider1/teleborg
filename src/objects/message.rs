@@ -6,7 +6,7 @@ use objects::message_entity::MessageEntity;
 #[derive(Clone, Deserialize, Debug)]
 pub struct Message {
     pub message_id: i64,
-    pub from_user: Option<User>,
+    pub from: Option<User>,
     pub date: i64,
     pub chat: Chat,
     pub forward_from: Option<User>,
