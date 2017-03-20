@@ -1,8 +1,8 @@
 [package]
 name = "teleborg"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Wesley A. Gahr <wesleyey0408@gmail.com>"]
-documentation = "https://docs.rs/teleborg/0.1.1/teleborg/"
+documentation = "https://docs.rs/teleborg/0.1.2/teleborg/"
 license = "Apache-2.0"
 description = "A Telegram bot API."
 repository = "https://github.com/voider1/teleborg"
