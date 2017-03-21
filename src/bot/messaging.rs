@@ -2,7 +2,7 @@ use serde_json;
 use serde_json::Value;
 
 use bot::parse_mode::{get_parse_mode, ParseMode};
-use error::Error::{JsonNotFound};
+use error::Error::JsonNotFound;
 use error::{Result, check_for_error};
 use objects::{Update, Message};
 use bot::Bot;
