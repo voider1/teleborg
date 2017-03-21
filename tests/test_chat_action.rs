@@ -4,7 +4,6 @@ extern crate reqwest;
 #[cfg(test)]
 mod tests {
     use teleborg::{Bot, ParseMode, ChatAction};
-    use teleborg::objects::{Button, Markup};
     use reqwest::Client;
 
     use std::env;
