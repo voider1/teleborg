@@ -3,7 +3,7 @@ pub use self::message_entity::MessageEntity;
 pub use self::user::User;
 pub use self::message::Message;
 pub use self::update::Update;
-pub use self::inline_keyboard::{Markup, Button};
+pub use self::inline_keyboard::{InlineKeyboardMarkup, InlineKeyboardButton};
 pub use self::call_back_query::CallBackQuery;
 pub use self::contact::Contact;
 
