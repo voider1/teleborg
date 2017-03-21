@@ -7,9 +7,9 @@ pub struct Contact {
 }
 
 impl Contact {
-	pub fn new(phone_number: String, 
-				first_name: String, 
-				last_name: Option<String>, 
+	pub fn new(phone_number: String,
+				first_name: String,
+				last_name: Option<String>,
 				user_id: Option<i64>) -> Contact {
 		Contact {
 			phone_number: phone_number.to_string(),
