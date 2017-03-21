@@ -1,6 +1,8 @@
 pub use self::parse_mode::ParseMode;
+pub use self::chat_action::ChatAction;
 
 mod parse_mode;
+mod chat_action;
 mod messaging;
 
 use reqwest::Client;

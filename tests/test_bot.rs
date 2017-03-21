@@ -36,7 +36,7 @@ mod tests {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
-        let message = bot.send_message(&chat_id, "test", None, None, None, None);
+        let message = bot.send_message(&chat_id, "test", None, None, None, None, None);
         assert!(message.is_ok());
     }
 
@@ -45,7 +45,7 @@ mod tests {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
-        let message = bot.send_message(&chat_id, "test", Some(&ParseMode::Text), None, None, None);
+        let message = bot.send_message(&chat_id, "test", Some(&ParseMode::Text), None, None, None, None);
         assert!(message.is_ok());
     }
 
@@ -57,6 +57,7 @@ mod tests {
         let message = bot.send_message(&chat_id,
                                        "*test*",
                                        Some(&ParseMode::Markdown),
+                                       None,
                                        None,
                                        None,
                                        None);
@@ -71,6 +72,7 @@ mod tests {
         let message = bot.send_message(&chat_id,
                                        "<b>test</b>",
                                        Some(&ParseMode::Html),
+                                       None,
                                        None,
                                        None,
                                        None);

@@ -2,9 +2,10 @@ use serde_json;
 use serde_json::Value;
 
 use bot::parse_mode::{get_parse_mode, ParseMode};
+use bot::chat_action::{ChatAction, get_chat_action};
 use error::Error::{JsonNotFound};
 use error::{Result, check_for_error};
-use objects::{Update, Message};
+use objects::{Update, Message, Markup, Contact};
 use bot::Bot;
 
 impl Bot {
@@ -15,7 +16,8 @@ impl Bot {
                         parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i64>)
+                        reply_to_message_id: Option<&i64>,
+                        reply_markup: Option<&Markup>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
@@ -24,13 +26,21 @@ impl Bot {
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
+        let reply_markup =
+            if reply_markup.is_some() {
+                serde_json::to_string(&reply_markup.unwrap())
+                    .unwrap_or("None".to_string())
+            } else {
+                "".to_string()
+            };
         let path = ["sendMessage"];
         let params = [("chat_id", chat_id),
                       ("text", text),
                       ("parse_mode", parse_mode),
                       ("disable_web_page_preview", disable_web_page_preview),
                       ("disable_notification", disable_notification),
-                      ("reply_to_message_id", reply_to_message_id)];
+                      ("reply_to_message_id", reply_to_message_id),
+                      ("reply_markup", &reply_markup)];
         self.post_message(&path, &params)
     }
 
@@ -39,7 +49,7 @@ impl Bot {
         let message = update.clone().message.unwrap();
         let message_id = message.message_id;
         let chat_id = message.chat.id;
-        self.send_message(&chat_id, text, None, None, None, Some(&message_id))
+        self.send_message(&chat_id, text, None, None, None, Some(&message_id), None)
     }
 
     /// API call which will forward a message.
@@ -59,6 +69,71 @@ impl Bot {
                       ("disable_notification", disable_notification),
                       ("message_id", message_id)];
         self.post_message(&path, &params)
+    }
+
+    /// API call whick will send the requested chat action to your bot.
+    pub fn send_chat_action(&self, chat_id: &i64, action: &ChatAction) -> Result<bool> {
+        let action = get_chat_action(action);
+        println!("{:?}", &action);
+        let path = ["sendChatAction"];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("chat_id", chat_id.to_string()),
+            ("action", action)];
+        let mut data = self.client.post(&url).form(&params).send()?;
+        println!("{:?}", &data);
+
+        let rjson: Value = check_for_error(data.json()?)?;
+        let message_json = rjson.get("result").ok_or(JsonNotFound)?;
+        println!("{:?}", message_json);
+        if message_json.as_bool().unwrap() {
+            Ok(true)
+        } else {
+            Ok(false)
+        }
+    }
+
+    /// API call which will send the given contact.
+    pub fn send_contact(&self,
+                        chat_id: &i64,
+                        contact: &Contact,
+                        disable_notification: Option<&bool>,
+                        reply_to_message_id: Option<&i32>,
+                        reply_markup: Option<&Markup>) -> Result<bool> {
+
+        let chat_id: &str = &chat_id.to_string();
+        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
+        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
+            .unwrap_or("None".to_string());
+        let reply_markup =
+            if reply_markup.is_some() {
+                serde_json::to_string(&reply_markup.unwrap())
+                    .unwrap_or("None".to_string())
+            } else {
+                "".to_string()
+            };
+
+        let path = ["sendContact"];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("chat_id", chat_id),
+            ("phone_number", &contact.phone_number),
+            ("first_name", &contact.first_name),
+            ("last_name", &contact.clone().last_name.unwrap()),
+            ("disable_notification", disable_notification),
+            ("reply_to_message_id", reply_to_message_id),
+            ("reply_markup", &reply_markup)];
+        //println!("{:?}", params);
+        let mut data = self.client.post(&url).form(&params).send()?;
+        println!("{:?}", &data);
+
+        let rjson: Value = check_for_error(data.json()?)?;
+        println!("{:?}", &rjson);
+        let message_json = rjson.get("result").ok_or(JsonNotFound)?;
+        //println!("{:?}", message_json);
+        if message_json.as_bool().unwrap_or(false) {
+            Ok(true)
+        } else {
+            Ok(false)
+        }
     }
 
     /// The actual networking done for sending messages.
