@@ -125,7 +125,7 @@ impl Bot {
     }
 
     /// API call which will forward a message.
-    pub fn forward_messge(&self,
+    pub fn forward_message(&self,
                           update: &Update,
                           chat_id: &i32,
                           disable_notification: Option<&bool>)
