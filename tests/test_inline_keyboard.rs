@@ -4,7 +4,7 @@ extern crate reqwest;
 #[cfg(test)]
 mod tests {
     use teleborg::{Bot, ParseMode};
-    use teleborg::objects::{Button, Markup};
+    use teleborg::objects::{InlineKeyboardButton, InlineKeyboardMarkup};
     use reqwest::Client;
 
     use std::env;
@@ -29,11 +29,11 @@ mod tests {
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
 
-        let mut total = Vec::<Vec<Button>>::new();
-        let mut row = Vec::<Button>::new();
-        row.push(Button::new("TestButton".to_string(), Some("http://github.com/voider1/teleborg".to_string()), None, None, None));
+        let mut total = Vec::<Vec<InlineKeyboardButton>>::new();
+        let mut row = Vec::<InlineKeyboardButton>::new();
+        row.push(InlineKeyboardButton::new("TestButton".to_string(), Some("http://github.com/voider1/teleborg".to_string()), None, None, None));
         total.push(row);
-        let markup = Markup::new(total);
+        let markup = InlineKeyboardMarkup::new(total);
         let message = bot.send_message(&chat_id, "test", None, None, None, None, Some(&markup));
         assert!(message.is_ok());
     }
