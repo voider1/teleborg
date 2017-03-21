@@ -3,6 +3,7 @@ pub use self::chat_action::ChatAction;
 
 mod parse_mode;
 mod chat_action;
+mod media;
 mod messaging;
 
 use reqwest::Client;
