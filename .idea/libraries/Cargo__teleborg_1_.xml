@@ -1,0 +1,66 @@
+<component name="libraryTable">
+  <library name="Cargo &lt;teleborg-1&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-0.9.11" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_derive-0.9.11" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/dtoa-0.4.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/traitobject-0.1.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/core-foundation-sys-0.2.3" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.3.7" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/idna-0.1.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/tempdir-0.3.5" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/foreign-types-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/gcc-0.3.45" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.2.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/rustc-serialize-0.3.23" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/winapi-build-0.1.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/advapi32-sys-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.21" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/redox_syscall-0.1.17" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-0.9.9" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/matches-0.1.4" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/rand-0.3.15" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/security-framework-0.1.12" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/mime-0.2.3" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/language-tags-0.2.2" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/gdi32-sys-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/pkg-config-0.3.9" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/url-1.4.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/security-framework-sys-0.1.12" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/schannel-0.1.4" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/bitflags-0.7.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/itoa-0.3.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/synom-0.11.3" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-bidi-0.2.5" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_codegen_internals-0.14.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/kernel32-sys-0.2.2" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/typeable-0.1.2" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/unicase-1.4.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.4.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.5" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-normalization-0.1.4" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/time-0.1.36" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-0.3.15" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/crypt32-sys-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.9" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/user32-sys-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/lazy_static-0.2.4" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/antidote-1.0.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/native-tls-0.1.1" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/syn-0.11.9" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/num-traits-0.1.37" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/core-foundation-0.2.3" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.0.4" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/semver-0.1.20" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/secur32-sys-0.2.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_urlencoded-0.4.2" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/rustc_version-0.1.7" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/num_cpus-1.3.0" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.9" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/winapi-0.2.8" />
+      <root url="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-native-tls-0.2.2" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
