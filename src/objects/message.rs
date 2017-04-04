@@ -1,6 +1,7 @@
 use objects::User;
 use objects::Chat;
 use objects::MessageEntity;
+use objects::Contact;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -25,7 +26,7 @@ pub struct Message {
     pub video: Option<String>,
     pub voice: Option<String>,
     pub caption: Option<String>,
-    pub contact: Option<String>,
+    pub contact: Option<Contact>,
     pub location: Option<String>,
     pub venue: Option<String>,
     pub new_chat_member: Option<User>,
