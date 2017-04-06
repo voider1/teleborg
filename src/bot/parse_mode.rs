@@ -14,4 +14,3 @@ pub fn get_parse_mode(parse_mode: &ParseMode) -> String {
     }
     .to_string()
 }
-
