@@ -11,8 +11,9 @@ use serde_json::Value;
 use bot::chat_action::{get_chat_action};
 use bot::parse_mode::{get_parse_mode};
 use error::{Result, check_for_error};
-use error::Error::{RequestFailed, JsonNotFound};
+use error::Error::{JsonNotFound, RequestFailed};
 use objects::{Update, Message, Contact, InlineKeyboardMarkup};
+
 use value_extension::ValueExtension;
 
 /// A `Bot` which will do all the API calls.
@@ -102,6 +103,7 @@ impl Bot {
                         disable_notification: Option<&bool>,
                         reply_to_message_id: Option<&i64>,
                         reply_markup: Option<&InlineKeyboardMarkup>)
+                        reply_to_message_id: Option<&i64>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
@@ -111,6 +113,7 @@ impl Bot {
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
         let reply_markup = &reply_markup.map(|r| serde_json::to_string(r).unwrap_or("".to_string())).unwrap_or("".to_string());
+                          
         let path = ["sendMessage"];
         let params = [("chat_id", chat_id),
                       ("text", text),
@@ -119,6 +122,7 @@ impl Bot {
                       ("disable_notification", disable_notification),
                       ("reply_to_message_id", reply_to_message_id),
                       ("reply_markup", reply_markup)];
+                      ("reply_to_message_id", reply_to_message_id)];
         self.post_message(&path, &params)
     }
 
@@ -134,6 +138,13 @@ impl Bot {
     pub fn forward_messge(&self,
                           update: &Update,
                           chat_id: &i64,
+        self.send_message(&chat_id, text, None, None, None, Some(&message_id))
+    }
+
+    /// API call which will forward a message.
+    pub fn forward_message(&self,
+                          update: &Update,
+                          chat_id: &i32,
                           disable_notification: Option<&bool>)
                           -> Result<Message> {
         let message = update.clone().message.unwrap();
@@ -156,7 +167,6 @@ impl Bot {
         let path = ["sendChatAction"];
         let params = [("chat_id", chat_id),
                       ("action", action)];
-
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
@@ -172,7 +182,6 @@ impl Bot {
                         disable_notification: Option<&bool>,
                         reply_to_message_id: Option<&i64>,
                         reply_markup: Option<&InlineKeyboardMarkup>) -> Result<Message> {
-
         let chat_id: &str = &chat_id.to_string();
         let phone_number = &contact.phone_number;
         let first_name = &contact.first_name;
@@ -181,7 +190,6 @@ impl Bot {
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
         let reply_markup = &reply_markup.and_then(|r| serde_json::to_string(r).ok()).unwrap_or("".to_string());
-
         let path = ["sendContact"];
         let params = [("chat_id", chat_id),
                       ("phone_number", phone_number),
