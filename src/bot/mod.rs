@@ -155,7 +155,7 @@ impl Bot {
         let action = &get_chat_action(action);
         let path = ["sendChatAction"];
         let params = [("chat_id", chat_id),
-                                 ("action", action)];
+                      ("action", action)];
 
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
@@ -195,9 +195,7 @@ impl Bot {
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let message_json = rjson.get("result").ok_or(JsonNotFound)?;
-        println!("{:?}", message_json);
         let message: Message = serde_json::from_value(message_json.clone())?;
-        println!("{:?}", message);
         Ok(message)
     }
 }
