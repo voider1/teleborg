@@ -161,8 +161,8 @@ impl Bot {
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let result_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let result: bool = serde_json::from_value(result_json.clone())?;
-        Ok(result)
+        let chat_action_succeeded: bool = serde_json::from_value(result_json.clone())?;
+        Ok(chat_action_succeeded)
     }
 
     /// API call which will send the given contact.
