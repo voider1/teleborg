@@ -160,7 +160,8 @@ impl Bot {
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
-        let result = rjson.get("result").unwrap().as_bool().unwrap();
+        let result_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let result: bool = serde_json::from_value(result_json.clone())?;
         Ok(result)
     }
 
@@ -169,20 +170,23 @@ impl Bot {
                         chat_id: &i64,
                         contact: &Contact,
                         disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i32>,
+                        reply_to_message_id: Option<&i64>,
                         reply_markup: Option<&InlineKeyboardMarkup>) -> Result<Message> {
 
         let chat_id: &str = &chat_id.to_string();
+        let phone_number = &contact.phone_number;
+        let first_name = &contact.first_name;
+        let last_name = &contact.clone().last_name.unwrap();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string())
             .unwrap_or("None".to_string());
-        let reply_markup = &reply_markup.map(|r| serde_json::to_string(r).unwrap_or("".to_string())).unwrap_or("".to_string());
+        let reply_markup = &reply_markup.and_then(|r| serde_json::to_string(r).ok()).unwrap_or("".to_string());
 
         let path = ["sendContact"];
         let params = [("chat_id", chat_id),
-                      ("phone_number", &contact.phone_number),
-                      ("first_name", &contact.first_name),
-                      ("last_name", &contact.clone().last_name.unwrap()),
+                      ("phone_number", phone_number),
+                      ("first_name", first_name),
+                      ("last_name", last_name),
                       ("disable_notification", disable_notification),
                       ("reply_to_message_id", reply_to_message_id),
                       ("reply_markup", reply_markup)];
