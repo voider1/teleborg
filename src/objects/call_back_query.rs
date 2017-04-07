@@ -1,6 +1,7 @@
 use objects::message::Message;
 use objects::user::User;
 
+/// represents an incoming callback query from a callback button in an inline keyboard.
 #[derive(Clone, Deserialize, Debug)]
 pub struct CallBackQuery {
     pub id: String,

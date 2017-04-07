@@ -155,7 +155,7 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
-    /// API call which will send the requested chat action to your bot.
+    /// API call which will show the given chat action to the users.
     pub fn send_chat_action(&self, chat_id: &i64, action: &ChatAction) -> Result<bool> {
         let chat_id: &str = &chat_id.to_string();
         let action = &get_chat_action(action);
