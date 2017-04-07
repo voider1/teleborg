@@ -1,4 +1,4 @@
-/// The ChatActions to send.
+/// Represents each chat action.
 pub enum ChatAction {
     Typing,
     UploadPhoto,
