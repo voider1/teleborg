@@ -92,8 +92,8 @@ mod tests {
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
 
-        let message = bot.send_chat_action(&chat_id, &ChatAction::FindLocation);
-        assert!(message.is_ok());
+        let success = bot.send_chat_action(&chat_id, &ChatAction::FindLocation);
+        assert!(success.is_ok());
     }
 
     #[test]
@@ -102,15 +102,15 @@ mod tests {
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
 
-        let mut total = Vec::<Vec<InlineKeyboardButton>>::new();
+        let mut buttons = Vec::<Vec<InlineKeyboardButton>>::new();
         let mut row = Vec::<InlineKeyboardButton>::new();
         row.push(InlineKeyboardButton::new("TestButton".to_string(),
                                            Some("http://github.com/voider1/teleborg".to_string()),
                                            None,
                                            None,
                                            None));
-        total.push(row);
-        let markup = InlineKeyboardMarkup::new(total);
+        buttons.push(row);
+        let markup = InlineKeyboardMarkup::new(buttons);
         let message = bot.send_message(&chat_id, "test", None, None, None, None, Some(&markup));
         assert!(message.is_ok());
     }
