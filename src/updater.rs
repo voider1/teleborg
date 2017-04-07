@@ -24,8 +24,10 @@ impl Updater {
                  network_delay: Option<i32>,
                  dispatcher: Dispatcher)
                  -> Updater {
-        let token = token.or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
-            .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
+        let token =
+            token
+                .or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
+                .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
 
         let mut updater = Updater { token: token };
 
@@ -47,16 +49,18 @@ impl Updater {
         // Spawn threads
         thread::Builder::new()
             .name("dispatcher".to_string())
-            .spawn(move || {
-                dispatcher.start_handling(rx, dispatcher_bot);
-            })
+            .spawn(move || { dispatcher.start_handling(rx, dispatcher_bot); })
             .unwrap();
 
         thread::Builder::new()
             .name("updater".to_string())
             .spawn(move || {
-                Self::start_polling_thread(poll_interval, timeout, network_delay, updater_bot, tx);
-            })
+                       Self::start_polling_thread(poll_interval,
+                                                  timeout,
+                                                  network_delay,
+                                                  updater_bot,
+                                                  tx);
+                   })
             .unwrap()
             .join()
             .unwrap();

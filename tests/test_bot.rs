@@ -46,7 +46,13 @@ mod tests {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
-        let message = bot.send_message(&chat_id, "test", Some(&ParseMode::Text), None, None, None, None);
+        let message = bot.send_message(&chat_id,
+                                       "test",
+                                       Some(&ParseMode::Text),
+                                       None,
+                                       None,
+                                       None,
+                                       None);
         assert!(message.is_ok());
     }
 
@@ -119,7 +125,7 @@ mod tests {
             phone_number: "0612345678".to_string(),
             first_name: "Voider".to_string(),
             last_name: Some("1".to_string()),
-            user_id: Some(666)
+            user_id: Some(666),
         };
         let message = bot.send_contact(&chat_id, &contact, None, None, None);
         assert!(message.is_ok());

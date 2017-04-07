@@ -11,6 +11,6 @@ pub fn get_parse_mode(parse_mode: &ParseMode) -> String {
             &ParseMode::Text => "None",
             &ParseMode::Markdown => "Markdown",
             &ParseMode::Html => "HTML",
-    }
-    .to_string()
+        }
+        .to_string()
 }
