@@ -1,3 +1,4 @@
+/// represents a phone contact.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Contact {
     pub phone_number: String,
