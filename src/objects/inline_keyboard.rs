@@ -1,12 +1,12 @@
 use std::option::Option;
 
-/// represents an inline keyboard that appears right next to the message it belongs to.
+/// Represents an inline keyboard that appears right next to the message it belongs to.
 #[derive(Serialize, Debug)]
 pub struct InlineKeyboardMarkup {
     pub inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
 }
 
-/// represents one button of an inline keyboard. You must use exactly one of the optional fields.
+/// Represents one button of an `InlineKeyboardMarkup` You must use exactly one of the optional fields.
 #[derive(Serialize, Debug)]
 pub struct InlineKeyboardButton {
     text: String,
