@@ -6,7 +6,7 @@ pub struct InlineKeyboardMarkup {
     pub inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
 }
 
-/// Represents one button of an `InlineKeyboardMarkup` You must use exactly one of the optional fields.
+/// Represents one button of an `InlineKeyboardMarkup`, you must use exactly one of the optional fields.
 #[derive(Serialize, Debug)]
 pub struct InlineKeyboardButton {
     text: String,
