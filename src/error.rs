@@ -24,11 +24,17 @@ pub enum Error {
 
 /// Check if there occured an error when querying the API.
 pub fn check_for_error(json: serde_json::Value) -> Result<serde_json::Value> {
-    let status = json.get("ok").ok_or(Error::JsonNotFound)?.as_bool().unwrap();
+    let status = json.get("ok")
+        .ok_or(Error::JsonNotFound)?
+        .as_bool()
+        .unwrap();
 
     if !status {
-        let description =
-            json.get("description").ok_or(Error::JsonNotFound)?.as_str().unwrap().to_string();
+        let description = json.get("description")
+            .ok_or(Error::JsonNotFound)?
+            .as_str()
+            .unwrap()
+            .to_string();
         Err(Error::TelegramError(description))
     } else {
         Ok(json)

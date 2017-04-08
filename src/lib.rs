@@ -38,7 +38,7 @@ extern crate serde_json;
 
 pub use reqwest::StatusCode;
 
-pub use self::bot::{Bot, ParseMode};
+pub use self::bot::{Bot, ParseMode, ChatAction};
 pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
 pub use self::command::Command;

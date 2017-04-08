@@ -25,7 +25,8 @@ impl Dispatcher {
 
     /// Add a function which implements the `Command` trait to the `Dispatcher.command_handlers`.
     pub fn add_command_handler<C: Command>(&mut self, command_name: &str, command: C, args: bool) {
-        self.command_handlers.insert(command_name.to_string(), (Box::new(command), args,));
+        self.command_handlers
+            .insert(command_name.to_string(), (Box::new(command), args));
     }
 
     /// Add a function which implements the `Command` trait to the `Dispatcher.message_handlers`.
