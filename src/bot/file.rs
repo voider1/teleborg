@@ -1,5 +1,5 @@
 pub enum File {
-    FileId(&str),
-    Url(&str),
-    File(&str),
+    FileId(String),
+    Url(String),
+    File(String),
 }
