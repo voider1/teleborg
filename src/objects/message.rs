@@ -1,7 +1,7 @@
-use objects::User;
-use objects::Chat;
-use objects::MessageEntity;
-use objects::Contact;
+use super::User;
+use super::Chat;
+use super::MessageEntity;
+use super::Contact;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]

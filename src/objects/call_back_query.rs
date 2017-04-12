@@ -1,5 +1,5 @@
-use objects::message::Message;
-use objects::user::User;
+use super::Message;
+use super::User;
 
 /// Represents an incoming callback query from a `InlineKeyboardButton` in an `InlineKeyboardMarkup`.
 #[derive(Clone, Deserialize, Debug)]

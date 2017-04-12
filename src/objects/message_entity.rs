@@ -1,4 +1,4 @@
-use objects::User;
+use super::User;
 
 /// Represents a Telegram message entity.
 #[derive(Clone, Deserialize, Debug)]
