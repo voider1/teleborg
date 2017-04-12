@@ -55,6 +55,7 @@ mod marker;
 pub mod objects;
 pub mod error;
 
+/// Pass this to a method which requires markup where you do not want markup.
 pub const NO_MARKUP: Option<objects::NullMarkup> = None;
 
 impl<T: Sync + Send + 'static + FnMut(&Bot, objects::Update, Option<Vec<&str>>)> Command for T {
