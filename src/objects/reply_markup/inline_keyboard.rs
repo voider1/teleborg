@@ -1,4 +1,5 @@
 use super::InlineKeyboardButton;
+use marker::ReplyMarkup;
 
 /// Represents an inline keyboard that appears right next to the message it belongs to.
 #[derive(Serialize, Debug)]
@@ -12,3 +13,5 @@ impl InlineKeyboardMarkup {
         InlineKeyboardMarkup { inline_keyboard: inline_keyboard }
     }
 }
+
+impl ReplyMarkup for InlineKeyboardMarkup {}

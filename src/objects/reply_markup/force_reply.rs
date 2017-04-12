@@ -1,7 +1,10 @@
+use marker::ReplyMarkup;
+
 /// Represents ForceReply from the Telegram bot API.
 #[derive(Serialize, Debug)]
 pub struct ForceReply {
     force_reply: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
     selective: Option<bool>,
 }
 
@@ -14,3 +17,5 @@ impl ForceReply {
         }
     }
 }
+
+impl ReplyMarkup for ForceReply {}
