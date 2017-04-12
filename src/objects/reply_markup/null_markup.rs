@@ -1,5 +1,6 @@
 use marker::ReplyMarkup;
 
+/// Empty Markup placeholder.
 #[derive(Serialize, Debug)]
 pub struct NullMarkup;
 
