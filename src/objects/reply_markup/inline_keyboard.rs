@@ -1,4 +1,4 @@
-use super::inline_keyboard_button::InlineKeyboardButton;
+use super::InlineKeyboardButton;
 
 /// Represents an inline keyboard that appears right next to the message it belongs to.
 #[derive(Serialize, Debug)]
