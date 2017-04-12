@@ -15,7 +15,7 @@ pub use self::location::Location;
 pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
-pub use self::reply_markup::{ForceReply, InlineKeyboardMarkup, InlineKeyboardButton};
+pub use self::reply_markup::{InlineKeyboardMarkup, InlineKeyboardButton, ForceReply};
 
 mod chat;
 mod message_entity;
