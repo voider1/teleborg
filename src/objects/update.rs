@@ -1,4 +1,4 @@
-use objects::Message;
+use super::Message;
 
 /// Represents an update returned by the Telegram API.
 #[derive(Clone, Deserialize, Debug)]
