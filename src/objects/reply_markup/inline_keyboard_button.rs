@@ -1,11 +1,3 @@
-use std::option::Option;
-
-/// Represents an inline keyboard that appears right next to the message it belongs to.
-#[derive(Serialize, Debug)]
-pub struct InlineKeyboardMarkup {
-    pub inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
-}
-
 /// Represents one button of an `InlineKeyboardMarkup`, you must use exactly one of the optional fields.
 #[derive(Serialize, Debug)]
 pub struct InlineKeyboardButton {
@@ -14,13 +6,6 @@ pub struct InlineKeyboardButton {
     callback_data: Option<String>,
     switch_inline_query: Option<String>,
     switch_inline_query_current_chat: Option<String>,
-}
-
-impl InlineKeyboardMarkup {
-    /// Constructs a new `InlineKeyboardMarkup`.
-    pub fn new(inline_keyboard: Vec<Vec<InlineKeyboardButton>>) -> InlineKeyboardMarkup {
-        InlineKeyboardMarkup { inline_keyboard: inline_keyboard }
-    }
 }
 
 impl InlineKeyboardButton {
