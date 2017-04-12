@@ -111,9 +111,7 @@ mod tests {
     fn test_force_reply() {
         let (bot, chat_id) = setup();
         let force_reply = ForceReply::new(true, None);
-        println!("{:?}", force_reply);
         let message = bot.send_message(&chat_id, "test force reply", None, None, None, None, Some(force_reply));
-        println!("{:?}", message);
         assert!(message.is_ok());
     }
 
