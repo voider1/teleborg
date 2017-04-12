@@ -6,7 +6,7 @@ pub use self::update::Update;
 pub use self::call_back_query::CallBackQuery;
 pub use self::contact::Contact;
 pub use self::reply_markup::ForceReply;
-pub use self::reply_markup::{InlineKeyboardMarkup, InlineKeyboardButton};
+pub use self::reply_markup::{InlineKeyboardMarkup, InlineKeyboardButton, ForceReply};
 
 mod chat;
 mod message_entity;
