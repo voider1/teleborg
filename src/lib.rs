@@ -32,6 +32,7 @@
 use std::marker::{Sync, Send};
 
 extern crate reqwest;
+extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
@@ -48,8 +49,11 @@ mod dispatcher;
 mod command;
 mod value_extension;
 mod bot;
+mod marker;
 pub mod objects;
 pub mod error;
+
+pub const NO_MARKUP: Option<objects::NullMarkup> = None;
 
 impl<T: Sync + Send + 'static + FnMut(&Bot, objects::Update, Option<Vec<&str>>)> Command for T {
     fn execute(&mut self, bot: &Bot, update: objects::Update, args: Option<Vec<&str>>) {

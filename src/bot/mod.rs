@@ -3,15 +3,18 @@ pub use self::chat_action::ChatAction;
 
 mod parse_mode;
 mod chat_action;
+mod file;
 
 use reqwest::Client;
 use serde_json;
 use serde_json::Value;
 
 use bot::chat_action::get_chat_action;
+use bot::file::File;
 use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
 use error::Error::{JsonNotFound, RequestFailed};
+use marker::ReplyMarkup;
 use objects::{Update, Message, Contact, InlineKeyboardMarkup};
 
 use value_extension::ValueExtension;
@@ -95,14 +98,14 @@ impl Bot {
     }
 
     /// API call which will send a message to a chat which your bot participates in.
-    pub fn send_message(&self,
+    pub fn send_message<M: ReplyMarkup>(&self,
                         chat_id: &i64,
                         text: &str,
                         parse_mode: Option<&ParseMode>,
                         disable_web_page_preview: Option<&bool>,
                         disable_notification: Option<&bool>,
                         reply_to_message_id: Option<&i64>,
-                        reply_markup: Option<&InlineKeyboardMarkup>)
+                        reply_markup: Option<M>)
                         -> Result<Message> {
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
@@ -113,8 +116,8 @@ impl Bot {
                                              .map(|i| i.to_string())
                                              .unwrap_or("None".to_string());
         let reply_markup =
-            &reply_markup
-                 .map(|r| serde_json::to_string(r).unwrap_or("".to_string()))
+            &Box::new(reply_markup)
+                 .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
                  .unwrap_or("".to_string());
 
         let path = ["sendMessage"];
@@ -133,13 +136,13 @@ impl Bot {
         let message = update.clone().message.unwrap();
         let message_id = message.message_id;
         let chat_id = message.chat.id;
-        self.send_message(&chat_id, text, None, None, None, Some(&message_id), None)
+        self.send_message(&chat_id, text, None, None, None, Some(&message_id), ::NO_MARKUP)
     }
 
     /// API call which will forward a message.
     pub fn forward_message(&self,
                            update: &Update,
-                           chat_id: &i32,
+                           chat_id: &i64,
                            disable_notification: Option<&bool>)
                            -> Result<Message> {
         let message = update.clone().message.unwrap();
@@ -153,6 +156,18 @@ impl Bot {
                       ("disable_notification", disable_notification),
                       ("message_id", message_id)];
         self.post_message(&path, &params)
+    }
+
+    /// API call which will send a photo.
+    pub fn send_photo(&self,
+                      chat_id: &i64,
+                      photo: File,
+                      caption: Option<&str>,
+                      disable_notification: Option<&bool>,
+                      reply_to_message_id: Option<i64>,
+                      reply_markup: Option<&InlineKeyboardMarkup>)
+                      -> Message {
+        unimplemented!()
     }
 
     /// API call which will show the given chat action to the users.

@@ -1,4 +1,5 @@
 use super::InlineKeyboardButton;
+use marker::ReplyMarkup;
 
 /// Represents a reply keyboard markup.
 #[derive(Serialize, Debug)]
@@ -24,3 +25,5 @@ impl ReplyKeyboardMarkup {
         }
     }
 }
+
+impl ReplyMarkup for ReplyKeyboardMarkup {}
