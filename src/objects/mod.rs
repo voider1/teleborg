@@ -8,6 +8,7 @@ pub use self::call_back_query::CallBackQuery;
 pub use self::contact::Contact;
 pub use self::photo_size::PhotoSize;
 pub use self::document::Document;
+pub use self::audio::Audio;
 
 mod chat;
 mod message_entity;
@@ -19,3 +20,4 @@ mod call_back_query;
 mod contact;
 mod photo_size;
 mod document;
+mod audio;

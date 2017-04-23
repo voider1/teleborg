@@ -3,6 +3,7 @@ use objects::Chat;
 use objects::MessageEntity;
 use objects::Contact;
 use objects::Document;
+use objects::Audio;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,7 +20,7 @@ pub struct Message {
     pub edit_date: Option<i64>,
     pub text: Option<String>,
     pub entities: Option<Vec<MessageEntity>>,
-    pub audio: Option<String>,
+    pub audio: Option<Audio>,
     pub document: Option<Document>,
     pub game: Option<String>,
     pub photo: Option<String>,
