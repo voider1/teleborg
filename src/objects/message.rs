@@ -10,6 +10,7 @@ use objects::PhotoSize;
 use objects::Voice;
 use objects::Location;
 use objects::Venue;
+use objects::Game;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -28,7 +29,7 @@ pub struct Message {
     pub entities: Option<Vec<MessageEntity>>,
     pub audio: Option<Audio>,
     pub document: Option<Document>,
-    pub game: Option<String>,
+    pub game: Option<Game>,
     pub photo: Option<Vec<PhotoSize>>,
     pub sticker: Option<Sticker>,
     pub video: Option<Video>,
