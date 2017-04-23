@@ -76,16 +76,14 @@ impl Bot {
         let network_delay = network_delay.unwrap_or(0.0);
         let path = ["getUpdates"];
         let path_url = ::construct_api_url(&self.bot_url, &path);
-        let params = [("offset", offset),
-                     ("limit", limit),
-                     ("timeout", timeout)];
-        /*
-        let url = format!("{}?offset={}&limit={}&timeout={}",
+        let url = format!("{}?offset={}&limit={}&timeout={}&network_delay={}",
                           path_url,
                           offset,
                           limit,
-                          timeout);*/
-        let mut data = self.client.get(&path_url).form(&params).send()?;
+                          timeout,
+                          network_delay);
+        println!("{}", url);
+        let mut data = self.client.get(&url).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.get("result");
 
