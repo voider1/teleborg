@@ -9,6 +9,7 @@ pub use self::contact::Contact;
 pub use self::photo_size::PhotoSize;
 pub use self::document::Document;
 pub use self::audio::Audio;
+pub use self::sticker::Sticker;
 
 mod chat;
 mod message_entity;
@@ -21,3 +22,4 @@ mod contact;
 mod photo_size;
 mod document;
 mod audio;
+mod sticker;
