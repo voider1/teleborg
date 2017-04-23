@@ -1,5 +1,5 @@
 /// Represents a PhotoSize object
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct PhotoSize {
     pub file_id: String,
     pub file_path: Option<String>,

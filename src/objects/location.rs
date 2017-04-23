@@ -1,5 +1,5 @@
 /// Represents a location
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct Location {
     pub longitude: f64,
     pub latitude: f64,

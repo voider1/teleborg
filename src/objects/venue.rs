@@ -1,7 +1,7 @@
 use objects::Location;
 
 /// Represents a venue
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct Venue {
     pub location: Location,
     pub title: String,
