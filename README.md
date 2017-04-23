@@ -7,7 +7,7 @@ How to use the project
 Add this to your `Cargo.toml`
 ``` toml
 [dependencies]
-teleborg = "0.1.3"
+teleborg = "0.1.4"
 ```
 It's on crates.io now, check it out https://crates.io/crates/teleborg.
 Note that this project only works on Rust 1.16 or above.
