@@ -11,6 +11,7 @@ pub use self::document::Document;
 pub use self::audio::Audio;
 pub use self::sticker::Sticker;
 pub use self::video::Video;
+pub use self::voice::Voice;
 
 mod chat;
 mod message_entity;
@@ -25,3 +26,4 @@ mod document;
 mod audio;
 mod sticker;
 mod video;
+mod voice;

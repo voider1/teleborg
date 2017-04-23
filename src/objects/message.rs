@@ -7,6 +7,7 @@ use objects::Audio;
 use objects::Sticker;
 use objects::Video;
 use objects::PhotoSize;
+use objects::Voice;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -29,7 +30,7 @@ pub struct Message {
     pub photo: Option<Vec<PhotoSize>>,
     pub sticker: Option<Sticker>,
     pub video: Option<Video>,
-    pub voice: Option<String>,
+    pub voice: Option<Voice>,
     pub caption: Option<String>,
     pub contact: Option<Contact>,
     pub location: Option<String>,
