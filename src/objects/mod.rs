@@ -7,6 +7,7 @@ pub use self::inline_keyboard::{InlineKeyboardMarkup, InlineKeyboardButton};
 pub use self::call_back_query::CallBackQuery;
 pub use self::contact::Contact;
 pub use self::photo_size::PhotoSize;
+pub use self::document::Document;
 
 mod chat;
 mod message_entity;
@@ -17,3 +18,4 @@ mod inline_keyboard;
 mod call_back_query;
 mod contact;
 mod photo_size;
+mod document;
