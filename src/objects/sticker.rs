@@ -1,7 +1,7 @@
 use objects::PhotoSize;
 
 /// Represents a sticker
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug)]
 pub struct Sticker {
     pub file_id: String,
     pub width: i64,
