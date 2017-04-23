@@ -2,7 +2,7 @@ use objects::PhotoSize;
 
 /// Represents a PhotoSize object
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct PhotoSize {
+pub struct Animation {
     pub file_id: String,
     pub thump: Option<PhotoSize>,
     pub file_name: Option<String>,

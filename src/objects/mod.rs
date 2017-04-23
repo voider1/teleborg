@@ -14,6 +14,7 @@ pub use self::video::Video;
 pub use self::voice::Voice;
 pub use self::location::Location;
 pub use self::venue::Venue;
+pub use self::animation::Animation;
 
 mod chat;
 mod message_entity;
@@ -31,3 +32,4 @@ mod video;
 mod voice;
 mod location;
 mod venue;
+mod animation;
