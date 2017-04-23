@@ -7,7 +7,7 @@ How to use the project
 Add this to your `Cargo.toml`
 ``` toml
 [dependencies]
-teleborg = "0.1.2"
+teleborg = "0.1.3"
 ```
 It's on crates.io now, check it out https://crates.io/crates/teleborg.
 Note that this project only works on Rust 1.16 or above.
@@ -39,6 +39,5 @@ fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
 }
 ```
 
-Currently I only support send_message, reply_to_message and forward_message. More is to come.
-I recommend not putting your token in the code, if you pass None as teleborg::updater::Updater::Start()'s first argument it'll automatically search for a environment variable called "TELEGRAM_BOT_TOKEN".
+I recommend not putting your token in the code, if you pass None as teleborg::Updater::start()'s first argument it'll automatically search for a environment variable called "TELEGRAM_BOT_TOKEN".
 Just make sure you set the environment variable equal to your bot token and all is good.
