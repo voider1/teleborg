@@ -13,6 +13,7 @@ pub use self::sticker::Sticker;
 pub use self::video::Video;
 pub use self::voice::Voice;
 pub use self::location::Location;
+pub use self::venue::Venue;
 
 mod chat;
 mod message_entity;
@@ -29,3 +30,4 @@ mod sticker;
 mod video;
 mod voice;
 mod location;
+mod venue;

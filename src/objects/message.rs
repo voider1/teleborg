@@ -9,6 +9,7 @@ use objects::Video;
 use objects::PhotoSize;
 use objects::Voice;
 use objects::Location;
+use objects::Venue;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -35,7 +36,7 @@ pub struct Message {
     pub caption: Option<String>,
     pub contact: Option<Contact>,
     pub location: Option<Location>,
-    pub venue: Option<String>,
+    pub venue: Option<Venue>,
     pub new_chat_member: Option<User>,
     pub left_chat_member: Option<User>,
     pub new_chat_title: Option<String>,
