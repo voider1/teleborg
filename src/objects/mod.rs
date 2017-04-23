@@ -10,6 +10,7 @@ pub use self::photo_size::PhotoSize;
 pub use self::document::Document;
 pub use self::audio::Audio;
 pub use self::sticker::Sticker;
+pub use self::video::Video;
 
 mod chat;
 mod message_entity;
@@ -23,3 +24,4 @@ mod photo_size;
 mod document;
 mod audio;
 mod sticker;
+mod video;

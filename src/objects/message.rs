@@ -5,6 +5,7 @@ use objects::Contact;
 use objects::Document;
 use objects::Audio;
 use objects::Sticker;
+use objects::Video;
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -26,7 +27,7 @@ pub struct Message {
     pub game: Option<String>,
     pub photo: Option<String>,
     pub sticker: Option<Sticker>,
-    pub video: Option<String>,
+    pub video: Option<Video>,
     pub voice: Option<String>,
     pub caption: Option<String>,
     pub contact: Option<Contact>,
