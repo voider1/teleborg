@@ -82,7 +82,6 @@ impl Bot {
                           limit,
                           timeout,
                           network_delay);
-        println!("{}", url);
         let mut data = self.client.get(&url).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.get("result");
