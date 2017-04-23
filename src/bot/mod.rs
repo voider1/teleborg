@@ -69,20 +69,23 @@ impl Bot {
                        offset: i32,
                        limit: Option<i32>,
                        timeout: Option<i32>,
-                       network_delay: Option<i32>)
+                       network_delay: Option<f32>)
                        -> Result<Option<Vec<Update>>> {
         let limit = limit.unwrap_or(100);
         let timeout = timeout.unwrap_or(0);
-        // Use network_delay when it gets implemented
-        let network_delay = network_delay.unwrap_or(5);
+        let network_delay = network_delay.unwrap_or(0.0);
         let path = ["getUpdates"];
         let path_url = ::construct_api_url(&self.bot_url, &path);
+        let params = [("offset", offset),
+                     ("limit", limit),
+                     ("timeout", timeout)];
+        /*
         let url = format!("{}?offset={}&limit={}&timeout={}",
                           path_url,
                           offset,
                           limit,
-                          timeout);
-        let mut data = self.client.get(&url).send()?;
+                          timeout);*/
+        let mut data = self.client.get(&path_url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.get("result");
 

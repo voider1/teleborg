@@ -21,7 +21,7 @@ impl Updater {
     pub fn start(token: Option<String>,
                  poll_interval: Option<u64>,
                  timeout: Option<i32>,
-                 network_delay: Option<i32>,
+                 network_delay: Option<f32>,
                  dispatcher: Dispatcher)
                  -> Updater {
         let token =
@@ -39,8 +39,13 @@ impl Updater {
     fn start_polling(&mut self,
                      poll_interval: Option<u64>,
                      timeout: Option<i32>,
-                     network_delay: Option<i32>,
+                     network_delay: Option<f32>,
                      mut dispatcher: Dispatcher) {
+        // Making sure there are default values
+        let poll_interval = poll_interval.or(Some(0));
+        let timeout = timeout.or(Some(10));
+        let network_delay = network_delay.or(Some(0.0));
+
         let (tx, rx) = mpsc::channel();
         let bot = Arc::new(bot::Bot::new([BASE_URL, &self.token].concat()).unwrap());
         let updater_bot = bot.clone();
@@ -69,7 +74,7 @@ impl Updater {
     /// The method which will run in a thread and push the updates to the `Dispatcher`.
     fn start_polling_thread(poll_interval: Option<u64>,
                             timeout: Option<i32>,
-                            network_delay: Option<i32>,
+                            network_delay: Option<f32>,
                             bot: Arc<bot::Bot>,
                             tx: mpsc::Sender<Update>) {
         let poll_interval = time::Duration::from_secs(poll_interval.unwrap_or(0));
