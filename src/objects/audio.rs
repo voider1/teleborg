@@ -1,4 +1,4 @@
-/// Represents an audio file
+/// Represents an audio file.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Audio {
     pub file_id: String,
