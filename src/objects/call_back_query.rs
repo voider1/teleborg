@@ -4,11 +4,11 @@ use objects::user::User;
 /// Represents an incoming callback query from a `InlineKeyboardButton` in an `InlineKeyboardMarkup`.
 #[derive(Clone, Deserialize, Debug)]
 pub struct CallBackQuery {
-	id: String,
-	from: User,
-	message: Option<Message>,
-	inline_message_id: Option<String>,
-	chat_instance: String,
-	data: Option<String>,
-	game_short_name: Option<String>,
+    pub id: String,
+    pub from: User,
+    pub message: Option<Message>,
+    pub inline_message_id: Option<String>,
+    pub chat_instance: String,
+    pub data: Option<String>,
+    pub game_short_name: Option<String>,
 }

@@ -3,7 +3,8 @@ extern crate reqwest;
 
 #[cfg(test)]
 mod tests {
-    use teleborg::{Bot, ParseMode};
+    use teleborg::{Bot, ParseMode, ChatAction};
+    use teleborg::objects::{Contact, InlineKeyboardButton, InlineKeyboardMarkup};
     use reqwest::Client;
 
     use std::env;
@@ -45,7 +46,13 @@ mod tests {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
-        let message = bot.send_message(&chat_id, "test", Some(&ParseMode::Text), None, None, None, None);
+        let message = bot.send_message(&chat_id,
+                                       "test",
+                                       Some(&ParseMode::Text),
+                                       None,
+                                       None,
+                                       None,
+                                       None);
         assert!(message.is_ok());
     }
 
@@ -76,6 +83,51 @@ mod tests {
                                        None,
                                        None,
                                        None);
+        assert!(message.is_ok());
+    }
+
+    #[test]
+    fn test_url_chat_actions() {
+        let (token, chat_id) = setup();
+        let bot_url = [BASE_URL, &token].concat();
+        let bot = Bot::new(bot_url).unwrap();
+
+        let success = bot.send_chat_action(&chat_id, &ChatAction::FindLocation);
+        assert!(success.is_ok());
+    }
+
+    #[test]
+    fn test_url_inline_keyboard() {
+        let (token, chat_id) = setup();
+        let bot_url = [BASE_URL, &token].concat();
+        let bot = Bot::new(bot_url).unwrap();
+
+        let mut buttons = Vec::<Vec<InlineKeyboardButton>>::new();
+        let mut row = Vec::<InlineKeyboardButton>::new();
+        row.push(InlineKeyboardButton::new("TestButton".to_string(),
+                                           Some("http://github.com/voider1/teleborg".to_string()),
+                                           None,
+                                           None,
+                                           None));
+        buttons.push(row);
+        let markup = InlineKeyboardMarkup::new(buttons);
+        let message = bot.send_message(&chat_id, "test", None, None, None, None, Some(&markup));
+        assert!(message.is_ok());
+    }
+
+    #[test]
+    fn test_send_contact() {
+        let (token, chat_id) = setup();
+        let bot_url = [BASE_URL, &token].concat();
+        let bot = Bot::new(bot_url).unwrap();
+
+        let contact = Contact {
+            phone_number: "0612345678".to_string(),
+            first_name: "Voider".to_string(),
+            last_name: Some("1".to_string()),
+            user_id: Some(666),
+        };
+        let message = bot.send_contact(&chat_id, &contact, None, None, None);
         assert!(message.is_ok());
     }
 }
