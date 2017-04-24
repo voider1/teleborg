@@ -1,16 +1,5 @@
-use objects::User;
-use objects::Chat;
-use objects::MessageEntity;
-use objects::Contact;
-use objects::Document;
-use objects::Audio;
-use objects::Sticker;
-use objects::Video;
-use objects::PhotoSize;
-use objects::Voice;
-use objects::Location;
-use objects::Venue;
-use objects::Game;
+use objects::{User, Chat, MessageEntity, Contact, Document, Audio, Sticker, Video, PhotoSize,
+              Voice, Location, Venue, Game};
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
