@@ -11,7 +11,6 @@ mod tests {
         Updater::start(None, None, None, None, dispatcher);
     }
 
-
     fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
         bot.reply_to_message(&update, "It works!").unwrap();
     }
