@@ -88,6 +88,7 @@ impl Bot {
 
         if let Some(result) = updates_json {
             let updates: Vec<Update> = serde_json::from_value(result.clone())?;
+            println!("{:?}", updates);
             Ok(Some(updates))
         } else {
             Ok(None)
