@@ -1,7 +1,5 @@
-use objects::User;
-use objects::Chat;
-use objects::MessageEntity;
-use objects::Contact;
+use objects::{User, Chat, MessageEntity, Contact, Document, Audio, Sticker, Video, PhotoSize,
+              Voice, Location, Venue, Game};
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]
@@ -18,17 +16,17 @@ pub struct Message {
     pub edit_date: Option<i64>,
     pub text: Option<String>,
     pub entities: Option<Vec<MessageEntity>>,
-    pub audio: Option<String>,
-    pub document: Option<String>,
-    pub game: Option<String>,
-    pub photo: Option<String>,
-    pub sticker: Option<String>,
-    pub video: Option<String>,
-    pub voice: Option<String>,
+    pub audio: Option<Audio>,
+    pub document: Option<Document>,
+    pub game: Option<Game>,
+    pub photo: Option<Vec<PhotoSize>>,
+    pub sticker: Option<Sticker>,
+    pub video: Option<Video>,
+    pub voice: Option<Voice>,
     pub caption: Option<String>,
     pub contact: Option<Contact>,
-    pub location: Option<String>,
-    pub venue: Option<String>,
+    pub location: Option<Location>,
+    pub venue: Option<Venue>,
     pub new_chat_member: Option<User>,
     pub left_chat_member: Option<User>,
     pub new_chat_title: Option<String>,
