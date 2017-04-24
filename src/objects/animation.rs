@@ -1,6 +1,6 @@
 use objects::PhotoSize;
 
-/// Represents a animation object
+/// Represents an animation object.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Animation {
     pub file_id: String,

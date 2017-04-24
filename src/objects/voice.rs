@@ -1,4 +1,4 @@
-/// Represents a voice file
+/// Represents a voice memo
 #[derive(Clone, Deserialize, Debug)]
 pub struct Voice {
     pub file_id: String,

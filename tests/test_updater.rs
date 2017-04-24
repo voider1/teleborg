@@ -5,7 +5,6 @@ mod tests {
     use teleborg::{Dispatcher, Updater, Bot};
     use teleborg::objects::Update;
 
-    #[test]
     fn test_updater() {
         let mut dispatcher = Dispatcher::new();
         dispatcher.add_command_handler("test", test, false);

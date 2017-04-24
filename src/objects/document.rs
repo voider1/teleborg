@@ -1,6 +1,6 @@
 use objects::PhotoSize;
 
-/// Represents a document
+/// Represents a document.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Document {
     pub file_id: String,

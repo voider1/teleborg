@@ -1,6 +1,6 @@
 use objects::PhotoSize;
 
-/// Represents a sticker
+/// Represents a sticker.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Sticker {
     pub file_id: String,

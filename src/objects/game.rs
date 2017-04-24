@@ -2,7 +2,7 @@ use objects::PhotoSize;
 use objects::MessageEntity;
 use objects::Animation;
 
-/// Represents a game
+/// Represents a game.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Game {
     title: String,
