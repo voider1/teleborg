@@ -31,6 +31,8 @@
 
 use std::marker::{Sync, Send};
 
+#[macro_use]
+extern crate log;
 extern crate reqwest;
 #[macro_use]
 extern crate serde_derive;

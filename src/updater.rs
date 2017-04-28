@@ -24,6 +24,7 @@ impl Updater {
                  network_delay: Option<f32>,
                  dispatcher: Dispatcher)
                  -> Updater {
+        debug!("[+] Starting updater...");
         let token =
             token
                 .or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
@@ -31,6 +32,7 @@ impl Updater {
 
         let mut updater = Updater { token: token };
 
+        debug!("[+] Going to start polling...");
         updater.start_polling(poll_interval, timeout, network_delay, dispatcher);
         updater
     }
@@ -77,6 +79,7 @@ impl Updater {
                             network_delay: Option<f32>,
                             bot: Arc<bot::Bot>,
                             tx: mpsc::Sender<Update>) {
+        debug!("Going to start polling thread...");
         let poll_interval = time::Duration::from_secs(poll_interval.unwrap_or(0));
         let mut last_update_id = 0;
 

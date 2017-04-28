@@ -33,6 +33,7 @@ pub struct Bot {
 impl Bot {
     /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
+        debug!("Going to construct a new Bot...");
         let client = Client::new()?;
         let rjson = Bot::get_me(&client, &bot_url)?;
         let id = rjson.as_required_i64("id")?;

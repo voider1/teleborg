@@ -17,6 +17,7 @@ pub struct Dispatcher {
 impl Dispatcher {
     /// Constructs a new `Dispatcher`.
     pub fn new() -> Self {
+        debug!("Going to construct a new Dispatcher...");
         Dispatcher {
             command_handlers: HashMap::new(),
             message_handlers: Vec::new(),
@@ -36,6 +37,7 @@ impl Dispatcher {
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
     pub fn start_handling(&mut self, rx: mpsc::Receiver<Update>, bot: Arc<Bot>) {
+        debug!("Going to start dispatcher thread...");
         loop {
             let update = rx.recv().unwrap();
 
