@@ -52,6 +52,7 @@ impl Dispatcher {
                         let command = self.command_handlers.get_mut(name_command[0]);
 
                         if let Some(c) = command {
+                            debug!("Going to execute the {} command", name_command[0]);
                             if c.1 {
                                 let args = msg.clone().split_off(1);
                                 c.0.execute(&bot, update, Some(args));

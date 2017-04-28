@@ -24,7 +24,7 @@ impl Updater {
                  network_delay: Option<f32>,
                  dispatcher: Dispatcher)
                  -> Updater {
-        debug!("[+] Starting updater...");
+        debug!("Starting updater...");
         let token =
             token
                 .or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
@@ -32,7 +32,7 @@ impl Updater {
 
         let mut updater = Updater { token: token };
 
-        debug!("[+] Going to start polling...");
+        debug!("Going to start polling...");
         updater.start_polling(poll_interval, timeout, network_delay, dispatcher);
         updater
     }
@@ -102,8 +102,9 @@ impl Updater {
                     // Do nothing, we have nothing
                     continue;
                 }
-                Err(..) => {
+                Err(e) => {
                     // Handle error
+                    debug!("Error while polling updates: {:?}", e);
                     continue;
                 }
             };
