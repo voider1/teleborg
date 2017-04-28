@@ -10,6 +10,7 @@ readme = "README.md"
 keywords = ["telegram-bot", "rust", "telegram-api"]
 
 [dependencies]
+log = { version = "0.3.7", features = ["release_max_level_info"] }
 reqwest = "0.4.0"
 serde = "0.9.5"
 serde_json = "0.9.4"

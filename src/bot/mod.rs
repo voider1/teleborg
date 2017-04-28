@@ -33,6 +33,7 @@ pub struct Bot {
 impl Bot {
     /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
+        debug!("Going to construct a new Bot...");
         let client = Client::new()?;
         let rjson = Bot::get_me(&client, &bot_url)?;
         let id = rjson.as_required_i64("id")?;
@@ -52,6 +53,7 @@ impl Bot {
 
     /// API call which gets the information about your bot.
     pub fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
+        debug!("Calling get_me...");
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
         let mut resp = client.get(&url).send()?;
@@ -71,6 +73,7 @@ impl Bot {
                        timeout: Option<i32>,
                        network_delay: Option<f32>)
                        -> Result<Option<Vec<Update>>> {
+        debug!("Calling get_updates...");
         let limit = limit.unwrap_or(100);
         let timeout = timeout.unwrap_or(0);
         let network_delay = network_delay.unwrap_or(0.0);
@@ -104,6 +107,7 @@ impl Bot {
                         reply_to_message_id: Option<&i64>,
                         reply_markup: Option<&InlineKeyboardMarkup>)
                         -> Result<Message> {
+        debug!("Calling send_message...");
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
         let disable_web_page_preview: &str =
@@ -130,6 +134,7 @@ impl Bot {
 
     /// API call which will reply to a message directed to your bot.
     pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
+        debug!("Calling reply_to_message...");
         let message = update.clone().message.unwrap();
         let message_id = message.message_id;
         let chat_id = message.chat.id;
@@ -142,6 +147,7 @@ impl Bot {
                            chat_id: &i32,
                            disable_notification: Option<&bool>)
                            -> Result<Message> {
+        debug!("Calling forward_message...");
         let message = update.clone().message.unwrap();
         let chat_id: &str = &chat_id.to_string();
         let from_chat_id: &str = &message.chat.id.to_string();
@@ -157,6 +163,7 @@ impl Bot {
 
     /// API call which will show the given chat action to the users.
     pub fn send_chat_action(&self, chat_id: &i64, action: &ChatAction) -> Result<bool> {
+        debug!("Calling send_chat_action...");
         let chat_id: &str = &chat_id.to_string();
         let action = &get_chat_action(action);
         let path = ["sendChatAction"];
@@ -177,6 +184,7 @@ impl Bot {
                         reply_to_message_id: Option<&i64>,
                         reply_markup: Option<&InlineKeyboardMarkup>)
                         -> Result<Message> {
+        debug!("Calling send_contact...");
         let chat_id: &str = &chat_id.to_string();
         let phone_number = &contact.phone_number;
         let first_name = &contact.first_name;
@@ -201,6 +209,7 @@ impl Bot {
 
     /// The actual networking done for sending messages.
     fn post_message(&self, path: &[&str], params: &[(&str, &str)]) -> Result<Message> {
+        debug!("Posting message...");
         let url = ::construct_api_url(&self.bot_url, path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
