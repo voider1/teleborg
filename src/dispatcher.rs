@@ -66,6 +66,7 @@ impl Dispatcher {
                 }
             }
             for message_handler in self.message_handlers.iter_mut() {
+                debug!("Going to execute a message handler...");
                 message_handler.execute(&bot, update.clone(), None);
             }
         }
