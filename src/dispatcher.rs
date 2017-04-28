@@ -52,9 +52,10 @@ impl Dispatcher {
                         let command = self.command_handlers.get_mut(name_command[0]);
 
                         if let Some(c) = command {
-                            debug!("Going to execute the {} command", name_command[0]);
+                            debug!("Going to execute the {} command...", name_command[0]);
                             if c.1 {
                                 let args = msg.clone().split_off(1);
+                                debug!("With these arguments: {:?}", args);
                                 c.0.execute(&bot, update, Some(args));
                             } else {
                                 c.0.execute(&bot, update, None);
