@@ -12,6 +12,7 @@ use bot::Bot;
 pub struct Dispatcher {
     command_handlers: HashMap<String, (Box<Command>, bool)>,
     message_handlers: Vec<Box<Command>>,
+    inline_query_handlers: Vec<Box<Command>>,
 }
 
 impl Dispatcher {
@@ -20,6 +21,7 @@ impl Dispatcher {
         Dispatcher {
             command_handlers: HashMap::new(),
             message_handlers: Vec::new(),
+            inline_query_handlers: Vec::new(),
         }
     }
 
