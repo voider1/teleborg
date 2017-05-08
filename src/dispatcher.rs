@@ -36,6 +36,11 @@ impl Dispatcher {
         self.message_handlers.push(Box::new(command));
     }
 
+    /// Add a function which implements the `Command` traut ti the `Dispatcher.inline_query_handlers`.
+    pub fn add_inline_query_handler<C: Command>(&mut self, command: C) {
+        self.inline_query_handlers.push(Box::new(command));
+    }
+
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
     pub fn start_handling(&mut self, rx: mpsc::Receiver<Update>, bot: Arc<Bot>) {
         loop {
