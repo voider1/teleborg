@@ -17,9 +17,6 @@ pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
 pub use self::inline_query::InlineQuery;
-pub use self::input_message_content;
-pub use self::inline_query_results;
-
 
 mod chat;
 mod message_entity;
