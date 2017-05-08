@@ -16,6 +16,7 @@ pub use self::location::Location;
 pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
+pub use self::inline_query::InlineQuery;
 
 mod chat;
 mod message_entity;
@@ -35,3 +36,4 @@ mod location;
 mod venue;
 mod animation;
 mod game;
+mod inline_query;
