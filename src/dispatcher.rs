@@ -68,6 +68,11 @@ impl Dispatcher {
                     }
                 }
             }
+            if let Some(inline_query) = update.clone().inline_query {
+                for inline_query_handler in self.inline_query_handlers.iter_mut() {
+                    inline_query_handler.execute(&bot, update.clone(), None);
+                }
+            }
             for message_handler in self.message_handlers.iter_mut() {
                 message_handler.execute(&bot, update.clone(), None);
             }
