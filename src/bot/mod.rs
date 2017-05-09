@@ -13,6 +13,7 @@ use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
 use error::Error::{JsonNotFound, RequestFailed};
 use objects::{Update, Message, Contact, InlineKeyboardMarkup};
+use objects::inline_query_results::InlineQueryResult;
 
 use value_extension::ValueExtension;
 
@@ -197,6 +198,13 @@ impl Bot {
                       ("reply_to_message_id", reply_to_message_id),
                       ("reply_markup", reply_markup)];
         self.post_message(&path, &params)
+    }
+
+    pub fn answer_inline_query(&self, update: &Update, query_result: Vec<InlineQueryResult>) {
+        let inline_query_id = update.clone().inline_query.map(|i| i.id).unwrap_or("".to_owned());
+        let path = ["answerInlineQuery"];
+        let params = [("inline_query_id", inline_query_id),
+                      ("results", )];
     }
 
     /// The actual networking done for sending messages.
