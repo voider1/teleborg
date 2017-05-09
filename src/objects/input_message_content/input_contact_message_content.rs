@@ -6,4 +6,4 @@ pub struct InputContactMessageContent {
     last_name: Option<String>,
 }
 
-impl InputContactMessageContent for InputContactMessageContent {}
+impl InputMessageContent for InputContactMessageContent {}
