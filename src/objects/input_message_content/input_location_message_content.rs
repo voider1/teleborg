@@ -1,6 +1,6 @@
 use objects::input_message_content::marker::InputMessageContent;
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Deserialize, Serialize)]
 pub struct InputLocationMessageContent {
     pub latitude: f64,
     pub longitude: f64,

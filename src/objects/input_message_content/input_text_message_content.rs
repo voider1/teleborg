@@ -1,6 +1,6 @@
 use objects::input_message_content::marker::InputMessageContent;
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize)]
 pub struct InputTextMessageContent {
     pub message_text: String,
     pub parse_mode: Option<String>,
