@@ -37,5 +37,5 @@ mod venue;
 mod animation;
 mod game;
 mod inline_query;
-mod input_message_content;
-mod inline_query_results;
+pub mod input_message_content;
+pub mod inline_query_results;
