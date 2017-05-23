@@ -200,11 +200,18 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
-    pub fn answer_inline_query(&self, update: &Update, query_result: Vec<InlineQueryResult>) {
+    pub fn answer_inline_query<I: InlineQueryResult>(&self, update: &Update, query_result: Vec<Box<I>>) -> Result<bool> {
         let inline_query_id = update.clone().inline_query.map(|i| i.id).unwrap_or("".to_owned());
+        let query_result = serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
         let path = ["answerInlineQuery"];
         let params = [("inline_query_id", inline_query_id),
-                      ("results", )];
+                      ("results", query_result)];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let mut data = self.client.post(&url).form(&params).send()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        let result_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let answer_succeeded: bool = serde_json::from_value(result_json.clone())?;
+        Ok(answer_succeeded)
     }
 
     /// The actual networking done for sending messages.
