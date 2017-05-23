@@ -1,7 +1,7 @@
 use objects::input_message_content::marker::InputMessageContent;
 use bot::parse_mode::{ParseMode, get_parse_mode};
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct InputTextMessageContent {
     pub message_text: String,
     pub parse_mode: Option<String>,
