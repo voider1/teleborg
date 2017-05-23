@@ -68,7 +68,7 @@ impl Dispatcher {
                     }
                 }
             }
-            if let Some(inline_query) = update.clone().inline_query {
+            if update.clone().inline_query.is_some() {
                 for inline_query_handler in self.inline_query_handlers.iter_mut() {
                     inline_query_handler.execute(&bot, update.clone(), None);
                 }
