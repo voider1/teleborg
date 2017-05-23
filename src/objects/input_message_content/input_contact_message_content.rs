@@ -1,6 +1,6 @@
 use objects::input_message_content::marker::InputMessageContent;
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct InputContactMessageContent {
     pub phone_number: String,
     pub first_name: String,
