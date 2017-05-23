@@ -7,17 +7,17 @@ use self::rand::Rng;
 use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
 
-#[derive(Deserialize, Serialize)]
-pub struct InlineQueryResultArticle <T: InputMessageContent> {
+#[derive(Serialize, Deserialize, Debug)]
+pub struct InlineQueryResultArticle<I: InputMessageContent> {
     #[serde(rename="type")]
     pub result_type: String,
     pub id: String,
     pub title: String,
-    pub input_message_content: T,
+    pub input_message_content: Box<I>,
 }
 
-impl <T:InputMessageContent> InlineQueryResultArticle <T> {
-    pub fn new(title: String, input_message_content: T) -> Self {
+impl <I>InlineQueryResultArticle<I> where I: InputMessageContent  {
+    pub fn new<T: InputMessageContent>(title: String, input_message_content: Box<T>) -> InlineQueryResultArticle<T> {
         let now = Instant::now();
         let seconds = now.elapsed().as_secs();
 
@@ -33,4 +33,4 @@ impl <T:InputMessageContent> InlineQueryResultArticle <T> {
     }
 }
 
-impl <T: InputMessageContent> InlineQueryResult for InlineQueryResultArticle<T> {}
+impl <I>InlineQueryResult for InlineQueryResultArticle<I> where I: InputMessageContent {}
