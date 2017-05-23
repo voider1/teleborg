@@ -24,7 +24,7 @@ mod tests {
         if let Some(inline_query) = update.clone().inline_query {
             let mut results = Vec::new();
             let content = Box::new(InputTextMessageContent::new("Test Message".to_owned(), Some(ParseMode::Text), Some(true)));
-            let result = Box::new(InlineQueryResultArticle::<InputTextMessageContent>::new("Results".to_owned(), content));
+            let result = Box::new(InlineQueryResultArticle::new("Results".to_string(), content));
             results.push(result);
             let answer_result = bot.answer_inline_query(&update, results);
             assert!(answer_result.is_ok());

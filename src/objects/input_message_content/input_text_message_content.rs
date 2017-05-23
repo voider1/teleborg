@@ -10,9 +10,10 @@ pub struct InputTextMessageContent {
 
 impl InputTextMessageContent {
     pub fn new(message_text: String, parse_mode: Option<ParseMode>, disable_web_page_preview: Option<bool>) -> Self {
+        let parse_mode = Some(get_parse_mode(&parse_mode.unwrap_or(ParseMode::Text)));
         InputTextMessageContent {
             message_text: message_text,
-            parse_mode: Some(get_parse_mode(&parse_mode.unwrap_or(ParseMode::Text))),
+            parse_mode: parse_mode,
             disable_web_page_preview: disable_web_page_preview,
         }
     }
