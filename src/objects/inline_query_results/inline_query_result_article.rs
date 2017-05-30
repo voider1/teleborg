@@ -4,7 +4,7 @@ use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
 use objects::inline_keyboard::InlineKeyboardMarkup;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Debug)]
 pub struct InlineQueryResultArticle<I> {
     #[serde(rename="type")]
     pub result_type: String,

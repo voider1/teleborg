@@ -1,4 +1,4 @@
 extern crate serde;
-use self::serde::{Deserialize, Serialize};
+use self::serde::Serialize;
 
-pub trait InlineQueryResult: Serialize + Deserialize {}
+pub trait InlineQueryResult: Serialize {}
