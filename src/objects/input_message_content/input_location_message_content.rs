@@ -6,4 +6,13 @@ pub struct InputLocationMessageContent {
     pub longitude: f64,
 }
 
+impl InputLocationMessageContent {
+    pub fn new(latitude: f64, longitude: f64) -> Self {
+        InputLocationMessageContent {
+            latitude: latitude,
+            longitude: longitude,
+        }
+    }
+}
+
 impl InputMessageContent for InputLocationMessageContent {}
