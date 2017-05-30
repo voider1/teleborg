@@ -23,8 +23,18 @@ mod tests {
     fn test_inline_query(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
         if let Some(inline_query) = update.clone().inline_query {
             let mut results = Vec::new();
-            let content = InputTextMessageContent::new("Test Message".to_owned(), Some(ParseMode::Text), Some(true));
-            let article = InlineQueryResultArticle::new("Results".to_string(), content);
+            let content = InputTextMessageContent::new("HITLER RULES BITCH".to_owned(),
+                                                       Some(ParseMode::Text),
+                                                       Some(true));
+            let article = InlineQueryResultArticle::new("hitler rules".to_string(),
+                                                        content,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None);
             results.push(article);
             let answer_result = bot.answer_inline_query(&update, results);
             assert!(answer_result.is_ok());
