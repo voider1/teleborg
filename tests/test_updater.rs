@@ -8,7 +8,8 @@ mod tests {
                                                   InlineQueryResultArticle,
                                                   InlineQueryResultPhoto,
                                                   InlineQueryResultGif,
-                                                  InlineQueryResultMpeg4Gif};
+                                                  InlineQueryResultMpeg4Gif,
+                                                  InlineQueryResultVideo};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -120,6 +121,18 @@ mod tests {
                                                None,
                                                None);
 
+            let video = InlineQueryResultVideo::new("https://media1.giphy.com/media/1IuRitRjkbgTC/giphy.mp4".to_string(),
+                                                    "video/mp4".to_string(),
+                                                    "https://i.ytimg.com/vi/Ani_6IRV20A/hqdefault.jpg".to_string(),
+                                                    "Fried noodles".to_string(),
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None);
+
 
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
@@ -128,6 +141,7 @@ mod tests {
             results.push(Box::new(photo));
             results.push(Box::new(gif));
             results.push(Box::new(mpeg4));
+            results.push(Box::new(video));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
