@@ -3,6 +3,7 @@ pub use self::inline_query_result_photo::InlineQueryResultPhoto;
 pub use self::inline_query_result_gif::InlineQueryResultGif;
 pub use self::inline_query_result_mpeg4_gif::InlineQueryResultMpeg4Gif;
 pub use self::inline_query_result_video::InlineQueryResultVideo;
+pub use self::inline_query_result_audio::InlineQueryResultAudio;
 pub use self::marker::InlineQueryResult;
 pub use self::inline_query_result_type::InlineQueryResultType;
 
@@ -11,6 +12,7 @@ mod inline_query_result_photo;
 mod inline_query_result_gif;
 mod inline_query_result_mpeg4_gif;
 mod inline_query_result_video;
+mod inline_query_result_audio;
 mod marker;
 mod inline_query_result_type;
 
@@ -49,6 +51,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultVideo>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::Audio => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultAudio>()
                                               .unwrap())
             }
         }
