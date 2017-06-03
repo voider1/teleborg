@@ -17,7 +17,8 @@ impl InputVenueMessageContent {
                longitude: f64,
                title: String,
                address: String,
-               foursquare_id: Option<String>) -> Self {
+               foursquare_id: Option<String>)
+               -> Self {
         InputVenueMessageContent {
             latitude: latitude,
             longitude: longitude,

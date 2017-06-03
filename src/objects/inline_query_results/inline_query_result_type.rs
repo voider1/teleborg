@@ -1,3 +1,3 @@
 pub enum InlineQueryResultType {
-    Article
+    Article,
 }

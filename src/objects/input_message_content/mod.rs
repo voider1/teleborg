@@ -16,16 +16,34 @@ mod input_message_type;
 use serde::{Serialize, Serializer};
 
 impl Serialize for Box<InputMessageContent> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where S: Serializer
+    {
         match self.get_type() {
-            InputMessageType::Text =>
-                serializer.serialize_some((&**self).as_any().downcast_ref::<InputTextMessageContent>().unwrap()),
-            InputMessageType::Location =>
-                serializer.serialize_some((&**self).as_any().downcast_ref::<InputLocationMessageContent>().unwrap()),
-            InputMessageType::Contact =>
-                serializer.serialize_some((&**self).as_any().downcast_ref::<InputContactMessageContent>().unwrap()),
-            InputMessageType::Venue =>
-                serializer.serialize_some((&**self).as_any().downcast_ref::<InputVenueMessageContent>().unwrap()),
+            InputMessageType::Text => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InputTextMessageContent>()
+                                              .unwrap())
+            }
+            InputMessageType::Location => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InputLocationMessageContent>()
+                                              .unwrap())
+            }
+            InputMessageType::Contact => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InputContactMessageContent>()
+                                              .unwrap())
+            }
+            InputMessageType::Venue => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InputVenueMessageContent>()
+                                              .unwrap())
+            }
         }
     }
 }

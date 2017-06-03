@@ -12,7 +12,7 @@ pub struct InputContactMessageContent {
 
 impl InputContactMessageContent {
     pub fn new(phone_number: String, first_name: String, last_name: Option<String>) -> Self {
-        InputContactMessageContent{
+        InputContactMessageContent {
             phone_number: phone_number,
             first_name: first_name,
             last_name: last_name,

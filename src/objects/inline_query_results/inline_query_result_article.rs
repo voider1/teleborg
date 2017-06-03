@@ -31,7 +31,7 @@ pub struct InlineQueryResultArticle {
     pub thumb_height: Option<i64>,
 }
 
-impl InlineQueryResultArticle{
+impl InlineQueryResultArticle {
     pub fn new(title: String,
                input_message_content: Box<InputMessageContent>,
                reply_markup: Option<InlineKeyboardMarkup>,
@@ -40,7 +40,8 @@ impl InlineQueryResultArticle{
                description: Option<String>,
                thumb_url: Option<String>,
                thumb_width: Option<i64>,
-               thumb_height: Option<i64>) -> InlineQueryResultArticle {
+               thumb_height: Option<i64>)
+               -> InlineQueryResultArticle {
         let result_type = "article".to_string();
         let uuid = format!("{}", Uuid::new_v4());
 
