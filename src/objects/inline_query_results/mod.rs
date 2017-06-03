@@ -5,6 +5,7 @@ pub use self::inline_query_result_mpeg4_gif::InlineQueryResultMpeg4Gif;
 pub use self::inline_query_result_video::InlineQueryResultVideo;
 pub use self::inline_query_result_audio::InlineQueryResultAudio;
 pub use self::inline_query_result_voice::InlineQueryResultVoice;
+pub use self::inline_query_result_document::InlineQueryResultDocument;
 pub use self::marker::InlineQueryResult;
 pub use self::inline_query_result_type::InlineQueryResultType;
 
@@ -15,6 +16,7 @@ mod inline_query_result_mpeg4_gif;
 mod inline_query_result_video;
 mod inline_query_result_audio;
 mod inline_query_result_voice;
+mod inline_query_result_document;
 mod marker;
 mod inline_query_result_type;
 
@@ -65,6 +67,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultVoice>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::Document => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultDocument>()
                                               .unwrap())
             }
         }

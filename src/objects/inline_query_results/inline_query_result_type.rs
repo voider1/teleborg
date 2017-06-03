@@ -6,5 +6,6 @@ pub enum InlineQueryResultType {
     Mpeg4Gif,
     Video,
     Audio,
-    Voice
+    Voice,
+    Document,
 }
