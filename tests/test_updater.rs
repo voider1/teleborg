@@ -6,7 +6,9 @@ mod tests {
     use teleborg::objects::Update;
     use teleborg::objects::inline_query_results::{InlineQueryResult,
                                                   InlineQueryResultArticle,
-                                                  InlineQueryResultPhoto};
+                                                  InlineQueryResultPhoto,
+                                                  InlineQueryResultGif,
+                                                  InlineQueryResultMpeg4Gif};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -96,11 +98,36 @@ mod tests {
                                             None,
                                             None);
 
+            let gif =
+                InlineQueryResultGif::new("https://media.tenor.com/images/53d5b0e9fadc7a6d8325a2aa02cfbffa/tenor.gif".to_string(),
+                                          None,
+                                          None,
+                                          None,
+                                          "https://media.tenor.com/images/53d5b0e9fadc7a6d8325a2aa02cfbffa/tenor.gif".to_string(),
+                                          None,
+                                          None,
+                                          None,
+                                          None);
+
+            let mpeg4 =
+                InlineQueryResultMpeg4Gif::new("https://media3.giphy.com/media/N04Fkkzhf9slO/giphy.mp4".to_string(),
+                                               None,
+                                               None,
+                                               None,
+                                               "https://media3.giphy.com/media/N04Fkkzhf9slO/giphy.mp4".to_string(),
+                                               None,
+                                               None,
+                                               None,
+                                               None);
+
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
             results.push(Box::new(article_venue));
             results.push(Box::new(photo));
+            results.push(Box::new(gif));
+            results.push(Box::new(mpeg4));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
