@@ -10,7 +10,8 @@ mod tests {
                                                   InlineQueryResultGif,
                                                   InlineQueryResultMpeg4Gif,
                                                   InlineQueryResultVideo,
-                                                  InlineQueryResultAudio};
+                                                  InlineQueryResultAudio,
+                                                  InlineQueryResultVoice};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -142,6 +143,13 @@ mod tests {
                                                     None,
                                                     None);
 
+            let voice = InlineQueryResultVoice::new("https://ia902304.us.archive.org/35/items/ogg_test/testogg.ogg".to_string(),
+                                                    "Test Ogg".to_string(),
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None);
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
@@ -151,6 +159,7 @@ mod tests {
             results.push(Box::new(mpeg4));
             results.push(Box::new(video));
             results.push(Box::new(audio));
+            results.push(Box::new(voice));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
