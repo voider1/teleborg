@@ -9,7 +9,8 @@ mod tests {
                                                   InlineQueryResultPhoto,
                                                   InlineQueryResultGif,
                                                   InlineQueryResultMpeg4Gif,
-                                                  InlineQueryResultVideo};
+                                                  InlineQueryResultVideo,
+                                                  InlineQueryResultAudio};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -133,6 +134,13 @@ mod tests {
                                                     None,
                                                     None);
 
+            let audio = InlineQueryResultAudio::new("http://www.kozco.com/tech/piano2-CoolEdit.mp3".to_string(),
+                                                    "Epic Piano".to_string(),
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None);
 
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
@@ -142,6 +150,7 @@ mod tests {
             results.push(Box::new(gif));
             results.push(Box::new(mpeg4));
             results.push(Box::new(video));
+            results.push(Box::new(audio));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
