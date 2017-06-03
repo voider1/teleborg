@@ -12,7 +12,8 @@ mod tests {
                                                   InlineQueryResultVideo,
                                                   InlineQueryResultAudio,
                                                   InlineQueryResultVoice,
-                                                  InlineQueryResultDocument};
+                                                  InlineQueryResultDocument,
+                                                  InlineQueryResultLocation};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -162,6 +163,15 @@ mod tests {
                                                           None,
                                                           None);
 
+            let location = InlineQueryResultLocation::new(35.0,
+                                                          38.0,
+                                                          "Location Test".to_string(),
+                                                          None,
+                                                          None,
+                                                          None,
+                                                          None,
+                                                          None);
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
@@ -173,6 +183,7 @@ mod tests {
             results.push(Box::new(audio));
             results.push(Box::new(voice));
             results.push(Box::new(document));
+            results.push(Box::new(location));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
