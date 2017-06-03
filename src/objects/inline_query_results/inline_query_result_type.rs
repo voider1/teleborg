@@ -9,4 +9,5 @@ pub enum InlineQueryResultType {
     Voice,
     Document,
     Location,
+    Venue,
 }

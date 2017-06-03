@@ -7,6 +7,8 @@ pub use self::inline_query_result_audio::InlineQueryResultAudio;
 pub use self::inline_query_result_voice::InlineQueryResultVoice;
 pub use self::inline_query_result_document::InlineQueryResultDocument;
 pub use self::inline_query_result_location::InlineQueryResultLocation;
+pub use self::inline_query_result_venue::InlineQueryResultVenue;
+
 pub use self::marker::InlineQueryResult;
 pub use self::inline_query_result_type::InlineQueryResultType;
 
@@ -19,6 +21,7 @@ mod inline_query_result_audio;
 mod inline_query_result_voice;
 mod inline_query_result_document;
 mod inline_query_result_location;
+mod inline_query_result_venue;
 mod marker;
 mod inline_query_result_type;
 
@@ -81,6 +84,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultLocation>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::Venue => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultVenue>()
                                               .unwrap())
             }
         }
