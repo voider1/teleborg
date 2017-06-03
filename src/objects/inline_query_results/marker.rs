@@ -1,4 +1,10 @@
-extern crate serde;
-use self::serde::Serialize;
+use super::InlineQueryResultType;
 
-pub trait InlineQueryResult: Serialize {}
+use std::any::Any;
+
+pub trait InlineQueryResult {
+    fn get_type(&self) -> InlineQueryResultType;
+    fn as_any(&self) -> &Any;
+}
+
+
