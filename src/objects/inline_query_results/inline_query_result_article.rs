@@ -43,11 +43,11 @@ impl InlineQueryResultArticle {
                thumb_height: Option<i64>)
                -> InlineQueryResultArticle {
         let result_type = "article".to_string();
-        let uuid = format!("{}", Uuid::new_v4());
+        let id = format!("{}", Uuid::new_v4());
 
         InlineQueryResultArticle {
             result_type: result_type,
-            id: uuid,
+            id: id,
             title: title,
             input_message_content: input_message_content,
             reply_markup: reply_markup,
