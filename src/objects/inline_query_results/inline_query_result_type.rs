@@ -4,4 +4,5 @@ pub enum InlineQueryResultType {
     Photo,
     Gif,
     Mpeg4Gif,
+    Video
 }
