@@ -1,4 +1,6 @@
 pub enum InputMessageType {
-    Text,
+    Contact,
     Location,
+    Text,
+    Venue,
 }
