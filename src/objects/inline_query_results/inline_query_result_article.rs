@@ -8,6 +8,7 @@ use super::InlineQueryResultType;
 
 use std::any::Any;
 
+/// Represents a link to an article or web page.
 #[derive(Serialize)]
 pub struct InlineQueryResultArticle {
     #[serde(rename="type")]
