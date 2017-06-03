@@ -1,6 +1,10 @@
 use objects::input_message_content::marker::InputMessageContent;
 
-#[derive(Serialize, Deserialize, Debug)]
+use super::InputMessageType;
+
+use std::any::Any;
+
+#[derive(Serialize, Deserialize)]
 pub struct InputLocationMessageContent {
     pub latitude: f64,
     pub longitude: f64,
@@ -15,4 +19,11 @@ impl InputLocationMessageContent {
     }
 }
 
-impl InputMessageContent for InputLocationMessageContent {}
+impl InputMessageContent for InputLocationMessageContent {
+    fn as_any(&self) -> &Any {
+        self
+    }
+    fn get_type(&self) -> InputMessageType {
+        InputMessageType::Location
+    }
+}
