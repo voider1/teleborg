@@ -208,7 +208,7 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
-    pub fn answer_inline_query<I: InlineQueryResult>(&self, update: &Update, query_result: Vec<I>) -> Result<bool> {
+    pub fn answer_inline_query(&self, update: &Update, query_result: Vec<Box<InlineQueryResult>>) -> Result<bool> {
         debug!("Calling answer_inline_query...");
         let inline_query_id = update.clone().inline_query.map(|i| i.id).unwrap_or("".to_owned());
         let query_result = serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
