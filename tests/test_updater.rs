@@ -11,7 +11,8 @@ mod tests {
                                                   InlineQueryResultMpeg4Gif,
                                                   InlineQueryResultVideo,
                                                   InlineQueryResultAudio,
-                                                  InlineQueryResultVoice};
+                                                  InlineQueryResultVoice,
+                                                  InlineQueryResultDocument};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -150,6 +151,17 @@ mod tests {
                                                     None,
                                                     None);
 
+            let document = InlineQueryResultDocument::new("Test Doc".to_string(),
+                                                          None,
+                                                          "http://www.colorado.edu/conflict/peace/download/peace_essay.ZIP".to_string(),
+                                                          "application/zip".to_string(),
+                                                          None,
+                                                          None,
+                                                          None,
+                                                          None,
+                                                          None,
+                                                          None);
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
@@ -160,6 +172,7 @@ mod tests {
             results.push(Box::new(video));
             results.push(Box::new(audio));
             results.push(Box::new(voice));
+            results.push(Box::new(document));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
