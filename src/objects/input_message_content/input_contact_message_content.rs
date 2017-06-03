@@ -1,7 +1,8 @@
-use super::{InputMessageContent, InputMessageType};
+use super::{InputMessageContent, InputMessageContentType};
 
 use std::any::Any;
 
+/// Represents the content of a contact message to be sent as the result of an inline query.
 #[derive(Serialize, Deserialize)]
 pub struct InputContactMessageContent {
     pub phone_number: String,
@@ -25,7 +26,7 @@ impl InputMessageContent for InputContactMessageContent {
         self
     }
 
-    fn get_type(&self) -> InputMessageType {
-        InputMessageType::Contact
+    fn get_type(&self) -> InputMessageContentType {
+        InputMessageContentType::Contact
     }
 }

@@ -1,7 +1,8 @@
-use super::{InputMessageContent, InputMessageType};
+use super::{InputMessageContent, InputMessageContentType};
 
 use std::any::Any;
 
+/// Represents the content of a venue message to be sent as the result of an inline query.
 #[derive(Serialize, Deserialize)]
 pub struct InputVenueMessageContent {
     pub latitude: f64,
@@ -34,7 +35,7 @@ impl InputMessageContent for InputVenueMessageContent {
         self
     }
 
-    fn get_type(&self) -> InputMessageType {
-        InputMessageType::Venue
+    fn get_type(&self) -> InputMessageContentType {
+        InputMessageContentType::Venue
     }
 }

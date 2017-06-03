@@ -1,8 +1,9 @@
-use super::{InputMessageContent, InputMessageType};
+use super::{InputMessageContent, InputMessageContentType};
 use bot::parse_mode::{ParseMode, get_parse_mode};
 
 use std::any::Any;
 
+/// Represents the content of a text message to be sent as the result of an inline query.
 #[derive(Serialize, Deserialize)]
 pub struct InputTextMessageContent {
     pub message_text: String,
@@ -29,7 +30,7 @@ impl InputMessageContent for InputTextMessageContent {
         self
     }
 
-    fn get_type(&self) -> InputMessageType {
-        InputMessageType::Text
+    fn get_type(&self) -> InputMessageContentType {
+        InputMessageContentType::Text
     }
 }
