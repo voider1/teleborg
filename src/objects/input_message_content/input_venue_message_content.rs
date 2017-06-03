@@ -1,6 +1,8 @@
-use objects::input_message_content::marker::InputMessageContent;
+use super::{InputMessageContent, InputMessageType};
 
-#[derive(Serialize, Deserialize, Debug)]
+use std::any::Any;
+
+#[derive(Serialize, Deserialize)]
 pub struct InputVenueMessageContent {
     pub latitude: f64,
     pub longitude: f64,
@@ -9,4 +11,28 @@ pub struct InputVenueMessageContent {
     pub foursquare_id: Option<String>,
 }
 
-impl InputMessageContent for InputVenueMessageContent {}
+impl InputVenueMessageContent {
+    pub fn new(latitude: f64,
+               longitude: f64,
+               title: String,
+               address: String,
+               foursquare_id: Option<String>) -> Self {
+        InputVenueMessageContent {
+            latitude: latitude,
+            longitude: longitude,
+            title: title,
+            address: address,
+            foursquare_id: foursquare_id,
+        }
+    }
+}
+
+impl InputMessageContent for InputVenueMessageContent {
+    fn as_any(&self) -> &Any {
+        self
+    }
+
+    fn get_type(&self) -> InputMessageType {
+        InputMessageType::Venue
+    }
+}
