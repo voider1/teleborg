@@ -8,11 +8,9 @@ use super::InlineQueryResultType;
 
 use std::any::Any;
 
-/// Represents a link to a file.
-/// By default, this file will be sent by the user with an optional caption.
+/// Represents a location on a map. By default, the location will be sent by the user.
 /// Alternatively, you can use input_message_content to send a message
-/// with the specified content instead of the file.
-/// Currently, only .PDF and .ZIP files can be sent using this method.
+/// with the specified content instead of the location.
 #[derive(Serialize)]
 pub struct InlineQueryResultLocation {
     #[serde(rename="type")]
