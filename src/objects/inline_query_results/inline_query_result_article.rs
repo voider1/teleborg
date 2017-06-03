@@ -42,7 +42,7 @@ impl InlineQueryResultArticle {
                thumb_url: Option<String>,
                thumb_width: Option<i64>,
                thumb_height: Option<i64>)
-               -> InlineQueryResultArticle {
+               -> Self {
         let result_type = "article".to_string();
         let id = format!("{}", Uuid::new_v4());
 
