@@ -11,8 +11,8 @@ use std::any::Any;
 #[derive(Serialize)]
 pub struct InlineQueryResultArticle {
     #[serde(rename="type")]
-    pub result_type: String,
-    pub id: String,
+    result_type: String,
+    id: String,
     pub title: String,
     pub input_message_content: Box<InputMessageContent>,
     #[serde(skip_serializing_if="Option::is_none")]
