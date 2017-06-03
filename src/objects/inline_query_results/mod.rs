@@ -1,8 +1,10 @@
 pub use self::inline_query_result_article::InlineQueryResultArticle;
+pub use self::inline_query_result_photo::InlineQueryResultPhoto;
 pub use self::marker::InlineQueryResult;
 pub use self::inline_query_result_type::InlineQueryResultType;
 
 mod inline_query_result_article;
+mod inline_query_result_photo;
 mod marker;
 mod inline_query_result_type;
 
@@ -17,6 +19,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultArticle>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::Photo => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultPhoto>()
                                               .unwrap())
             }
         }

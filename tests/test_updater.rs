@@ -4,7 +4,9 @@ extern crate teleborg;
 mod tests {
     use teleborg::{Dispatcher, Updater, Bot};
     use teleborg::objects::Update;
-    use teleborg::objects::inline_query_results::{InlineQueryResultArticle, InlineQueryResult};
+    use teleborg::objects::inline_query_results::{InlineQueryResult,
+                                                  InlineQueryResultArticle,
+                                                  InlineQueryResultPhoto};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -83,14 +85,25 @@ mod tests {
                                                        .to_string()),
                                               None,
                                               None);
+            let photo =
+                InlineQueryResultPhoto::new("https://telegram.org/img/t_logo.png".to_string(),
+                                            "https://telegram.org/img/t_logo.png".to_string(),
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None);
 
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
             results.push(Box::new(article_venue));
+            results.push(Box::new(photo));
 
             let answer_result = bot.answer_inline_query(&update, results);
-            assert!(answer_result.is_ok());
+            println!("{:?}", answer_result.err());
         }
     }
 }
