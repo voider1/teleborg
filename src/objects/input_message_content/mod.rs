@@ -21,7 +21,11 @@ impl Serialize for Box<InputMessageContent> {
             InputMessageType::Text =>
                 serializer.serialize_some((&**self).as_any().downcast_ref::<InputTextMessageContent>().unwrap()),
             InputMessageType::Location =>
-                serializer.serialize_some((&**self).as_any().downcast_ref::<InputLocationMessageContent>().unwrap())
+                serializer.serialize_some((&**self).as_any().downcast_ref::<InputLocationMessageContent>().unwrap()),
+            InputMessageType::Contact =>
+                serializer.serialize_some((&**self).as_any().downcast_ref::<InputContactMessageContent>().unwrap()),
+            InputMessageType::Venue =>
+                serializer.serialize_some((&**self).as_any().downcast_ref::<InputVenueMessageContent>().unwrap()),
         }
     }
 }
