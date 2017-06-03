@@ -1,6 +1,4 @@
-use objects::input_message_content::marker::InputMessageContent;
-
-use super::InputMessageType;
+use super::{InputMessageContent, InputMessageType};
 
 use std::any::Any;
 
@@ -23,6 +21,7 @@ impl InputMessageContent for InputLocationMessageContent {
     fn as_any(&self) -> &Any {
         self
     }
+
     fn get_type(&self) -> InputMessageType {
         InputMessageType::Location
     }
