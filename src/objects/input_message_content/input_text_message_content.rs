@@ -1,7 +1,11 @@
 use objects::input_message_content::marker::InputMessageContent;
 use bot::parse_mode::{ParseMode, get_parse_mode};
 
-#[derive(Serialize, Deserialize, Debug)]
+use super::InputMessageType;
+
+use std::any::Any;
+
+#[derive(Serialize, Deserialize)]
 pub struct InputTextMessageContent {
     pub message_text: String,
     pub parse_mode: Option<String>,
@@ -19,4 +23,12 @@ impl InputTextMessageContent {
     }
 }
 
-impl InputMessageContent for InputTextMessageContent {}
+impl InputMessageContent for InputTextMessageContent {
+    fn as_any(&self) -> &Any {
+        self
+    }
+
+    fn get_type(&self) -> InputMessageType {
+        InputMessageType::Text
+    }
+}
