@@ -1,4 +1,8 @@
-extern crate serde;
-use self::serde::{Deserialize, Serialize};
+use super::InputMessageType;
 
-pub trait InputMessageContent: Serialize + Deserialize {}
+use std::any::Any;
+
+pub trait InputMessageContent {
+    fn as_any(&self) -> &Any;
+    fn get_type(&self) -> InputMessageType;
+}
