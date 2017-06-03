@@ -1,7 +1,5 @@
-use objects::input_message_content::marker::InputMessageContent;
+use super::{InputMessageContent, InputMessageType};
 use bot::parse_mode::{ParseMode, get_parse_mode};
-
-use super::InputMessageType;
 
 use std::any::Any;
 
