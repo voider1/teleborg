@@ -37,7 +37,7 @@ impl Dispatcher {
         self.message_handlers.push(Box::new(command));
     }
 
-    /// Add a function which implements the `Command` traut ti the `Dispatcher.inline_query_handlers`.
+    /// Add a function which implements the `Command` trait to the `Dispatcher.inline_query_handlers`.
     pub fn add_inline_query_handler<C: Command>(&mut self, command: C) {
         self.inline_query_handlers.push(Box::new(command));
     }
