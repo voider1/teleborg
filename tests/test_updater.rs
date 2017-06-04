@@ -15,7 +15,8 @@ mod tests {
                                                   InlineQueryResultDocument,
                                                   InlineQueryResultLocation,
                                                   InlineQueryResultVenue,
-                                                  InlineQueryResultContact};
+                                                  InlineQueryResultContact,
+                                                  InlineQueryResultGame};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -194,6 +195,8 @@ mod tests {
                                                         None,
                                                         None);
 
+            let game = InlineQueryResultGame::new("floppy_bird".to_string(), None);
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
@@ -208,6 +211,7 @@ mod tests {
             results.push(Box::new(location));
             results.push(Box::new(venue));
             results.push(Box::new(contact));
+            results.push(Box::new(game));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
