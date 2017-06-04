@@ -11,4 +11,5 @@ pub enum InlineQueryResultType {
     Location,
     Venue,
     Contact,
+    Game,
 }
