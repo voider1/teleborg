@@ -14,7 +14,8 @@ mod tests {
                                                   InlineQueryResultVoice,
                                                   InlineQueryResultDocument,
                                                   InlineQueryResultLocation,
-                                                  InlineQueryResultVenue};
+                                                  InlineQueryResultVenue,
+                                                  InlineQueryResultContact};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -184,6 +185,15 @@ mod tests {
                                                     None,
                                                     None);
 
+            let contact = InlineQueryResultContact::new("06-12345678".to_string(),
+                                                        "Voider1".to_string(),
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None);
+
             results.push(Box::new(article_text));
             results.push(Box::new(article_location));
             results.push(Box::new(article_contact));
@@ -197,6 +207,7 @@ mod tests {
             results.push(Box::new(document));
             results.push(Box::new(location));
             results.push(Box::new(venue));
+            results.push(Box::new(contact));
 
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
