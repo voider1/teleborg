@@ -10,7 +10,7 @@ pub use self::inline_query_result_location::InlineQueryResultLocation;
 pub use self::inline_query_result_venue::InlineQueryResultVenue;
 
 pub use self::marker::InlineQueryResult;
-pub use self::inline_query_result_type::InlineQueryResultType;
+use self::inline_query_result_type::InlineQueryResultType;
 
 mod inline_query_result_article;
 mod inline_query_result_photo;
