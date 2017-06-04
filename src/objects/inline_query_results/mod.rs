@@ -8,6 +8,7 @@ pub use self::inline_query_result_voice::InlineQueryResultVoice;
 pub use self::inline_query_result_document::InlineQueryResultDocument;
 pub use self::inline_query_result_location::InlineQueryResultLocation;
 pub use self::inline_query_result_venue::InlineQueryResultVenue;
+pub use self::inline_query_result_contact::InlineQueryResultContact;
 
 pub use self::marker::InlineQueryResult;
 use self::inline_query_result_type::InlineQueryResultType;
@@ -22,6 +23,7 @@ mod inline_query_result_voice;
 mod inline_query_result_document;
 mod inline_query_result_location;
 mod inline_query_result_venue;
+mod inline_query_result_contact;
 mod marker;
 mod inline_query_result_type;
 
@@ -90,6 +92,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultVenue>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::Contact => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultContact>()
                                               .unwrap())
             }
         }

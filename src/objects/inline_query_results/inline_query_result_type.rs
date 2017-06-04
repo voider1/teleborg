@@ -10,4 +10,5 @@ pub enum InlineQueryResultType {
     Document,
     Location,
     Venue,
+    Contact,
 }
