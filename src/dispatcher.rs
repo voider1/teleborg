@@ -13,6 +13,7 @@ pub struct Dispatcher {
     command_handlers: HashMap<String, (Box<Command>, bool)>,
     message_handlers: Vec<Box<Command>>,
     inline_query_handlers: Vec<Box<Command>>,
+    callback_query_handlers: Vec<Box<Command>>,
 }
 
 impl Dispatcher {
@@ -23,6 +24,7 @@ impl Dispatcher {
             command_handlers: HashMap::new(),
             message_handlers: Vec::new(),
             inline_query_handlers: Vec::new(),
+            callback_query_handlers: Vec::new(),
         }
     }
 
@@ -40,6 +42,11 @@ impl Dispatcher {
     /// Add a function which implements the `Command` trait to the `Dispatcher.inline_query_handlers`.
     pub fn add_inline_query_handler<C: Command>(&mut self, command: C) {
         self.inline_query_handlers.push(Box::new(command));
+    }
+
+    /// Add a function which implements the `Command` trait to the `Dispatcher.callback_query_handlers`.
+    pub fn add_callback_query_handler<C: Command>(&mut self, command: C) {
+        self.callback_query_handlers.push(Box::new(command));
     }
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
@@ -75,6 +82,11 @@ impl Dispatcher {
             if update.clone().inline_query.is_some() {
                 for inline_query_handler in self.inline_query_handlers.iter_mut() {
                     inline_query_handler.execute(&bot, update.clone(), None);
+                }
+            }
+            if update.clone().callback_query.is_some() {
+                for callback_query_handler in self.callback_query_handlers.iter_mut() {
+                    callback_query_handler.execute(&bot, update.clone(), None);
                 }
             }
             for message_handler in self.message_handlers.iter_mut() {
