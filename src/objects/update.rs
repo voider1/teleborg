@@ -1,5 +1,6 @@
 use objects::Message;
 use objects::InlineQuery;
+use objects::ChosenInlineResult;
 use objects::CallBackQuery;
 
 /// Represents an update returned by the Telegram API.
@@ -9,6 +10,6 @@ pub struct Update {
     pub message: Option<Message>,
     pub edited_message: Option<Message>,
     pub inline_query: Option<InlineQuery>,
-    pub chosen_inline_result: Option<String>,
+    pub chosen_inline_result: Option<ChosenInlineResult>,
     pub callback_query: Option<CallBackQuery>,
 }
