@@ -16,6 +16,7 @@ pub use self::location::Location;
 pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
+pub use self::chosen_inline_result::ChosenInlineResult;
 pub use self::inline_query::InlineQuery;
 
 mod chat;
@@ -37,5 +38,6 @@ mod venue;
 mod animation;
 mod game;
 mod inline_query;
+mod chosen_inline_result;
 pub mod input_message_content;
 pub mod inline_query_results;
