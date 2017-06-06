@@ -213,15 +213,42 @@ impl Bot {
                                query_result: Vec<Box<InlineQueryResult>>)
                                -> Result<bool> {
         debug!("Calling answer_inline_query...");
-        let inline_query_id = update
-            .clone()
-            .inline_query
-            .map(|i| i.id)
-            .unwrap_or("".to_owned());
+        let inline_query_id = update.clone().inline_query.map(|i| i.id).unwrap_or(String::new());
         let query_result = serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
         let path = ["answerInlineQuery"];
         let params = [("inline_query_id", inline_query_id),
                       ("results", query_result)];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        let mut data = self.client.post(&url).form(&params).send()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        let result_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let answer_succeeded: bool = serde_json::from_value(result_json.clone())?;
+        Ok(answer_succeeded)
+    }
+
+    pub fn answer_callback_query(&self,
+                                 update: &Update,
+                                 text: Option<String>,
+                                 show_alert: Option<bool>,
+                                 url: Option<String>,
+                                 cache_time: Option<i64>) -> Result<bool> {
+        debug!("Calling answer_callback_query...");
+        let callback_query_id: &str = &update
+                      .clone()
+                      .callback_query
+                      .map(|i| i.id)
+                      .unwrap_or("".to_string());
+        let text = &text.unwrap_or(String::new());
+        let show_alert = &format!("{}", show_alert.unwrap_or(false));
+        let url = &url.unwrap_or(String::new());
+        let cache_time = &format!("{}", cache_time.unwrap_or(0));
+        let path = ["answerCallbackQuery"];
+        let params = [("callback_query_id", callback_query_id),
+                      ("text", text),
+                      ("show_alert", show_alert),
+                      ("url", url),
+                      ("cache_time", cache_time)];
+        println!("{:?}", params);
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
