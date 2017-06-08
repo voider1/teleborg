@@ -21,9 +21,7 @@ pub struct InlineQueryResultGame {
 }
 
 impl InlineQueryResultGame {
-    pub fn new(game_short_name: String,
-               reply_markup: Option<InlineKeyboardMarkup>,)
-               -> Self {
+    pub fn new(game_short_name: String, reply_markup: Option<InlineKeyboardMarkup>) -> Self {
         let result_type = "game".to_string();
         let id = format!("{}", Uuid::new_v4());
 

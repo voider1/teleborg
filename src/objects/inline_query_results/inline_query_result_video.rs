@@ -48,7 +48,8 @@ impl InlineQueryResultVideo {
                video_duration: Option<i64>,
                description: Option<String>,
                reply_markup: Option<InlineKeyboardMarkup>,
-               input_message_content: Option<Box<InputMessageContent>>) -> Self {
+               input_message_content: Option<Box<InputMessageContent>>)
+               -> Self {
         let result_type = "video".to_string();
         let id = format!("{}", Uuid::new_v4());
 

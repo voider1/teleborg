@@ -208,12 +208,17 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
+    /// API call which will send your query_results back to the chat.
     pub fn answer_inline_query(&self,
                                update: &Update,
                                query_result: Vec<Box<InlineQueryResult>>)
                                -> Result<bool> {
         debug!("Calling answer_inline_query...");
-        let inline_query_id = update.clone().inline_query.map(|i| i.id).unwrap_or(String::new());
+        let inline_query_id = update
+            .clone()
+            .inline_query
+            .map(|i| i.id)
+            .unwrap_or(String::new());
         let query_result = serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
         let path = ["answerInlineQuery"];
         let params = [("inline_query_id", inline_query_id),
@@ -226,18 +231,20 @@ impl Bot {
         Ok(answer_succeeded)
     }
 
+    /// API call which will send your callback_query result to the chat.
     pub fn answer_callback_query(&self,
                                  update: &Update,
                                  text: Option<String>,
                                  show_alert: Option<bool>,
                                  url: Option<String>,
-                                 cache_time: Option<i64>) -> Result<bool> {
+                                 cache_time: Option<i64>)
+                                 -> Result<bool> {
         debug!("Calling answer_callback_query...");
-        let callback_query_id: &str = &update
-                      .clone()
-                      .callback_query
-                      .map(|i| i.id)
-                      .unwrap_or("".to_string());
+        let callback_query_id = &update
+                                     .clone()
+                                     .callback_query
+                                     .map(|i| i.id)
+                                     .unwrap_or("".to_string());
         let text = &text.unwrap_or(String::new());
         let show_alert = &format!("{}", show_alert.unwrap_or(false));
         let url = &url.unwrap_or(String::new());

@@ -44,7 +44,8 @@ impl InlineQueryResultMpeg4Gif {
                title: Option<String>,
                caption: Option<String>,
                reply_markup: Option<InlineKeyboardMarkup>,
-               input_message_content: Option<Box<InputMessageContent>>) -> Self {
+               input_message_content: Option<Box<InputMessageContent>>)
+               -> Self {
         let result_type = "mpeg4_gif".to_string();
         let id = format!("{}", Uuid::new_v4());
 

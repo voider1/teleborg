@@ -34,14 +34,15 @@ pub struct InlineQueryResultContact {
 }
 
 impl InlineQueryResultContact {
-    pub fn new(phone_number: String, 
-               first_name: String, 
+    pub fn new(phone_number: String,
+               first_name: String,
                last_name: Option<String>,
                reply_markup: Option<InlineKeyboardMarkup>,
                input_message_content: Option<Box<InputMessageContent>>,
                thumb_url: Option<String>,
                thumb_width: Option<i64>,
-               thumb_height: Option<i64>) -> Self {
+               thumb_height: Option<i64>)
+               -> Self {
         let result_type = "contact".to_string();
         let id = format!("{}", Uuid::new_v4());
 

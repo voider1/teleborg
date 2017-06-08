@@ -44,7 +44,8 @@ impl InlineQueryResultGif {
                title: Option<String>,
                caption: Option<String>,
                reply_markup: Option<InlineKeyboardMarkup>,
-               input_message_content: Option<Box<InputMessageContent>>) -> Self {
+               input_message_content: Option<Box<InputMessageContent>>)
+               -> Self {
         let result_type = "gif".to_string();
         let id = format!("{}", Uuid::new_v4());
 

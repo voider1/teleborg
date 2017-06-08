@@ -4,19 +4,15 @@ extern crate teleborg;
 mod tests {
     use teleborg::{Dispatcher, Updater, Bot};
     use teleborg::objects::Update;
-    use teleborg::objects::inline_query_results::{InlineQueryResult,
-                                                  InlineQueryResultArticle,
-                                                  InlineQueryResultPhoto,
-                                                  InlineQueryResultGif,
+    use teleborg::objects::inline_query_results::{InlineQueryResult, InlineQueryResultArticle,
+                                                  InlineQueryResultPhoto, InlineQueryResultGif,
                                                   InlineQueryResultMpeg4Gif,
-                                                  InlineQueryResultVideo,
-                                                  InlineQueryResultAudio,
+                                                  InlineQueryResultVideo, InlineQueryResultAudio,
                                                   InlineQueryResultVoice,
                                                   InlineQueryResultDocument,
                                                   InlineQueryResultLocation,
                                                   InlineQueryResultVenue,
-                                                  InlineQueryResultContact,
-                                                  InlineQueryResultGame};
+                                                  InlineQueryResultContact, InlineQueryResultGame};
     use teleborg::objects::input_message_content::{InputTextMessageContent,
                                                    InputLocationMessageContent,
                                                    InputContactMessageContent,
@@ -28,6 +24,7 @@ mod tests {
         let mut dispatcher = Dispatcher::new();
         dispatcher.add_command_handler("test", test, false);
         dispatcher.add_inline_query_handler(test_inline_query);
+        dispatcher.add_callback_query_handler(test_callback_queries);
         Updater::start(None, None, None, None, dispatcher);
     }
 
@@ -128,19 +125,23 @@ mod tests {
                                                None,
                                                None);
 
-            let video = InlineQueryResultVideo::new("https://media1.giphy.com/media/1IuRitRjkbgTC/giphy.mp4".to_string(),
-                                                    "video/mp4".to_string(),
-                                                    "https://i.ytimg.com/vi/Ani_6IRV20A/hqdefault.jpg".to_string(),
-                                                    "Fried noodles".to_string(),
-                                                    None,
-                                                    None,
-                                                    None,
-                                                    None,
-                                                    None,
-                                                    None,
-                                                    None);
+            let video =
+                InlineQueryResultVideo::new("https://media1.giphy.com/media/1IuRitRjkbgTC/giphy.mp4"
+                                                .to_string(),
+                                            "video/mp4".to_string(),
+                                            "https://i.ytimg.com/vi/Ani_6IRV20A/hqdefault.jpg"
+                                                .to_string(),
+                                            "Fried noodles".to_string(),
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None,
+                                            None);
 
-            let audio = InlineQueryResultAudio::new("http://www.kozco.com/tech/piano2-CoolEdit.mp3".to_string(),
+            let audio = InlineQueryResultAudio::new("http://www.kozco.com/tech/piano2-CoolEdit.mp3"
+                                                        .to_string(),
                                                     "Epic Piano".to_string(),
                                                     None,
                                                     None,
@@ -216,5 +217,16 @@ mod tests {
             let answer_result = bot.answer_inline_query(&update, results);
             println!("{:?}", answer_result.err());
         }
+    }
+
+    fn test_callback_queries(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
+        println!("{:?}", update.callback_query);
+        let result = bot.answer_callback_query(&update,
+                                               Some("It works!!!".to_string()),
+                                               Some(true),
+                                               Some("https://github.com/voider1/teleborg"
+                                                        .to_string()),
+                                               Some(10));
+        println!("{:?}", result);
     }
 }

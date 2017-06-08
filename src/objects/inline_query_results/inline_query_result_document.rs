@@ -47,7 +47,8 @@ impl InlineQueryResultDocument {
                input_message_content: Option<Box<InputMessageContent>>,
                thumb_url: Option<String>,
                thumb_width: Option<i64>,
-               thumb_height: Option<i64>) -> Self {
+               thumb_height: Option<i64>)
+               -> Self {
         let result_type = "document".to_string();
         let id = format!("{}", Uuid::new_v4());
 
