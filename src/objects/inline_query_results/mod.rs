@@ -10,6 +10,7 @@ pub use self::inline_query_result_location::InlineQueryResultLocation;
 pub use self::inline_query_result_venue::InlineQueryResultVenue;
 pub use self::inline_query_result_contact::InlineQueryResultContact;
 pub use self::inline_query_result_game::InlineQueryResultGame;
+pub use self::inline_query_result_cached_photo::InlineQueryResultCachedPhoto;
 
 pub use self::marker::InlineQueryResult;
 use self::inline_query_result_type::InlineQueryResultType;
@@ -26,6 +27,7 @@ mod inline_query_result_location;
 mod inline_query_result_venue;
 mod inline_query_result_contact;
 mod inline_query_result_game;
+mod inline_query_result_cached_photo;
 mod marker;
 mod inline_query_result_type;
 
