@@ -12,4 +12,6 @@ pub enum InlineQueryResultType {
     Venue,
     Contact,
     Game,
+    CachedPhoto,
+    CachedGif,
 }

@@ -11,6 +11,7 @@ pub use self::inline_query_result_venue::InlineQueryResultVenue;
 pub use self::inline_query_result_contact::InlineQueryResultContact;
 pub use self::inline_query_result_game::InlineQueryResultGame;
 pub use self::inline_query_result_cached_photo::InlineQueryResultCachedPhoto;
+pub use self::inline_query_result_cached_gif::InlineQueryResultCachedGif;
 
 pub use self::marker::InlineQueryResult;
 use self::inline_query_result_type::InlineQueryResultType;
@@ -28,6 +29,7 @@ mod inline_query_result_venue;
 mod inline_query_result_contact;
 mod inline_query_result_game;
 mod inline_query_result_cached_photo;
+mod inline_query_result_cached_gif;
 mod marker;
 mod inline_query_result_type;
 
@@ -108,6 +110,18 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultGame>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::CachedPhoto => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultCachedPhoto>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::CachedGif => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultCachedGif>()
                                               .unwrap())
             }
         }
