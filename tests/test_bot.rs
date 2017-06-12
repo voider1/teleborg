@@ -23,6 +23,7 @@ mod tests {
         (token, chat_id)
     }
 
+    #[test]
     fn test_get_me() {
         let (token, _) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -31,6 +32,7 @@ mod tests {
         assert!(json.is_ok());
     }
 
+    #[test]
     fn test_send_message() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -39,6 +41,7 @@ mod tests {
         assert!(message.is_ok());
     }
 
+    #[test]
     fn test_send_text_message() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -53,6 +56,7 @@ mod tests {
         assert!(message.is_ok());
     }
 
+    #[test]
     fn test_send_markdown_message() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -67,6 +71,7 @@ mod tests {
         assert!(message.is_ok());
     }
 
+    #[test]
     fn test_send_html_message() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -81,6 +86,7 @@ mod tests {
         assert!(message.is_ok());
     }
 
+    #[test]
     fn test_url_chat_actions() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -90,6 +96,7 @@ mod tests {
         assert!(success.is_ok());
     }
 
+    #[test]
     fn test_url_inline_keyboard() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
@@ -108,6 +115,7 @@ mod tests {
         assert!(message.is_ok());
     }
 
+    #[test]
     fn test_send_contact() {
         let (token, chat_id) = setup();
         let bot_url = [BASE_URL, &token].concat();
