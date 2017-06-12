@@ -84,7 +84,6 @@ impl Updater {
         let mut last_update_id = 0;
 
         loop {
-            println!("get updates");
             let updates = bot.get_updates(last_update_id, None, timeout, network_delay);
 
             match updates {
@@ -96,19 +95,16 @@ impl Updater {
                         last_update_id = (u.update_id + 1) as i32;
                     } else {
                         // Do nothing, the vector is empty
-                        println!("empty");
                         continue;
                     }
                 }
                 Ok(None) => {
                     // Do nothing, we have nothing
-                    println!("none");
                     continue;
                 }
                 Err(e) => {
                     // Handle error
                     debug!("Error while polling updates: {:?}", e);
-                    println!("error: {:?}", e);
                     continue;
                 }
             };
