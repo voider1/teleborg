@@ -39,7 +39,7 @@ impl InlineQueryResultCachedVideo {
                input_message_content: Option<Box<InputMessageContent>>)
                -> Self {
         let result_type = "video".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultCachedVideo {
             result_type: result_type,

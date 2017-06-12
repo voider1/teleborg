@@ -42,7 +42,7 @@ impl InlineQueryResultLocation {
                thumb_height: Option<i64>)
                -> Self {
         let result_type = "location".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultLocation {
             result_type: result_type,

@@ -50,7 +50,7 @@ impl InlineQueryResultDocument {
                thumb_height: Option<i64>)
                -> Self {
         let result_type = "document".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultDocument {
             result_type: result_type,

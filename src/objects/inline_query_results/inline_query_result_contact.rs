@@ -44,7 +44,7 @@ impl InlineQueryResultContact {
                thumb_height: Option<i64>)
                -> Self {
         let result_type = "contact".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultContact {
             result_type: result_type,

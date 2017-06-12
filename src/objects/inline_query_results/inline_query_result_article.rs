@@ -44,7 +44,7 @@ impl InlineQueryResultArticle {
                thumb_height: Option<i64>)
                -> Self {
         let result_type = "article".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultArticle {
             result_type: result_type,

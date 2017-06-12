@@ -40,7 +40,7 @@ impl InlineQueryResultAudio {
                input_message_content: Option<Box<InputMessageContent>>)
                -> Self {
         let result_type = "audio".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultAudio {
             result_type: result_type,

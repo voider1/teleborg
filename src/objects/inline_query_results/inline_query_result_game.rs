@@ -23,7 +23,7 @@ pub struct InlineQueryResultGame {
 impl InlineQueryResultGame {
     pub fn new(game_short_name: String, reply_markup: Option<InlineKeyboardMarkup>) -> Self {
         let result_type = "game".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultGame {
             result_type: result_type,

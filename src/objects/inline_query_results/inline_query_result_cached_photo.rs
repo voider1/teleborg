@@ -39,7 +39,7 @@ impl InlineQueryResultCachedPhoto {
                input_message_content: Option<Box<InputMessageContent>>)
                -> Self {
         let result_type = "photo".to_string();
-        let id = format!("{}", Uuid::new_v4());
+        let id = Uuid::new_v4().simple().to_string();
 
         InlineQueryResultCachedPhoto {
             result_type: result_type,
