@@ -17,4 +17,5 @@ pub enum InlineQueryResultType {
     CachedMpeg4Gif,
     CachedSticker,
     CachedDocument,
+    CachedVideo,
 }

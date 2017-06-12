@@ -15,6 +15,7 @@ pub use self::inline_query_result_cached_gif::InlineQueryResultCachedGif;
 pub use self::inline_query_result_cached_mpeg4_gif::InlineQueryResultCachedMpeg4Gif;
 pub use self::inline_query_result_cached_sticker::InlineQueryResultCachedSticker;
 pub use self::inline_query_result_cached_document::InlineQueryResultCachedDocument;
+pub use self::inline_query_result_cached_video::InlineQueryResultCachedVideo;
 
 pub use self::marker::InlineQueryResult;
 use self::inline_query_result_type::InlineQueryResultType;
@@ -36,6 +37,7 @@ mod inline_query_result_cached_gif;
 mod inline_query_result_cached_mpeg4_gif;
 mod inline_query_result_cached_sticker;
 mod inline_query_result_cached_document;
+mod inline_query_result_cached_video;
 mod marker;
 mod inline_query_result_type;
 
@@ -146,6 +148,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultCachedDocument>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::CachedVideo => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultCachedVideo>()
                                               .unwrap())
             }
         }
