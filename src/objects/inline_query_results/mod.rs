@@ -16,6 +16,7 @@ pub use self::inline_query_result_cached_mpeg4_gif::InlineQueryResultCachedMpeg4
 pub use self::inline_query_result_cached_sticker::InlineQueryResultCachedSticker;
 pub use self::inline_query_result_cached_document::InlineQueryResultCachedDocument;
 pub use self::inline_query_result_cached_video::InlineQueryResultCachedVideo;
+pub use self::inline_query_result_cached_voice::InlineQueryResultCachedVoice;
 pub use self::inline_query_result_cached_audio::InlineQueryResultCachedAudio;
 
 pub use self::marker::InlineQueryResult;
@@ -39,6 +40,7 @@ mod inline_query_result_cached_mpeg4_gif;
 mod inline_query_result_cached_sticker;
 mod inline_query_result_cached_document;
 mod inline_query_result_cached_video;
+mod inline_query_result_cached_voice;
 mod inline_query_result_cached_audio;
 mod marker;
 mod inline_query_result_type;
@@ -156,6 +158,12 @@ impl Serialize for Box<InlineQueryResult> {
                 serializer.serialize_some((&**self)
                                               .as_any()
                                               .downcast_ref::<InlineQueryResultCachedVideo>()
+                                              .unwrap())
+            }
+            InlineQueryResultType::CachedVoice => {
+                serializer.serialize_some((&**self)
+                                              .as_any()
+                                              .downcast_ref::<InlineQueryResultCachedVoice>()
                                               .unwrap())
             }
             InlineQueryResultType::CachedAudio => {
