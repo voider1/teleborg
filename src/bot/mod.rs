@@ -211,7 +211,12 @@ impl Bot {
     /// API call which will send your query_results back to the chat.
     pub fn answer_inline_query(&self,
                                update: &Update,
-                               query_result: Vec<Box<InlineQueryResult>>)
+                               query_result: Vec<Box<InlineQueryResult>>,
+                               cache_time: Option<i64>,
+                               is_personal: Option<bool>,
+                               next_offset: Option<String>,
+                               switch_pm_text: Option<String>,
+                               switch_pm_parameter: Option<String>)
                                -> Result<bool> {
         debug!("Calling answer_inline_query...");
         let inline_query_id = update
@@ -220,9 +225,19 @@ impl Bot {
             .map(|i| i.id)
             .unwrap_or(String::new());
         let query_result = serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
+        let cache_time = cache_time.unwrap_or(300).to_string();
+        let is_personal = is_personal.unwrap_or(false).to_string();
+        let next_offset = next_offset.unwrap_or(String::new());
+        let switch_pm_text = switch_pm_text.unwrap_or(String::new());
+        let switch_pm_parameter = switch_pm_parameter.unwrap_or(String::new());
         let path = ["answerInlineQuery"];
         let params = [("inline_query_id", inline_query_id),
-                      ("results", query_result)];
+                      ("results", query_result),
+                      ("cache_time", cache_time),
+                      ("is_personal", is_personal),
+                      ("next_offset", next_offset),
+                      ("switch_pm_text", switch_pm_text),
+                      ("switch_pm_parameter", switch_pm_parameter)];
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
@@ -246,9 +261,9 @@ impl Bot {
                                      .map(|i| i.id)
                                      .unwrap_or("".to_string());
         let text = &text.unwrap_or(String::new());
-        let show_alert = &format!("{}", show_alert.unwrap_or(false));
+        let show_alert = &show_alert.unwrap_or(false).to_string();
         let url = &url.unwrap_or(String::new());
-        let cache_time = &format!("{}", cache_time.unwrap_or(0));
+        let cache_time = &cache_time.unwrap_or(0).to_string();
         let path = ["answerCallbackQuery"];
         let params = [("callback_query_id", callback_query_id),
                       ("text", text),
