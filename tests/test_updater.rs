@@ -214,8 +214,14 @@ mod tests {
             results.push(Box::new(contact));
             results.push(Box::new(game));
 
-            let answer_result = bot.answer_inline_query(&update, results);
-            println!("{:?}", answer_result.err());
+            let answer_result = bot.answer_inline_query(&update,
+                                                        results,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None,
+                                                        None);
+            assert!(answer_result.is_ok());
         }
     }
 
@@ -227,6 +233,6 @@ mod tests {
                                                Some("https://github.com/voider1/teleborg"
                                                         .to_string()),
                                                Some(10));
-        println!("{:?}", result);
+        assert!(result.is_ok());
     }
 }
