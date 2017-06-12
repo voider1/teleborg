@@ -18,4 +18,5 @@ pub enum InlineQueryResultType {
     CachedSticker,
     CachedDocument,
     CachedVideo,
+    CachedAudio,
 }
