@@ -14,4 +14,5 @@ pub enum InlineQueryResultType {
     Game,
     CachedPhoto,
     CachedGif,
+    CachedMpeg4Gif,
 }
