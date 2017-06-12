@@ -8,10 +8,10 @@ use super::InlineQueryResultType;
 
 use std::any::Any;
 
-/// Represents a link to a document stored on the Telegram servers.
-/// By default, this document will be sent by the user with an optional caption.
+/// Represents a link to a file stored on the Telegram servers.
+/// By default, this file will be sent by the user with an optional caption.
 /// Alternatively, you can use input_message_content to send a message
-/// with the specified content instead of the document.
+/// with the specified content instead of the file.
 #[derive(Serialize)]
 pub struct InlineQueryResultCachedDocument {
     #[serde(rename="type")]

@@ -8,10 +8,10 @@ use super::InlineQueryResultType;
 
 use std::any::Any;
 
-/// Represents a link to an animated GIF file stored on the Telegram servers.
-/// By default, this animated GIF file will be sent by the user with an optional caption.
+/// Represents a link to an mp3 audio file stored on the Telegram servers.
+/// By default, this audio file will be sent by the user.
 /// Alternatively, you can use input_message_content to send a message
-/// with specified content instead of the animation.
+/// with the specified content instead of the audio.
 #[derive(Serialize)]
 pub struct InlineQueryResultCachedAudio {
     #[serde(rename="type")]
