@@ -164,18 +164,6 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
-    /// API call which will send a photo.
-    pub fn send_photo(&self,
-                      chat_id: &i64,
-                      photo: File,
-                      caption: Option<&str>,
-                      disable_notification: Option<&bool>,
-                      reply_to_message_id: Option<i64>,
-                      reply_markup: Option<&InlineKeyboardMarkup>)
-                      -> Message {
-        unimplemented!()
-    }
-
     /// API call which will show the given chat action to the users.
     pub fn send_chat_action(&self, chat_id: &i64, action: &ChatAction) -> Result<bool> {
         debug!("Calling send_chat_action...");
