@@ -10,14 +10,11 @@ use serde_json;
 use serde_json::Value;
 
 use bot::chat_action::get_chat_action;
-use bot::file::File;
 use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
-use error::Error::{JsonNotFound, RequestFailed};
+use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Update, Message, Contact, InlineKeyboardMarkup};
-
-use value_extension::ValueExtension;
+use objects::{Update, Message, Contact, InlineKeyboardMarkup, User};
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -29,8 +26,8 @@ pub struct Bot {
     pub first_name: String,
     pub last_name: Option<String>,
     pub username: String,
-    client: Client,
     pub bot_url: String,
+    client: Client,
 }
 
 impl Bot {
@@ -38,57 +35,57 @@ impl Bot {
     pub fn new(bot_url: String) -> Result<Self> {
         debug!("Going to construct a new Bot...");
         let client = Client::new()?;
-        let rjson = Bot::get_me(&client, &bot_url)?;
-        let id = rjson.as_required_i64("id")?;
-        let first_name = rjson.as_required_string("first_name")?;
-        let last_name = rjson.as_optional_string("last_name");
-        let username = rjson.as_required_string("username")?;
+        let me = Bot::get_me(&client, &bot_url)?;
+        let id = me.id;
+        let first_name = me.first_name;
+        let last_name = me.last_name;
+        let username = me.username.expect("Cannot find username of the bot");
 
         Ok(Bot {
-               id: id,
-               first_name: first_name,
-               last_name: last_name,
-               username: username,
-               client: client,
-               bot_url: bot_url,
-           })
+            id: id,
+            first_name: first_name,
+            last_name: last_name,
+            username: username,
+            client: client,
+            bot_url: bot_url,
+        })
     }
 
     /// API call which gets the information about your bot.
-    pub fn get_me(client: &Client, bot_url: &str) -> Result<Value> {
+    pub fn get_me(client: &Client, bot_url: &str) -> Result<User> {
         debug!("Calling get_me...");
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
-        let mut resp = client.get(&url).send()?;
-
-        if resp.status().is_success() {
-            let rjson: Value = resp.json()?;
-            rjson.get("result").cloned().ok_or(JsonNotFound)
-        } else {
-            Err(RequestFailed(*resp.status()))
-        }
+        let mut data = client.get(&url)?.send()?;
+        let rjson: Value = check_for_error(data.json()?)?;
+        let user_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let user: User = serde_json::from_value(user_json.clone())?;
+        Ok(user)
     }
 
     /// API call which will get called to get the updates for your bot.
-    pub fn get_updates(&self,
-                       offset: i32,
-                       limit: Option<i32>,
-                       timeout: Option<i32>,
-                       network_delay: Option<f32>)
-                       -> Result<Option<Vec<Update>>> {
+    pub fn get_updates(
+        &self,
+        offset: i32,
+        limit: Option<i32>,
+        timeout: Option<i32>,
+        network_delay: Option<f32>,
+    ) -> Result<Option<Vec<Update>>> {
         debug!("Calling get_updates...");
         let limit = limit.unwrap_or(100);
         let timeout = timeout.unwrap_or(0);
         let network_delay = network_delay.unwrap_or(0.0);
         let path = ["getUpdates"];
         let path_url = ::construct_api_url(&self.bot_url, &path);
-        let url = format!("{}?offset={}&limit={}&timeout={}&network_delay={}",
-                          path_url,
-                          offset,
-                          limit,
-                          timeout,
-                          network_delay);
-        let mut data = self.client.get(&url).send()?;
+        let url = format!(
+            "{}?offset={}&limit={}&timeout={}&network_delay={}",
+            path_url,
+            offset,
+            limit,
+            timeout,
+            network_delay
+        );
+        let mut data = self.client.get(&url)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.get("result");
 
@@ -101,37 +98,40 @@ impl Bot {
     }
 
     /// API call which will send a message to a chat which your bot participates in.
-    pub fn send_message<M: ReplyMarkup>(&self,
-                        chat_id: &i64,
-                        text: &str,
-                        parse_mode: Option<&ParseMode>,
-                        disable_web_page_preview: Option<&bool>,
-                        disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i64>,
-                        reply_markup: Option<M>)
-                        -> Result<Message> {
+    pub fn send_message<M: ReplyMarkup>(
+        &self,
+        chat_id: &i64,
+        text: &str,
+        parse_mode: Option<&ParseMode>,
+        disable_web_page_preview: Option<&bool>,
+        disable_notification: Option<&bool>,
+        reply_to_message_id: Option<&i64>,
+        reply_markup: Option<M>,
+    ) -> Result<Message> {
         debug!("Calling send_message...");
         let chat_id: &str = &chat_id.to_string();
         let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
         let disable_web_page_preview: &str =
             &disable_web_page_preview.unwrap_or(&false).to_string();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id
-                                             .map(|i| i.to_string())
-                                             .unwrap_or("None".to_string());
-        let reply_markup =
-            &Box::new(reply_markup)
-                 .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
-                 .unwrap_or("".to_string());
+        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string()).unwrap_or(
+            "None"
+                .to_string(),
+        );
+        let reply_markup = &Box::new(reply_markup)
+            .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
+            .unwrap_or("".to_string());
 
         let path = ["sendMessage"];
-        let params = [("chat_id", chat_id),
-                      ("text", text),
-                      ("parse_mode", parse_mode),
-                      ("disable_web_page_preview", disable_web_page_preview),
-                      ("disable_notification", disable_notification),
-                      ("reply_to_message_id", reply_to_message_id),
-                      ("reply_markup", reply_markup)];
+        let params = [
+            ("chat_id", chat_id),
+            ("text", text),
+            ("parse_mode", parse_mode),
+            ("disable_web_page_preview", disable_web_page_preview),
+            ("disable_notification", disable_notification),
+            ("reply_to_message_id", reply_to_message_id),
+            ("reply_markup", reply_markup),
+        ];
         self.post_message(&path, &params)
     }
 
@@ -141,15 +141,24 @@ impl Bot {
         let message = update.clone().message.unwrap();
         let message_id = message.message_id;
         let chat_id = message.chat.id;
-        self.send_message(&chat_id, text, None, None, None, Some(&message_id), ::NO_MARKUP)
+        self.send_message(
+            &chat_id,
+            text,
+            None,
+            None,
+            None,
+            Some(&message_id),
+            ::NO_MARKUP,
+        )
     }
 
     /// API call which will forward a message.
-    pub fn forward_message(&self,
-                           update: &Update,
-                           chat_id: &i64,
-                           disable_notification: Option<&bool>)
-                           -> Result<Message> {
+    pub fn forward_message(
+        &self,
+        update: &Update,
+        chat_id: &i64,
+        disable_notification: Option<&bool>,
+    ) -> Result<Message> {
         debug!("Calling forward_message...");
         let message = update.clone().message.unwrap();
         let chat_id: &str = &chat_id.to_string();
@@ -157,10 +166,12 @@ impl Bot {
         let message_id: &str = &message.message_id.to_string();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let path = ["forwardMessage"];
-        let params = [("chat_id", chat_id),
-                      ("from_chat_id", from_chat_id),
-                      ("disable_notification", disable_notification),
-                      ("message_id", message_id)];
+        let params = [
+            ("chat_id", chat_id),
+            ("from_chat_id", from_chat_id),
+            ("disable_notification", disable_notification),
+            ("message_id", message_id),
+        ];
         self.post_message(&path, &params)
     }
 
@@ -172,7 +183,7 @@ impl Bot {
         let path = ["sendChatAction"];
         let params = [("chat_id", chat_id), ("action", action)];
         let url = ::construct_api_url(&self.bot_url, &path);
-        let mut data = self.client.post(&url).form(&params).send()?;
+        let mut data = self.client.post(&url)?.form(&params)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let result_json = rjson.get("result").ok_or(JsonNotFound)?;
         let chat_action_succeeded: bool = serde_json::from_value(result_json.clone())?;
@@ -180,33 +191,37 @@ impl Bot {
     }
 
     /// API call which will send the given contact.
-    pub fn send_contact(&self,
-                        chat_id: &i64,
-                        contact: &Contact,
-                        disable_notification: Option<&bool>,
-                        reply_to_message_id: Option<&i64>,
-                        reply_markup: Option<&InlineKeyboardMarkup>)
-                        -> Result<Message> {
+    pub fn send_contact(
+        &self,
+        chat_id: &i64,
+        contact: &Contact,
+        disable_notification: Option<&bool>,
+        reply_to_message_id: Option<&i64>,
+        reply_markup: Option<&InlineKeyboardMarkup>,
+    ) -> Result<Message> {
         debug!("Calling send_contact...");
         let chat_id: &str = &chat_id.to_string();
         let phone_number = &contact.phone_number;
         let first_name = &contact.first_name;
         let last_name = &contact.clone().last_name.unwrap();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id
-                                             .map(|i| i.to_string())
-                                             .unwrap_or("None".to_string());
+        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string()).unwrap_or(
+            "None"
+                .to_string(),
+        );
         let reply_markup = &reply_markup
-                                .and_then(|r| serde_json::to_string(r).ok())
-                                .unwrap_or("".to_string());
+            .and_then(|r| serde_json::to_string(r).ok())
+            .unwrap_or("".to_string());
         let path = ["sendContact"];
-        let params = [("chat_id", chat_id),
-                      ("phone_number", phone_number),
-                      ("first_name", first_name),
-                      ("last_name", last_name),
-                      ("disable_notification", disable_notification),
-                      ("reply_to_message_id", reply_to_message_id),
-                      ("reply_markup", reply_markup)];
+        let params = [
+            ("chat_id", chat_id),
+            ("phone_number", phone_number),
+            ("first_name", first_name),
+            ("last_name", last_name),
+            ("disable_notification", disable_notification),
+            ("reply_to_message_id", reply_to_message_id),
+            ("reply_markup", reply_markup),
+        ];
         self.post_message(&path, &params)
     }
 
@@ -214,7 +229,7 @@ impl Bot {
     fn post_message(&self, path: &[&str], params: &[(&str, &str)]) -> Result<Message> {
         debug!("Posting message...");
         let url = ::construct_api_url(&self.bot_url, path);
-        let mut data = self.client.post(&url).form(&params).send()?;
+        let mut data = self.client.post(&url)?.form(&params)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let message_json = rjson.get("result").ok_or(JsonNotFound)?;
         let message: Message = serde_json::from_value(message_json.clone())?;

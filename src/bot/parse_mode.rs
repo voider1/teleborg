@@ -8,9 +8,8 @@ pub enum ParseMode {
 /// Does pattern matching on the `ParseMode` and gets the right `String`.
 pub fn get_parse_mode(parse_mode: &ParseMode) -> String {
     match parse_mode {
-            &ParseMode::Text => "None",
-            &ParseMode::Markdown => "Markdown",
-            &ParseMode::Html => "HTML",
-        }
-        .to_string()
+        &ParseMode::Text => "None",
+        &ParseMode::Markdown => "Markdown",
+        &ParseMode::Html => "HTML",
+    }.to_string()
 }

@@ -12,11 +12,12 @@ pub struct ReplyKeyboardMarkup {
 
 impl ReplyKeyboardMarkup {
     /// Constructs a new `ReplyKeyboardMarkup`.
-    pub fn new(keyboard: Vec<Vec<InlineKeyboardButton>>,
-               resize_keyboard: Option<bool>,
-               one_time_keyboard: Option<bool>,
-               selective: Option<bool>)
-               -> ReplyKeyboardMarkup {
+    pub fn new(
+        keyboard: Vec<Vec<InlineKeyboardButton>>,
+        resize_keyboard: Option<bool>,
+        one_time_keyboard: Option<bool>,
+        selective: Option<bool>,
+    ) -> ReplyKeyboardMarkup {
         ReplyKeyboardMarkup {
             keyboard: keyboard,
             resize_keyboard: resize_keyboard,
