@@ -133,7 +133,7 @@ impl Bot {
             ("reply_to_message_id", reply_to_message_id),
             ("reply_markup", reply_markup),
         ];
-        self.post_message(&path, &params)
+        self.call(&path, &params)
     }
 
     /// API call which will reply to a message directed to your bot.
@@ -173,7 +173,7 @@ impl Bot {
             ("disable_notification", disable_notification),
             ("message_id", message_id),
         ];
-        self.post_message(&path, &params)
+        self.call(&path, &params)
     }
 
     /// API call which will show the given chat action to the users.
@@ -183,7 +183,7 @@ impl Bot {
         let action = &get_chat_action(action);
         let path = ["sendChatAction"];
         let params = [("chat_id", chat_id), ("action", action)];
-        self.post_message(&path, &params)
+        self.call(&path, &params)
     }
 
     /// API call which will send the given contact.
@@ -218,7 +218,7 @@ impl Bot {
             ("reply_to_message_id", reply_to_message_id),
             ("reply_markup", reply_markup),
         ];
-        self.post_message(&path, &params)
+        self.call(&path, &params)
     }
 
     pub fn get_user_profile_photos(
@@ -232,11 +232,11 @@ impl Bot {
         let limit: &str = &limit.map(|i| i.to_string()).unwrap_or("None".to_string());
         let path = ["getUserProfilePhotos"];
         let params = [("user_id", user_id), ("offset", offset), ("limit", limit)];
-        self.post_message(&path, &params)
+        self.call(&path, &params)
     }
 
     /// The actual networking done for sending messages.
-    fn post_message<T: DeserializeOwned>(
+    fn call<T: DeserializeOwned>(
         &self,
         path: &[&str],
         params: &[(&str, &str)],
