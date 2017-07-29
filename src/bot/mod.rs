@@ -6,6 +6,7 @@ mod chat_action;
 mod file;
 
 use reqwest::Client;
+use serde::de::DeserializeOwned;
 use serde_json;
 use serde_json::Value;
 
@@ -14,7 +15,7 @@ use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Update, Message, Contact, InlineKeyboardMarkup, User};
+use objects::{Update, Message, Contact, InlineKeyboardMarkup, User, UserProfilePhotos};
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -182,12 +183,7 @@ impl Bot {
         let action = &get_chat_action(action);
         let path = ["sendChatAction"];
         let params = [("chat_id", chat_id), ("action", action)];
-        let url = ::construct_api_url(&self.bot_url, &path);
-        let mut data = self.client.post(&url)?.form(&params)?.send()?;
-        let rjson: Value = check_for_error(data.json()?)?;
-        let result_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let chat_action_succeeded: bool = serde_json::from_value(result_json.clone())?;
-        Ok(chat_action_succeeded)
+        self.post_message(&path, &params)
     }
 
     /// API call which will send the given contact.
@@ -225,14 +221,32 @@ impl Bot {
         self.post_message(&path, &params)
     }
 
+    pub fn get_user_profile_photos(
+        &self,
+        user_id: &i64,
+        offset: Option<i64>,
+        limit: Option<i64>,
+    ) -> Result<UserProfilePhotos> {
+        let user_id: &str = &user_id.to_string();
+        let offset: &str = &offset.map(|i| i.to_string()).unwrap_or("None".to_string());
+        let limit: &str = &limit.map(|i| i.to_string()).unwrap_or("None".to_string());
+        let path = ["getUserProfilePhotos"];
+        let params = [("user_id", user_id), ("offset", offset), ("limit", limit)];
+        self.post_message(&path, &params)
+    }
+
     /// The actual networking done for sending messages.
-    fn post_message(&self, path: &[&str], params: &[(&str, &str)]) -> Result<Message> {
+    fn post_message<T: DeserializeOwned>(
+        &self,
+        path: &[&str],
+        params: &[(&str, &str)],
+    ) -> Result<T> {
         debug!("Posting message...");
         let url = ::construct_api_url(&self.bot_url, path);
         let mut data = self.client.post(&url)?.form(&params)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
-        let message_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let message: Message = serde_json::from_value(message_json.clone())?;
-        Ok(message)
+        let object_json = rjson.get("result").ok_or(JsonNotFound)?;
+        let object = serde_json::from_value::<T>(object_json.clone())?;
+        Ok(object)
     }
 }
