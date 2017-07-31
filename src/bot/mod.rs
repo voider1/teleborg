@@ -221,6 +221,7 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which will get a list of profile pictures for a user.
     pub fn get_user_profile_photos(
         &self,
         user_id: &i64,
