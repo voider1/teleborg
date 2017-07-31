@@ -172,4 +172,12 @@ mod tests {
         let user_profile_photos = bot.get_user_profile_photos(&user_id, None, None);
         assert!(user_profile_photos.is_ok());
     }
+
+    #[test]
+    fn test_get_file() {
+        let (bot, _, _) = setup();
+        let file_id = "AgADBAADXqsxG-2w-FNEGNmL3fISo9pw4BkABGDC7Yru_9tn5bAAAgI";
+        let file = bot.get_file(file_id);
+        assert!(file.is_ok());
+    }
 }

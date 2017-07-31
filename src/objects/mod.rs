@@ -18,6 +18,7 @@ pub use self::game::Game;
 pub use self::user_profile_photos::UserProfilePhotos;
 pub use self::reply_markup::{InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, NullMarkup,
                              ReplyKeyboardMarkup};
+pub use self::file::File;
 
 mod chat;
 mod message_entity;
@@ -38,3 +39,4 @@ mod animation;
 mod game;
 mod user_profile_photos;
 mod reply_markup;
+mod file;

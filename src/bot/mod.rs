@@ -15,7 +15,7 @@ use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Update, Message, Contact, InlineKeyboardMarkup, User, UserProfilePhotos};
+use objects::{Update, Message, Contact, InlineKeyboardMarkup, User, UserProfilePhotos, File};
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -225,9 +225,10 @@ impl Bot {
     pub fn get_user_profile_photos(
         &self,
         user_id: &i64,
-        offset: Option<i64>,
-        limit: Option<i64>,
+        offset: Option<&i64>,
+        limit: Option<&i64>,
     ) -> Result<UserProfilePhotos> {
+        debug!("Calling get_user_profile_photos...");
         let user_id: &str = &user_id.to_string();
         let offset: &str = &offset.map(|i| i.to_string()).unwrap_or("None".to_string());
         let limit: &str = &limit.map(|i| i.to_string()).unwrap_or("None".to_string());
@@ -236,12 +237,16 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which will get basic info about a file and prepare it for donwloading.
+    pub fn get_file(&self, file_id: &str) -> Result<File> {
+        debug!("Calling get_file...");
+        let path = ["getFile"];
+        let params = [("file_id", file_id)];
+        self.call(&path, &params)
+    }
+
     /// The actual networking done for sending messages.
-    fn call<T: DeserializeOwned>(
-        &self,
-        path: &[&str],
-        params: &[(&str, &str)],
-    ) -> Result<T> {
+    fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Posting message...");
         let url = ::construct_api_url(&self.bot_url, path);
         let mut data = self.client.post(&url)?.form(&params)?.send()?;
