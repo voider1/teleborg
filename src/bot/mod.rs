@@ -270,7 +270,6 @@ impl Bot {
                       ("show_alert", show_alert),
                       ("url", url),
                       ("cache_time", cache_time)];
-        println!("{:?}", params);
         let url = ::construct_api_url(&self.bot_url, &path);
         let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
