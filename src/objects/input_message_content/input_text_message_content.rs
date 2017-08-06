@@ -8,6 +8,7 @@ use std::any::Any;
 pub struct InputTextMessageContent {
     pub message_text: String,
     pub parse_mode: Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")]
     pub disable_web_page_preview: Option<bool>,
 }
 
