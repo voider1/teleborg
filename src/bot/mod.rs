@@ -245,9 +245,32 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which will kick a user from a group, supergroup or a channel. The bot must be
+    /// an administrator in the chat for this call to succeed.
+    pub fn kick_chat_member(
+        &self,
+        chat_id: &i64,
+        user_id: &i64,
+        until_date: Option<i64>,
+    ) -> Result<bool> {
+        debug!("Calling kick_chat_member...");
+        let chat_id: &str = &chat_id.to_string();
+        let user_id: &str = &user_id.to_string();
+        let until_date: &str = &until_date.map(|i| i.to_string()).unwrap_or(
+            "None".to_string(),
+        );
+        let path = ["kickChatMember"];
+        let params = [
+            ("chat_id", chat_id),
+            ("user_id", user_id),
+            ("until_date", until_date),
+        ];
+        self.call(&path, &params)
+    }
+
     /// The actual networking done for sending messages.
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
-        debug!("Posting message...");
+        debug!("Making API call...");
         let url = ::construct_api_url(&self.bot_url, path);
         let mut data = self.client.post(&url)?.form(&params)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
