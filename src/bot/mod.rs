@@ -268,7 +268,18 @@ impl Bot {
         self.call(&path, &params)
     }
 
-    /// The actual networking done for sending messages.
+    /// API call which will unban previously kicked members in a supergroup or channel. The bot
+    /// must be administrator for this to work.
+    pub fn unban_chat_member(&self, chat_id: &i64, user_id: &i64) -> Result<bool> {
+        debug!("Calling unban_chat_member...");
+        let chat_id: &str = &chat_id.to_string();
+        let user_id: &str = &user_id.to_string();
+        let path = ["unbanChatMember"];
+        let params = [("chat_id", chat_id), ("user_id", user_id)];
+        self.call(&path, &params)
+    }
+
+    /// The actual networking done for making API calls.
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Making API call...");
         let url = ::construct_api_url(&self.bot_url, path);
