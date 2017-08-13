@@ -246,7 +246,7 @@ impl Bot {
     }
 
     /// API call which will kick a user from a group, supergroup or a channel. The bot must be
-    /// an administrator in the chat for this call to succeed.
+    /// an administrator in the chat and must have the appropiate rights for this call to succeed.
     pub fn kick_chat_member(
         &self,
         chat_id: &i64,
@@ -269,13 +269,23 @@ impl Bot {
     }
 
     /// API call which will unban previously kicked members in a supergroup or channel. The bot
-    /// must be administrator for this to work.
+    /// must be an administrator and must have the appropiate rights for this call to succeed.
     pub fn unban_chat_member(&self, chat_id: &i64, user_id: &i64) -> Result<bool> {
         debug!("Calling unban_chat_member...");
         let chat_id: &str = &chat_id.to_string();
         let user_id: &str = &user_id.to_string();
         let path = ["unbanChatMember"];
         let params = [("chat_id", chat_id), ("user_id", user_id)];
+        self.call(&path, &params)
+    }
+
+    /// API call which will export an invite link to a supergroup or channel. The bot must be an
+    /// administrator and must have the the appropiate rights for this call to succeed.
+    pub fn export_chat_invite_link(&self, chat_id: &i64) -> Result<String> {
+        debug!("Calling export_chat_invite_link...");
+        let chat_id: &str = &chat_id.to_string();
+        let path = ["exportChatInviteLink"];
+        let params = [("chat_id", chat_id)];
         self.call(&path, &params)
     }
 
