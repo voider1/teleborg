@@ -1,7 +1,7 @@
-use objects::Message;
 use objects::InlineQuery;
 use objects::ChosenInlineResult;
 use objects::CallBackQuery;
+use super::Message;
 
 /// Represents an update returned by the Telegram API.
 #[derive(Clone, Deserialize, Debug)]

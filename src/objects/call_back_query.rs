@@ -1,5 +1,5 @@
-use objects::message::Message;
-use objects::user::User;
+use super::Message;
+use super::User;
 
 /// Represents an incoming callback query from a callback button in an inline keyboard.
 /// If the button that originated the query was attached to a message sent by the bot,
