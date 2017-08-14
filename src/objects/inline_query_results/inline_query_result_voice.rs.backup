@@ -2,56 +2,63 @@ use uuid::Uuid;
 
 use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
-use objects::InlineKeyboardMarkup;
+use objects::inline_keyboard::InlineKeyboardMarkup;
 
 use super::InlineQueryResultType;
 
 use std::any::Any;
 
-/// Represents a link to an mp3 audio file stored on the Telegram servers.
-/// By default, this audio file will be sent by the user.
+/// Represents a link to a voice recording in an .ogg container encoded with OPUS.
+/// By default, this voice recording will be sent by the user.
 /// Alternatively, you can use input_message_content to send a message
-/// with the specified content instead of the audio.
+/// with the specified content instead of the the voice message.
 #[derive(Serialize)]
-pub struct InlineQueryResultCachedAudio {
+pub struct InlineQueryResultVoice {
     #[serde(rename="type")]
     result_type: String,
     id: String,
-    pub audio_file_id: String,
+    pub voice_url: String,
+    pub title: String,
     #[serde(skip_serializing_if="Option::is_none")]
     pub caption: Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub voice_duration: Option<i64>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub reply_markup: Option<InlineKeyboardMarkup>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub input_message_content: Option<Box<InputMessageContent>>,
 }
 
-impl InlineQueryResultCachedAudio {
-    pub fn new(audio_file_id: String,
+impl InlineQueryResultVoice {
+    pub fn new(voice_url: String,
+               title: String,
                caption: Option<String>,
+               voice_duration: Option<i64>,
                reply_markup: Option<InlineKeyboardMarkup>,
                input_message_content: Option<Box<InputMessageContent>>)
                -> Self {
-        let result_type = "audio".to_string();
+        let result_type = "voice".to_string();
         let id = Uuid::new_v4().simple().to_string();
 
-        InlineQueryResultCachedAudio {
+        InlineQueryResultVoice {
             result_type: result_type,
             id: id,
-            audio_file_id: audio_file_id,
+            voice_url: voice_url,
+            title: title,
             caption: caption,
+            voice_duration: voice_duration,
             reply_markup: reply_markup,
             input_message_content: input_message_content,
         }
     }
 }
 
-impl InlineQueryResult for InlineQueryResultCachedAudio {
-    fn as_any(&self) -> &Any {
-        self
+impl InlineQueryResult for InlineQueryResultVoice {
+    fn get_type(&self) -> InlineQueryResultType {
+        InlineQueryResultType::Voice
     }
 
-    fn get_type(&self) -> InlineQueryResultType {
-        InlineQueryResultType::CachedAudio
+    fn as_any(&self) -> &Any {
+        self
     }
 }

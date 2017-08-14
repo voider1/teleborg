@@ -2,81 +2,75 @@ use uuid::Uuid;
 
 use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
-use objects::InlineKeyboardMarkup;
+use objects::inline_keyboard::InlineKeyboardMarkup;
 
 use super::InlineQueryResultType;
 
 use std::any::Any;
 
-/// Represents a link to a page containing an embedded video player or a video file.
-/// By default, this video file will be sent by the user with an optional caption.
+/// Represents a link to a photo. By default,
+/// this photo will be sent by the user with optional caption.
 /// Alternatively, you can use input_message_content to send a message
-/// with the specified content instead of the video.
+/// with the specified content instead of the photo.
 #[derive(Serialize)]
-pub struct InlineQueryResultVideo {
+pub struct InlineQueryResultPhoto {
     #[serde(rename="type")]
     result_type: String,
     id: String,
-    pub video_url: String,
-    pub mime_type: String,
+    pub photo_url: String,
     pub thumb_url: String,
-    pub title: String,
     #[serde(skip_serializing_if="Option::is_none")]
-    pub caption: Option<String>,
+    pub photo_width: Option<i64>,
     #[serde(skip_serializing_if="Option::is_none")]
-    pub video_width: Option<i64>,
+    pub photo_height: Option<i64>,
     #[serde(skip_serializing_if="Option::is_none")]
-    pub video_height: Option<i64>,
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub video_duration: Option<i64>,
+    pub title: Option<String>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub caption: Option<String>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub reply_markup: Option<InlineKeyboardMarkup>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub input_message_content: Option<Box<InputMessageContent>>,
 }
 
-impl InlineQueryResultVideo {
-    pub fn new(video_url: String,
-               mime_type: String,
+impl InlineQueryResultPhoto {
+    pub fn new(photo_url: String,
                thumb_url: String,
-               title: String,
-               caption: Option<String>,
-               video_width: Option<i64>,
-               video_height: Option<i64>,
-               video_duration: Option<i64>,
+               photo_width: Option<i64>,
+               photo_height: Option<i64>,
+               title: Option<String>,
                description: Option<String>,
+               caption: Option<String>,
                reply_markup: Option<InlineKeyboardMarkup>,
                input_message_content: Option<Box<InputMessageContent>>)
                -> Self {
-        let result_type = "video".to_string();
+        let result_type = "photo".to_string();
         let id = Uuid::new_v4().simple().to_string();
 
-        InlineQueryResultVideo {
+        InlineQueryResultPhoto {
             result_type: result_type,
             id: id,
-            video_url: video_url,
-            mime_type: mime_type,
+            photo_url: photo_url,
             thumb_url: thumb_url,
+            photo_width: photo_width,
+            photo_height: photo_height,
             title: title,
-            caption: caption,
-            video_width: video_width,
-            video_height: video_height,
-            video_duration: video_duration,
             description: description,
+            caption: caption,
             reply_markup: reply_markup,
             input_message_content: input_message_content,
         }
     }
 }
 
-impl InlineQueryResult for InlineQueryResultVideo {
-    fn get_type(&self) -> InlineQueryResultType {
-        InlineQueryResultType::Video
-    }
-
+impl InlineQueryResult for InlineQueryResultPhoto {
     fn as_any(&self) -> &Any {
         self
+    }
+
+    fn get_type(&self) -> InlineQueryResultType {
+        InlineQueryResultType::Photo
     }
 }

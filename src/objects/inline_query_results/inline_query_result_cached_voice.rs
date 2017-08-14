@@ -2,7 +2,7 @@ use uuid::Uuid;
 
 use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
-use objects::inline_keyboard::InlineKeyboardMarkup;
+use objects::InlineKeyboardMarkup;
 
 use super::InlineQueryResultType;
 
