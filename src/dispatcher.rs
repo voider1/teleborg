@@ -18,6 +18,7 @@ pub struct Dispatcher {
 impl Dispatcher {
     /// Constructs a new `Dispatcher`.
     pub fn new() -> Self {
+        debug!("Going to construct a new Dispatcher...");
         Dispatcher {
             command_handlers: HashMap::new(),
             message_handlers: Vec::new(),
@@ -43,6 +44,7 @@ impl Dispatcher {
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
     pub fn start_handling(&mut self, rx: mpsc::Receiver<Update>, bot: Arc<Bot>) {
+        debug!("Going to start dispatcher thread...");
         loop {
             let update = rx.recv().unwrap();
 
@@ -57,8 +59,10 @@ impl Dispatcher {
                         let command = self.command_handlers.get_mut(name_command[0]);
 
                         if let Some(c) = command {
+                            debug!("Going to execute the {} command...", name_command[0]);
                             if c.1 {
                                 let args = msg.clone().split_off(1);
+                                debug!("With these arguments: {:?}", args);
                                 c.0.execute(&bot, update, Some(args));
                             } else {
                                 c.0.execute(&bot, update, None);
@@ -74,6 +78,7 @@ impl Dispatcher {
                 }
             }
             for message_handler in self.message_handlers.iter_mut() {
+                debug!("Going to execute a message handler...");
                 message_handler.execute(&bot, update.clone(), None);
             }
         }

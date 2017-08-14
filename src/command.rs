@@ -1,5 +1,3 @@
-use std::marker::{Send, Sync};
-
 use objects::Update;
 use bot;
 
