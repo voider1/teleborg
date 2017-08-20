@@ -15,6 +15,7 @@ pub use self::location::Location;
 pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
+pub use self::inline_query::InlineQuery;
 pub use self::user_profile_photos::UserProfilePhotos;
 pub use self::reply_markup::{InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, NullMarkup,
                              ReplyKeyboardMarkup};
@@ -37,6 +38,7 @@ mod location;
 mod venue;
 mod animation;
 mod game;
+mod inline_query;
 mod user_profile_photos;
 mod reply_markup;
 mod file;

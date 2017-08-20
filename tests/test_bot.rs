@@ -34,7 +34,6 @@ mod tests {
         (bot, chat_id, user_id)
     }
 
-    #[test]
     fn test_get_me() {
         let token = get_token();
         let bot_url = [BASE_URL, &token].concat();
@@ -43,7 +42,6 @@ mod tests {
         assert!(bot.is_ok());
     }
 
-    #[test]
     fn test_send_message() {
         let (bot, chat_id, _) = setup();
         let message = bot.send_message(
@@ -58,7 +56,6 @@ mod tests {
         assert!(message.is_ok());
     }
 
-    #[test]
     fn test_send_text_message() {
         let (bot, chat_id, _) = setup();
         let message = bot.send_message(
@@ -73,7 +70,6 @@ mod tests {
         assert!(message.is_ok());
     }
 
-    #[test]
     fn test_send_markdown_message() {
         let (bot, chat_id, _) = setup();
         let message = bot.send_message(
@@ -88,7 +84,6 @@ mod tests {
         assert!(message.is_ok());
     }
 
-    #[test]
     fn test_send_html_message() {
         let (bot, chat_id, _) = setup();
         let message = bot.send_message(
@@ -103,14 +98,12 @@ mod tests {
         assert!(message.is_ok());
     }
 
-    #[test]
     fn test_url_chat_actions() {
         let (bot, chat_id, _) = setup();
         let success = bot.send_chat_action(&chat_id, &ChatAction::FindLocation);
         assert!(success.is_ok());
     }
 
-    #[test]
     fn test_url_inline_keyboard() {
         let (bot, chat_id, _) = setup();
         let mut buttons = Vec::<Vec<InlineKeyboardButton>>::new();
@@ -152,7 +145,6 @@ mod tests {
         assert!(message.is_ok());
     }
 
-    #[test]
     fn test_send_contact() {
         let (bot, chat_id, _) = setup();
 
@@ -179,5 +171,72 @@ mod tests {
         let file_id = "AgADBAADXqsxG-2w-FNEGNmL3fISo9pw4BkABGDC7Yru_9tn5bAAAgI";
         let file = bot.get_file(file_id);
         assert!(file.is_ok());
+    }
+
+    #[test]
+    fn test_edit_message_text() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id, "To be edited",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let edited_message = bot.edit_message_text(Some(&chat_id),
+                                                       Some(&message.message_id),
+                                                       None,
+                                                       "Edited message",
+                                                       None,
+                                                       None,
+                                                       NO_MARKUP
+            );
+            assert!(edited_message.is_ok());
+        }
+    }
+
+    #[test]
+    fn test_edit_message_reply_markup() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id,
+                                       "going to have reply markup",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let button = InlineKeyboardButton::new("test".to_string(),
+                                                   None,
+                                                   None,
+                                                   None,
+                                                   None);
+            let markup = InlineKeyboardMarkup::new(vec![vec![button]]);
+            let edited_message = bot.edit_message_reply_markup(Some(&chat_id),
+                                                       Some(&message.message_id),
+                                                       None,
+                                                       Some(markup)
+            );
+            assert!(edited_message.is_ok());
+        }
+    }
+
+    #[test]
+    fn test_delete_message() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id,
+                                       "going to be deleted",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let result = bot.delete_message(&chat_id, &message.message_id);
+            assert!(result.is_ok());
+        }
     }
 }

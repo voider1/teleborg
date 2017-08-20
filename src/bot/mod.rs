@@ -289,6 +289,98 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which edits a message text based on the combination of the chat_id and message_id
+    /// or by passing only the inline_message_id.
+    pub fn edit_message_text<M: ReplyMarkup>(&self,
+                                             chat_id: Option<&i64>,
+                                             message_id: Option<&i64>,
+                                             inline_message_id: Option<&str>,
+                                             text: &str,
+                                             parse_mode: Option<&ParseMode>,
+                                             disable_web_page_preview: Option<bool>,
+                                             reply_markup: Option<M>) -> Result<Message> {
+        debug!("Calling edit_message_text...");
+        let chat_id: &str = &chat_id.map(|c| c.to_string()).unwrap_or(String::new());
+        let message_id: &str = &message_id.map(|m| m.to_string()).unwrap_or(String::new());
+        let inline_message_id: &str = inline_message_id.unwrap_or("");
+        let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
+        let disable_web_page_preview: &str = &disable_web_page_preview.unwrap_or(false).to_string();
+        let reply_markup = &reply_markup
+            .and_then(|r| serde_json::to_string(&r).ok())
+            .unwrap_or("".to_string());
+        let path = ["editMessageText"];
+        let params = [("chat_id", chat_id),
+                                  ("message_id", message_id),
+                                  ("inline_message_id", inline_message_id),
+                                  ("text", text),
+                                  ("parse_mode", parse_mode),
+                                  ("disable_web_page_preview", disable_web_page_preview),
+                                  ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
+    /// API call which edits a message caption based on the combination of the chat_id and message_id
+    /// or by passing only the inline_message_id.
+    pub fn edit_message_caption<M: ReplyMarkup>(&self,
+                                                chat_id: Option<&i64>,
+                                                message_id: Option<&i64>,
+                                                inline_message_id: Option<&str>,
+                                                caption: Option<&str>,
+                                                reply_markup: Option<M>) -> Result<Message> {
+        debug!("Calling edit_message_caption...");
+        let chat_id: &str = &chat_id.map(|c| c.to_string()).unwrap_or(String::new());
+        let message_id: &str = &message_id.map(|m| m.to_string()).unwrap_or(String::new());
+        let inline_message_id: &str = inline_message_id.unwrap_or("");
+        let caption: &str = caption.unwrap_or("");
+        let reply_markup = &reply_markup
+            .and_then(|r| serde_json::to_string(&r).ok())
+            .unwrap_or("".to_string());
+        let path = ["editMessageCaption"];
+        let params = [("chat_id", chat_id),
+                                  ("message_id", message_id),
+                                  ("inline_message_id", inline_message_id),
+                                  ("caption", caption),
+                                  ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
+    /// API call which edits a message reply markup based on the combination of the chat_id and message_id
+    /// or by passing only the inline_message_id.
+    pub fn edit_message_reply_markup<M: ReplyMarkup>(&self,
+                                                     chat_id: Option<&i64>,
+                                                     message_id: Option<&i64>,
+                                                     inline_message_id: Option<&str>,
+                                                     reply_markup: Option<M>) -> Result<Message> {
+        debug!("Calling edit_message_reply_markup...");
+        let chat_id: &str = &chat_id.map(|c| c.to_string()).unwrap_or(String::new());
+        let message_id: &str = &message_id.map(|m| m.to_string()).unwrap_or(String::new());
+        let inline_message_id: &str = inline_message_id.unwrap_or("");
+        let reply_markup = &reply_markup
+            .and_then(|r| serde_json::to_string(&r).ok())
+            .unwrap_or("".to_string());
+        let path = ["editMessageReplyMarkup"];
+        let params = [("chat_id", chat_id),
+                                  ("message_id", message_id),
+                                  ("inline_message_id", inline_message_id),
+                                  ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
+    /// API call to delete messages with the following limitations:
+    /// - A message can only be deleted if it was sent less than 48 hours ago.
+    /// - Bots can delete outgoing messages in groups and supergroups.
+    /// - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+    /// - If the bot is an administrator of a group, it can delete any message there.
+    /// - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+    pub fn delete_message(&self, chat_id: &i64, message_id: &i64) -> Result<bool> {
+        let chat_id: &str = &chat_id.to_string();
+        let message_id: &str = &message_id.to_string();
+        let path = ["deleteMessage"];
+        let params = [("chat_id", chat_id),
+                                  ("message_id", message_id)];
+        self.call(&path, &params)
+    }
+
     /// The actual networking done for making API calls.
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Making API call...");
