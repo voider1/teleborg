@@ -319,6 +319,31 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which edits a message caption based on the combination of the chat_id and message_id
+    /// or only just the inline_message_id
+    pub fn edit_message_caption<M: ReplyMarkup>(&self,
+                                                chat_id: Option<&i64>,
+                                                message_id: Option<&i64>,
+                                                inline_message_id: Option<&str>,
+                                                caption: Option<&str>,
+                                                reply_markup: Option<M>) -> Result<Message> {
+        debug!("Calling edit_message_caption...");
+        let chat_id: &str = &chat_id.map(|c| c.to_string()).unwrap_or(String::new());
+        let message_id: &str = &message_id.map(|m| m.to_string()).unwrap_or(String::new());
+        let inline_message_id: &str = inline_message_id.unwrap_or("");
+        let caption: &str = caption.unwrap_or("");
+        let reply_markup = &reply_markup
+            .and_then(|r| serde_json::to_string(&r).ok())
+            .unwrap_or("".to_string());
+        let path = ["editMessageCaption"];
+        let params = [("chat_id", chat_id),
+            ("message_id", message_id),
+            ("inline_message_id", inline_message_id),
+            ("caption", caption),
+            ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
     /// The actual networking done for making API calls.
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Making API call...");
