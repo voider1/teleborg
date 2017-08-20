@@ -337,10 +337,10 @@ impl Bot {
             .unwrap_or("".to_string());
         let path = ["editMessageCaption"];
         let params = [("chat_id", chat_id),
-            ("message_id", message_id),
-            ("inline_message_id", inline_message_id),
-            ("caption", caption),
-            ("reply_markup", reply_markup)];
+                                  ("message_id", message_id),
+                                  ("inline_message_id", inline_message_id),
+                                  ("caption", caption),
+                                  ("reply_markup", reply_markup)];
         self.call(&path, &params)
     }
 
@@ -360,9 +360,9 @@ impl Bot {
             .unwrap_or("".to_string());
         let path = ["editMessageReplyMarkup"];
         let params = [("chat_id", chat_id),
-            ("message_id", message_id),
-            ("inline_message_id", inline_message_id),
-            ("reply_markup", reply_markup)];
+                                  ("message_id", message_id),
+                                  ("inline_message_id", inline_message_id),
+                                  ("reply_markup", reply_markup)];
         self.call(&path, &params)
     }
 
