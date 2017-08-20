@@ -174,7 +174,7 @@ mod tests {
     }
 
     #[test]
-    fn edit_message_text() {
+    fn test_edit_message_text() {
         let (bot, chat_id, _) = setup();
         let message = bot.send_message(&chat_id, "To be edited",
                                        None,
@@ -193,6 +193,50 @@ mod tests {
                                                        NO_MARKUP
             );
             assert!(edited_message.is_ok());
+        }
+    }
+
+    #[test]
+    fn test_edit_message_reply_markup() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id,
+                                       "going to have reply markup",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let button = InlineKeyboardButton::new("test".to_string(),
+                                                   None,
+                                                   None,
+                                                   None,
+                                                   None);
+            let markup = InlineKeyboardMarkup::new(vec![vec![button]]);
+            let edited_message = bot.edit_message_reply_markup(Some(&chat_id),
+                                                       Some(&message.message_id),
+                                                       None,
+                                                       Some(markup)
+            );
+            assert!(edited_message.is_ok());
+        }
+    }
+
+    #[test]
+    fn test_delete_message() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id,
+                                       "going to be deleted",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let result = bot.delete_message(&chat_id, &message.message_id);
+            assert!(result.is_ok());
         }
     }
 }

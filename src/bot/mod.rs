@@ -290,7 +290,7 @@ impl Bot {
     }
 
     /// API call which edits a message text based on the combination of the chat_id and message_id
-    /// or only just the inline_message_id
+    /// or by passing only the inline_message_id.
     pub fn edit_message_text<M: ReplyMarkup>(&self,
                                              chat_id: Option<&i64>,
                                              message_id: Option<&i64>,
@@ -320,7 +320,7 @@ impl Bot {
     }
 
     /// API call which edits a message caption based on the combination of the chat_id and message_id
-    /// or only just the inline_message_id
+    /// or by passing only the inline_message_id.
     pub fn edit_message_caption<M: ReplyMarkup>(&self,
                                                 chat_id: Option<&i64>,
                                                 message_id: Option<&i64>,
@@ -341,6 +341,43 @@ impl Bot {
             ("inline_message_id", inline_message_id),
             ("caption", caption),
             ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
+    /// API call which edits a message reply markup based on the combination of the chat_id and message_id
+    /// or by passing only the inline_message_id.
+    pub fn edit_message_reply_markup<M: ReplyMarkup>(&self,
+                                                     chat_id: Option<&i64>,
+                                                     message_id: Option<&i64>,
+                                                     inline_message_id: Option<&str>,
+                                                     reply_markup: Option<M>) -> Result<Message> {
+        debug!("Calling edit_message_reply_markup...");
+        let chat_id: &str = &chat_id.map(|c| c.to_string()).unwrap_or(String::new());
+        let message_id: &str = &message_id.map(|m| m.to_string()).unwrap_or(String::new());
+        let inline_message_id: &str = inline_message_id.unwrap_or("");
+        let reply_markup = &reply_markup
+            .and_then(|r| serde_json::to_string(&r).ok())
+            .unwrap_or("".to_string());
+        let path = ["editMessageReplyMarkup"];
+        let params = [("chat_id", chat_id),
+            ("message_id", message_id),
+            ("inline_message_id", inline_message_id),
+            ("reply_markup", reply_markup)];
+        self.call(&path, &params)
+    }
+
+    /// API call to delete messages with the following limitations:
+    /// - A message can only be deleted if it was sent less than 48 hours ago.
+    /// - Bots can delete outgoing messages in groups and supergroups.
+    /// - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+    /// - If the bot is an administrator of a group, it can delete any message there.
+    /// - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+    pub fn delete_message(&self, chat_id: &i64, message_id: &i64) -> Result<bool> {
+        let chat_id: &str = &chat_id.to_string();
+        let message_id: &str = &message_id.to_string();
+        let path = ["deleteMessage"];
+        let params = [("chat_id", chat_id),
+                                  ("message_id", message_id)];
         self.call(&path, &params)
     }
 
