@@ -187,13 +187,13 @@ impl Bot {
     }
 
     /// API call which will send the given contact.
-    pub fn send_contact(
+    pub fn send_contact<M: ReplyMarkup>(
         &self,
         chat_id: &i64,
         contact: &Contact,
         disable_notification: Option<&bool>,
         reply_to_message_id: Option<&i64>,
-        reply_markup: Option<&InlineKeyboardMarkup>,
+        reply_markup: Option<M>,
     ) -> Result<Message> {
         debug!("Calling send_contact...");
         let chat_id: &str = &chat_id.to_string();
@@ -205,8 +205,8 @@ impl Bot {
             "None"
                 .to_string(),
         );
-        let reply_markup = &reply_markup
-            .and_then(|r| serde_json::to_string(r).ok())
+        let reply_markup = &Box::new(reply_markup)
+            .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
             .unwrap_or("".to_string());
         let path = ["sendContact"];
         let params = [

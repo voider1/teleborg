@@ -162,7 +162,7 @@ mod tests {
             last_name: Some("1".to_string()),
             user_id: Some(666),
         };
-        let message = bot.send_contact(&chat_id, &contact, None, None, None);
+        let message = bot.send_contact(&chat_id, &contact, None, None, NO_MARKUP);
         assert!(message.is_ok());
     }
 
