@@ -172,4 +172,27 @@ mod tests {
         let file = bot.get_file(file_id);
         assert!(file.is_ok());
     }
+
+    #[test]
+    fn edit_message_text() {
+        let (bot, chat_id, _) = setup();
+        let message = bot.send_message(&chat_id, "To be edited",
+                                       None,
+                                       None,
+                                       None,
+                                       None,
+                                       NO_MARKUP
+        );
+        if let Ok(message) = message {
+            let edited_message = bot.edit_message_text(Some(&chat_id),
+                                                       Some(&message.message_id),
+                                                       None,
+                                                       "Edited message",
+                                                       None,
+                                                       None,
+                                                       NO_MARKUP
+            );
+            assert!(edited_message.is_ok());
+        }
+    }
 }
