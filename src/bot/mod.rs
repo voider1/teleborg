@@ -1,7 +1,7 @@
 pub use self::parse_mode::ParseMode;
 pub use self::chat_action::ChatAction;
 
-mod parse_mode;
+pub mod parse_mode;
 mod chat_action;
 mod file;
 
@@ -13,6 +13,9 @@ use serde_json::Value;
 use bot::chat_action::get_chat_action;
 use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
+use objects::inline_query_results::InlineQueryResult;
+
+use value_extension::ValueExtension;
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
 use objects::{Update, Message, Contact, InlineKeyboardMarkup, User, UserProfilePhotos, File};
@@ -286,6 +289,68 @@ impl Bot {
         let chat_id: &str = &chat_id.to_string();
         let path = ["exportChatInviteLink"];
         let params = [("chat_id", chat_id)];
+        self.call(&path, &params)
+    }
+
+    /// API call which will send your query_results back to the chat.
+    pub fn answer_inline_query(&self,
+                               update: &Update,
+                               query_result: Vec<Box<InlineQueryResult>>,
+                               cache_time: Option<i64>,
+                               is_personal: Option<bool>,
+                               next_offset: Option<String>,
+                               switch_pm_text: Option<String>,
+                               switch_pm_parameter: Option<String>)
+                               -> Result<bool> {
+        debug!("Calling answer_inline_query...");
+        let inline_query_id: &str = &update
+            .clone()
+            .inline_query
+            .map(|i| i.id)
+            .unwrap_or(String::new());
+        let query_result: &str = &serde_json::to_string(query_result.as_slice()).unwrap_or(String::new());
+        let cache_time: &str = &cache_time.unwrap_or(300).to_string();
+        let is_personal: &str = &is_personal.unwrap_or(false).to_string();
+        let next_offset: &str = &next_offset.unwrap_or(String::new());
+        let switch_pm_text: &str = &switch_pm_text.unwrap_or(String::new());
+        let switch_pm_parameter: &str = &switch_pm_parameter.unwrap_or(String::new());
+        let path = ["answerInlineQuery"];
+        let params = [("inline_query_id", inline_query_id),
+                      ("results", query_result),
+                      ("cache_time", cache_time),
+                      ("is_personal", is_personal),
+                      ("next_offset", next_offset),
+                      ("switch_pm_text", switch_pm_text),
+                      ("switch_pm_parameter", switch_pm_parameter)];
+        let url = ::construct_api_url(&self.bot_url, &path);
+        self.call(&path, &params)
+    }
+
+    /// API call which will send your callback_query result to the chat.
+    pub fn answer_callback_query(&self,
+                                 update: &Update,
+                                 text: Option<String>,
+                                 show_alert: Option<bool>,
+                                 url: Option<String>,
+                                 cache_time: Option<i64>)
+                                 -> Result<bool> {
+        debug!("Calling answer_callback_query...");
+        let callback_query_id: &str = &update
+                                     .clone()
+                                     .callback_query
+                                     .map(|i| i.id)
+                                     .unwrap_or("".to_string());
+        let text: &str = &text.unwrap_or(String::new());
+        let show_alert: &str = &show_alert.unwrap_or(false).to_string();
+        let url: &str = &url.unwrap_or(String::new());
+        let cache_time: &str = &cache_time.unwrap_or(0).to_string();
+        let path = ["answerCallbackQuery"];
+        let params = [("callback_query_id", callback_query_id),
+                      ("text", text),
+                      ("show_alert", show_alert),
+                      ("url", url),
+                      ("cache_time", cache_time)];
+        let url = ::construct_api_url(&self.bot_url, &path);
         self.call(&path, &params)
     }
 

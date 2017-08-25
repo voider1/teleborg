@@ -10,6 +10,7 @@ readme = "README.md"
 keywords = ["telegram-bot", "rust", "telegram-api"]
 
 [dependencies]
+uuid = { version = "0.4", features = ["serde", "v4"] }
 log = { version = "0.3.8", features = ["release_max_level_info"] }
 reqwest = "0.7.1"
 serde = "1.0.11"
