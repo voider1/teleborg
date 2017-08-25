@@ -3,6 +3,7 @@ use uuid::Uuid;
 use objects::input_message_content::InputMessageContent;
 use objects::inline_query_results::InlineQueryResult;
 use objects::InlineKeyboardMarkup;
+use marker::ReplyMarkup;
 
 use super::InlineQueryResultType;
 
@@ -16,8 +17,7 @@ pub struct InlineQueryResultArticle {
     id: String,
     pub title: String,
     pub input_message_content: Box<InputMessageContent>,
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub reply_markup: Option<InlineKeyboardMarkup>,
+    pub reply_markup: Option<Box<ReplyMarkup>>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub url: Option<String>,
     #[serde(skip_serializing_if="Option::is_none")]
@@ -35,7 +35,7 @@ pub struct InlineQueryResultArticle {
 impl InlineQueryResultArticle {
     pub fn new(title: String,
                input_message_content: Box<InputMessageContent>,
-               reply_markup: Option<InlineKeyboardMarkup>,
+               reply_markup: Option<Box<ReplyMarkup>>,
                url: Option<String>,
                hide_url: Option<bool>,
                description: Option<String>,
