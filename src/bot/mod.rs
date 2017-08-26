@@ -15,7 +15,13 @@ use bot::parse_mode::get_parse_mode;
 use error::{Result, check_for_error};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Update, Message, Contact, InlineKeyboardMarkup, User, UserProfilePhotos, File};
+use objects::{Update, Message, Contact, User, UserProfilePhotos, File};
+
+const CHAT_ID: &str = "chat_id";
+const DISABLE_NOTIFICATION: &str = "disable_notification";
+const REPLY_TO_MESSAGE_ID: &str = "reply_to_message_id";
+const REPLY_MARKUP: &str = "reply_markup";
+const USER_ID: &str = "user_id";
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -125,13 +131,13 @@ impl Bot {
 
         let path = ["sendMessage"];
         let params = [
-            ("chat_id", chat_id),
+            (CHAT_ID, chat_id),
             ("text", text),
             ("parse_mode", parse_mode),
             ("disable_web_page_preview", disable_web_page_preview),
-            ("disable_notification", disable_notification),
-            ("reply_to_message_id", reply_to_message_id),
-            ("reply_markup", reply_markup),
+            (DISABLE_NOTIFICATION, disable_notification),
+            (REPLY_TO_MESSAGE_ID, reply_to_message_id),
+            (REPLY_MARKUP, reply_markup),
         ];
         self.call(&path, &params)
     }
@@ -168,9 +174,9 @@ impl Bot {
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let path = ["forwardMessage"];
         let params = [
-            ("chat_id", chat_id),
+            (CHAT_ID, chat_id),
             ("from_chat_id", from_chat_id),
-            ("disable_notification", disable_notification),
+            (DISABLE_NOTIFICATION, disable_notification),
             ("message_id", message_id),
         ];
         self.call(&path, &params)
@@ -182,7 +188,7 @@ impl Bot {
         let chat_id: &str = &chat_id.to_string();
         let action = &get_chat_action(action);
         let path = ["sendChatAction"];
-        let params = [("chat_id", chat_id), ("action", action)];
+        let params = [(CHAT_ID, chat_id), ("action", action)];
         self.call(&path, &params)
     }
 
@@ -210,13 +216,13 @@ impl Bot {
             .unwrap_or("".to_string());
         let path = ["sendContact"];
         let params = [
-            ("chat_id", chat_id),
+            (CHAT_ID, chat_id),
             ("phone_number", phone_number),
             ("first_name", first_name),
             ("last_name", last_name),
-            ("disable_notification", disable_notification),
-            ("reply_to_message_id", reply_to_message_id),
-            ("reply_markup", reply_markup),
+            (DISABLE_NOTIFICATION, disable_notification),
+            (REPLY_TO_MESSAGE_ID, reply_to_message_id),
+            (REPLY_MARKUP, reply_markup),
         ];
         self.call(&path, &params)
     }
@@ -233,7 +239,7 @@ impl Bot {
         let offset: &str = &offset.map(|i| i.to_string()).unwrap_or("None".to_string());
         let limit: &str = &limit.map(|i| i.to_string()).unwrap_or("None".to_string());
         let path = ["getUserProfilePhotos"];
-        let params = [("user_id", user_id), ("offset", offset), ("limit", limit)];
+        let params = [(USER_ID, user_id), ("offset", offset), ("limit", limit)];
         self.call(&path, &params)
     }
 
@@ -261,8 +267,8 @@ impl Bot {
         );
         let path = ["kickChatMember"];
         let params = [
-            ("chat_id", chat_id),
-            ("user_id", user_id),
+            (CHAT_ID, chat_id),
+            (USER_ID, user_id),
             ("until_date", until_date),
         ];
         self.call(&path, &params)
@@ -275,7 +281,7 @@ impl Bot {
         let chat_id: &str = &chat_id.to_string();
         let user_id: &str = &user_id.to_string();
         let path = ["unbanChatMember"];
-        let params = [("chat_id", chat_id), ("user_id", user_id)];
+        let params = [(CHAT_ID, chat_id), (USER_ID, user_id)];
         self.call(&path, &params)
     }
 
@@ -285,7 +291,7 @@ impl Bot {
         debug!("Calling export_chat_invite_link...");
         let chat_id: &str = &chat_id.to_string();
         let path = ["exportChatInviteLink"];
-        let params = [("chat_id", chat_id)];
+        let params = [(CHAT_ID, chat_id)];
         self.call(&path, &params)
     }
 
@@ -295,7 +301,7 @@ impl Bot {
         debug!("Calling delete_chat_photo");
         let chat_id: &str = &chat_id.to_string();
         let path = ["deleteChatPhoto"];
-        let params = [("chat_id", chat_id)];
+        let params = [(CHAT_ID, chat_id)];
         self.call(&path, &params)
     }
 
