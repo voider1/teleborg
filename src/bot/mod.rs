@@ -289,6 +289,16 @@ impl Bot {
         self.call(&path, &params)
     }
 
+    /// API call which will delete a chat photo. Photos can't be changed for private chats. The bot
+    /// must be an administrator and must have the appropiate rights for this call to succeed.
+    pub fn delete_chat_photo(&self, chat_id: &i64) -> Result<bool> {
+        debug!("Calling delete_chat_photo");
+        let chat_id: &str = &chat_id.to_string();
+        let path = ["deleteChatPhoto"];
+        let params = [("chat_id", chat_id)];
+        self.call(&path, &params)
+    }
+
     /// The actual networking done for making API calls.
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Making API call...");
