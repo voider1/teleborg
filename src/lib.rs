@@ -28,29 +28,26 @@
 //! }
 //! ```
 
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate log;
 extern crate reqwest;
 extern crate serde;
-#[macro_use]
-extern crate serde_derive;
+#[macro_use] extern crate serde_derive;
 extern crate serde_json;
 
 pub use reqwest::StatusCode;
 
 pub use self::bot::{Bot, ParseMode, ChatAction};
+pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
-pub use self::command::Command;
 
-mod updater;
-mod dispatcher;
-mod command;
-mod value_extension;
-mod bot;
-mod marker;
-pub mod objects;
 pub mod error;
+pub mod objects;
+mod bot;
+mod command;
+mod dispatcher;
+mod marker;
+mod updater;
 
 /// Pass this to a method which requires markup where you do not want markup.
 pub const NO_MARKUP: Option<objects::NullMarkup> = None;

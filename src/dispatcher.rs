@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::sync::{Arc, mpsc};
 
-use objects::Update;
 use command::Command;
 use bot::Bot;
+use objects::Update;
 
 /// A `Dispatcher` which will receive updates from the `Updater` and dispatches
 /// them to the registered handlers.

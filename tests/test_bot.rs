@@ -3,11 +3,12 @@ extern crate reqwest;
 
 #[cfg(test)]
 mod tests {
-    use teleborg::{Bot, ParseMode, ChatAction, NO_MARKUP};
-    use teleborg::objects::{Contact, InlineKeyboardButton, InlineKeyboardMarkup, ForceReply};
+    use std::env;
+
     use reqwest::Client;
 
-    use std::env;
+    use teleborg::{Bot, ParseMode, ChatAction, NO_MARKUP};
+    use teleborg::objects::{Contact, InlineKeyboardButton, InlineKeyboardMarkup, ForceReply};
 
     const BASE_URL: &'static str = "https://api.telegram.org/bot";
 

@@ -1,21 +1,18 @@
-pub use self::parse_mode::ParseMode;
-pub use self::chat_action::ChatAction;
-
-mod parse_mode;
-mod chat_action;
-mod file;
-
 use reqwest::Client;
 use serde::de::DeserializeOwned;
 use serde_json;
 use serde_json::Value;
 
-use bot::chat_action::get_chat_action;
-use bot::parse_mode::get_parse_mode;
+pub use self::chat_action::{ChatAction, get_chat_action};
+pub use self::parse_mode::{ParseMode, get_parse_mode};
 use error::{Result, check_for_error};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
 use objects::{Update, Message, Contact, User, UserProfilePhotos, File};
+
+mod parse_mode;
+mod chat_action;
+mod file;
 
 const CHAT_ID: &str = "chat_id";
 const DISABLE_NOTIFICATION: &str = "disable_notification";
