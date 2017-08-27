@@ -17,7 +17,8 @@ pub struct Updater {
 }
 
 impl Updater {
-    /// Constructs a new `Updater` and starts the threads.
+    /// Constructs a new `Updater` and starts the threads, if token is `None` it will check the
+    /// environtment for the `TELEGRAM_BOT_TOKEN`.
     pub fn start(token: Option<String>,
                  poll_interval: Option<u64>,
                  timeout: Option<i32>,

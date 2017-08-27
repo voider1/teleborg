@@ -1,12 +1,15 @@
-//! # teleborg
+//! # Teleborg
 //!
-//! The `teleborg` library provides an interface to the [Telegram bot
+//! Teleborg is a fast, reliable and easy to use wrapper for the [Telegram bot
 //! API](https://core.telegram.org/bots/api).
+//! This crate aims to provide everything the user needs to create a high
+//! performant Telegram bot.
 //!
 //! ## Getting started
 //!
 //! ``` no_run
 //! extern crate teleborg;
+//!
 //! use teleborg::{Dispatcher, Bot, Updater};
 //! use teleborg::objects::Update;
 //!
@@ -23,7 +26,7 @@
 //! }
 //!
 //! // Our first command handler
-//! fn test(bot: &Bot, update: Update, args: Option<Vec<&str>>) {
+//! fn test(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
 //!     bot.reply_to_message(&update, "It works!").unwrap();
 //! }
 //! ```
