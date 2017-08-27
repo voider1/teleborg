@@ -1,4 +1,4 @@
-# teleborg
+# Teleborg
 A loose Telegram bot API for Rust based on the traiting system.
 
 How to use the project
