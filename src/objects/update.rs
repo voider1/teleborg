@@ -1,4 +1,4 @@
-use super::Message;
+use super::{CallBackQuery, Message};
 
 /// Represents an update returned by the Telegram API.
 #[derive(Clone, Deserialize, Debug)]
@@ -8,5 +8,5 @@ pub struct Update {
     pub edited_message: Option<Message>,
     pub inline_query: Option<String>,
     pub chosen_inline_result: Option<String>,
-    pub callback_query: Option<String>,
+    pub callback_query: Option<CallBackQuery>,
 }
