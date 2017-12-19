@@ -8,4 +8,5 @@ Cargo.lock
 
 .DS_Store
 .idea
-*.bk
+*.bko
+*.sublime-workspace
