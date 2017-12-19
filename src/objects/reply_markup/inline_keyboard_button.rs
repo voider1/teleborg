@@ -19,11 +19,11 @@ impl InlineKeyboardButton {
     ) -> InlineKeyboardButton {
         InlineKeyboardButton {
             text: text,
-            url: Some(url.unwrap_or("".to_string())),
-            callback_data: Some(callback_data.unwrap_or("".to_string())),
-            switch_inline_query: Some(switch_inline_query.unwrap_or("".to_string())),
+            url: Some(url.unwrap_or_else(|| "".to_string())),
+            callback_data: Some(callback_data.unwrap_or_else(|| "".to_string())),
+            switch_inline_query: Some(switch_inline_query.unwrap_or_else(|| "".to_string())),
             switch_inline_query_current_chat: Some(
-                switch_inline_query_current_chat.unwrap_or("".to_string()),
+                switch_inline_query_current_chat.unwrap_or_else(|| "".to_string()),
             ),
         }
     }

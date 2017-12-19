@@ -1,4 +1,4 @@
-pub enum File {
+enum File {
     FileId(String),
     Url(String),
     File(String),

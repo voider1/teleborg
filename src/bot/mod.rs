@@ -114,10 +114,10 @@ impl Bot {
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id
             .map(|i| i.to_string())
-            .unwrap_or("None".to_string());
+            .unwrap_or_else(|| "None".to_string());
         let reply_markup = &Box::new(reply_markup)
             .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
-            .unwrap_or("".to_string());
+            .unwrap_or_else(|| "".to_string());
 
         let path = ["sendMessage"];
         let params = [
@@ -196,13 +196,14 @@ impl Bot {
         let phone_number = &contact.phone_number;
         let first_name = &contact.first_name;
         let last_name = &contact.clone().last_name.unwrap();
-        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
+        let disable_notification: &str =
+            &disable_notification.unwrap_or_else(|| &false).to_string();
         let reply_to_message_id: &str = &reply_to_message_id
             .map(|i| i.to_string())
-            .unwrap_or("None".to_string());
+            .unwrap_or_else(|| "None".to_string());
         let reply_markup = &Box::new(reply_markup)
-            .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
-            .unwrap_or("".to_string());
+            .map(|r| serde_json::to_string(&r).unwrap_or_else(|_| "".to_string()))
+            .unwrap_or_else(|| "".to_string());
         let path = ["sendContact"];
         let params = [
             (CHAT_ID, chat_id),
@@ -225,8 +226,12 @@ impl Bot {
     ) -> Result<UserProfilePhotos> {
         debug!("Calling get_user_profile_photos...");
         let user_id: &str = &user_id.to_string();
-        let offset: &str = &offset.map(|i| i.to_string()).unwrap_or("None".to_string());
-        let limit: &str = &limit.map(|i| i.to_string()).unwrap_or("None".to_string());
+        let offset: &str = &offset
+            .map(|i| i.to_string())
+            .unwrap_or_else(|| "None".to_string());
+        let limit: &str = &limit
+            .map(|i| i.to_string())
+            .unwrap_or_else(|| "None".to_string());
         let path = ["getUserProfilePhotos"];
         let params = [(USER_ID, user_id), ("offset", offset), ("limit", limit)];
         self.call(&path, &params)
@@ -253,7 +258,7 @@ impl Bot {
         let user_id: &str = &user_id.to_string();
         let until_date: &str = &until_date
             .map(|i| i.to_string())
-            .unwrap_or("None".to_string());
+            .unwrap_or_else(|| "None".to_string());
         let path = ["kickChatMember"];
         let params = [
             (CHAT_ID, chat_id),

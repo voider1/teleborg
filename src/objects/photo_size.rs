@@ -1,4 +1,4 @@
-/// Represents a PhotoSize object, which is basically a photo.
+/// Represents a `PhotoSize` object, which is basically a photo.
 #[derive(Clone, Deserialize, Debug)]
 pub struct PhotoSize {
     pub file_id: String,

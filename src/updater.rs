@@ -1,4 +1,4 @@
-use std::{env, thread, time};
+use std::{thread, time};
 use std::sync::mpsc;
 use std::sync::Arc;
 
@@ -6,7 +6,7 @@ use bot;
 use dispatcher::Dispatcher;
 use objects::Update;
 
-const BASE_URL: &'static str = "https://api.telegram.org/bot";
+const BASE_URL: &str = "https://api.telegram.org/bot";
 
 /// An `Updater` which will request updates from the API.
 ///
@@ -49,20 +49,20 @@ impl Updater {
         debug!("Starting updater...");
         let (tx, rx) = mpsc::channel();
         let bot = Arc::new(bot::Bot::new([BASE_URL, &self.token].concat()).unwrap());
-        let updater_bot = bot.clone();
-        let dispatcher_bot = bot.clone();
+        let updater_bot = Arc::clone(&bot);
+        let dispatcher_bot = Arc::clone(&bot);
 
         thread::Builder::new()
             .name("dispatcher".to_string())
             .spawn(move || {
-                dispatcher.start_handling(rx, dispatcher_bot);
+                dispatcher.start_handling(&rx, &dispatcher_bot);
             })
             .unwrap();
 
         thread::Builder::new()
             .name("updater".to_string())
             .spawn(move || {
-                self.start_polling_thread(updater_bot, tx);
+                self.start_polling_thread(&updater_bot, &tx);
             })
             .unwrap()
             .join()
@@ -70,7 +70,7 @@ impl Updater {
     }
 
     /// The method which will run in a thread and push the updates to the `Dispatcher`.
-    fn start_polling_thread(&self, bot: Arc<bot::Bot>, tx: mpsc::Sender<Update>) {
+    fn start_polling_thread(&self, bot: &Arc<bot::Bot>, tx: &mpsc::Sender<Update>) {
         debug!("Going to start polling thread...");
         let poll_interval = time::Duration::from_secs(self.poll_interval);
         let mut last_update_id = 0;

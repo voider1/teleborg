@@ -1,6 +1,6 @@
 use marker::ReplyMarkup;
 
-/// Represents ForceReply from the Telegram bot API.
+/// Represents `ForceReply` from the Telegram bot API.
 #[derive(Serialize, Debug)]
 pub struct ForceReply {
     force_reply: bool,

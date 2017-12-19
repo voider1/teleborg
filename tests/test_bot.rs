@@ -10,11 +10,10 @@ mod tests {
     use teleborg::{Bot, ChatAction, ParseMode, NO_MARKUP};
     use teleborg::objects::{Contact, ForceReply, InlineKeyboardButton, InlineKeyboardMarkup};
 
-    const BASE_URL: &'static str = "https://api.telegram.org/bot";
+    const BASE_URL: &str = "https://api.telegram.org/bot";
 
     fn get_token() -> String {
         env::var("TELEGRAM_BOT_TOKEN")
-            .ok()
             .expect("Can't find TELEGRAM_BOT_TOKEN env variable")
     }
 
@@ -23,12 +22,10 @@ mod tests {
         let bot_url = [BASE_URL, &token].concat();
         let bot = Bot::new(bot_url).unwrap();
         let chat_id = env::var("TELEGRAM_CHAT_ID")
-            .ok()
             .expect("Can't find TELEGRAM_CHAT_ID env variable")
             .parse::<i64>()
             .unwrap();
         let user_id = env::var("TELEGRAM_USER_ID")
-            .ok()
             .expect("Can't find TELEGRAM_USER_ID env variable")
             .parse::<i64>()
             .unwrap();
