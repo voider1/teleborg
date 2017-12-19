@@ -54,7 +54,9 @@ impl From<reqwest::Error> for Error {
         } else if err.is_serialization() {
             Error::SerializeError(String::from("Something went wrong with the serialization."))
         } else if err.is_redirect() {
-            Error::RequestError(String::from("Server redirecting too many times or making a loop"))
+            Error::RequestError(String::from(
+                "Server redirecting too many times or making a loop",
+            ))
         } else if err.is_client_error() {
             let status = err.status();
 
@@ -72,7 +74,9 @@ impl From<reqwest::Error> for Error {
                 Error::RequestError(String::from("Response had a 5xx status code"))
             }
         } else {
-            Error::RequestError(String::from("Something went wrong while trying to make a request"))
+            Error::RequestError(String::from(
+                "Something went wrong while trying to make a request",
+            ))
         }
     }
 }

@@ -4,8 +4,7 @@ use marker::ReplyMarkup;
 #[derive(Serialize, Debug)]
 pub struct ForceReply {
     force_reply: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    selective: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")] selective: Option<bool>,
 }
 
 impl ForceReply {

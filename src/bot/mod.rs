@@ -3,12 +3,12 @@ use serde::de::DeserializeOwned;
 use serde_json;
 use serde_json::Value;
 
-pub use self::chat_action::{ChatAction, get_chat_action};
-pub use self::parse_mode::{ParseMode, get_parse_mode};
-use error::{Result, check_for_error};
+pub use self::chat_action::{get_chat_action, ChatAction};
+pub use self::parse_mode::{get_parse_mode, ParseMode};
+use error::{check_for_error, Result};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Update, Message, Contact, User, UserProfilePhotos, File};
+use objects::{Contact, File, Message, Update, User, UserProfilePhotos};
 
 mod parse_mode;
 mod chat_action;
@@ -72,22 +72,16 @@ impl Bot {
         &self,
         offset: i32,
         limit: Option<i32>,
-        timeout: Option<i32>,
-        network_delay: Option<f32>,
+        timeout: i32,
+        network_delay: f32,
     ) -> Result<Option<Vec<Update>>> {
         debug!("Calling get_updates...");
         let limit = limit.unwrap_or(100);
-        let timeout = timeout.unwrap_or(0);
-        let network_delay = network_delay.unwrap_or(0.0);
         let path = ["getUpdates"];
         let path_url = ::construct_api_url(&self.bot_url, &path);
         let url = format!(
             "{}?offset={}&limit={}&timeout={}&network_delay={}",
-            path_url,
-            offset,
-            limit,
-            timeout,
-            network_delay
+            path_url, offset, limit, timeout, network_delay
         );
         let mut data = self.client.get(&url)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
@@ -118,10 +112,9 @@ impl Bot {
         let disable_web_page_preview: &str =
             &disable_web_page_preview.unwrap_or(&false).to_string();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string()).unwrap_or(
-            "None"
-                .to_string(),
-        );
+        let reply_to_message_id: &str = &reply_to_message_id
+            .map(|i| i.to_string())
+            .unwrap_or("None".to_string());
         let reply_markup = &Box::new(reply_markup)
             .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
             .unwrap_or("".to_string());
@@ -204,10 +197,9 @@ impl Bot {
         let first_name = &contact.first_name;
         let last_name = &contact.clone().last_name.unwrap();
         let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id.map(|i| i.to_string()).unwrap_or(
-            "None"
-                .to_string(),
-        );
+        let reply_to_message_id: &str = &reply_to_message_id
+            .map(|i| i.to_string())
+            .unwrap_or("None".to_string());
         let reply_markup = &Box::new(reply_markup)
             .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
             .unwrap_or("".to_string());
@@ -259,9 +251,9 @@ impl Bot {
         debug!("Calling kick_chat_member...");
         let chat_id: &str = &chat_id.to_string();
         let user_id: &str = &user_id.to_string();
-        let until_date: &str = &until_date.map(|i| i.to_string()).unwrap_or(
-            "None".to_string(),
-        );
+        let until_date: &str = &until_date
+            .map(|i| i.to_string())
+            .unwrap_or("None".to_string());
         let path = ["kickChatMember"];
         let params = [
             (CHAT_ID, chat_id),

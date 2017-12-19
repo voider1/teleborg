@@ -22,9 +22,9 @@ impl InlineKeyboardButton {
             url: Some(url.unwrap_or("".to_string())),
             callback_data: Some(callback_data.unwrap_or("".to_string())),
             switch_inline_query: Some(switch_inline_query.unwrap_or("".to_string())),
-            switch_inline_query_current_chat: Some(switch_inline_query_current_chat.unwrap_or(
-                "".to_string(),
-            )),
+            switch_inline_query_current_chat: Some(
+                switch_inline_query_current_chat.unwrap_or("".to_string()),
+            ),
         }
     }
 }

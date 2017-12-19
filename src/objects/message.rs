@@ -1,5 +1,5 @@
-use super::{User, Chat, MessageEntity, Contact, Document, Audio, Sticker, Video, PhotoSize, Voice,
-            Location, Venue, Game};
+use super::{Audio, Chat, Contact, Document, Game, Location, MessageEntity, PhotoSize, Sticker,
+            User, Venue, Video, Voice};
 
 /// Represents a Telegram message.
 #[derive(Clone, Deserialize, Debug)]

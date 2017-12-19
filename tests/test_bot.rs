@@ -1,5 +1,5 @@
-extern crate teleborg;
 extern crate reqwest;
+extern crate teleborg;
 
 #[cfg(test)]
 mod tests {
@@ -7,15 +7,15 @@ mod tests {
 
     use reqwest::Client;
 
-    use teleborg::{Bot, ParseMode, ChatAction, NO_MARKUP};
-    use teleborg::objects::{Contact, InlineKeyboardButton, InlineKeyboardMarkup, ForceReply};
+    use teleborg::{Bot, ChatAction, ParseMode, NO_MARKUP};
+    use teleborg::objects::{Contact, ForceReply, InlineKeyboardButton, InlineKeyboardMarkup};
 
     const BASE_URL: &'static str = "https://api.telegram.org/bot";
 
     fn get_token() -> String {
-        env::var("TELEGRAM_BOT_TOKEN").ok().expect(
-            "Can't find TELEGRAM_BOT_TOKEN env variable",
-        )
+        env::var("TELEGRAM_BOT_TOKEN")
+            .ok()
+            .expect("Can't find TELEGRAM_BOT_TOKEN env variable")
     }
 
     fn setup() -> (Bot, i64, i64) {

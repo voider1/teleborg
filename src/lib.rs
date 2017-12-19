@@ -31,15 +31,17 @@
 //! }
 //! ```
 
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 extern crate reqwest;
 extern crate serde;
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde_json;
 
 pub use reqwest::StatusCode;
 
-pub use self::bot::{Bot, ParseMode, ChatAction};
+pub use self::bot::{Bot, ChatAction, ParseMode};
 pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;

@@ -14,78 +14,69 @@ const BASE_URL: &'static str = "https://api.telegram.org/bot";
 /// which will poll for updates and dispatch them to the handlers.
 pub struct Updater {
     token: String,
+    poll_interval: u64,
+    timeout: i32,
+    network_delay: f32,
+}
+
+pub struct UpdaterBuilder {
+    token: String,
+    dispatcher: Dispatcher,
+    poll_interval: u64,
+    timeout: i32,
+    network_delay: f32,
 }
 
 impl Updater {
-    /// Constructs a new `Updater` and starts the threads, if token is `None` it will check the
-    /// environtment for the `TELEGRAM_BOT_TOKEN`.
-    pub fn start(token: Option<String>,
-                 poll_interval: Option<u64>,
-                 timeout: Option<i32>,
-                 network_delay: Option<f32>,
-                 dispatcher: Dispatcher)
-                 -> Updater {
-        debug!("Starting updater...");
-        let token =
-            token
-                .or_else(|| env::var("TELEGRAM_BOT_TOKEN").ok())
-                .expect("You should pass in a token to new or set the TELEGRAM_BOT_TOKEN env var");
+    /// Constructs a new `UpdaterBuilder`.
+    pub fn new(token: String, dispatcher: Dispatcher) -> UpdaterBuilder {
+        let poll_interval = 0;
+        let timeout = 10;
+        let network_delay = 0.0;
 
-        let mut updater = Updater { token: token };
-
-        debug!("Going to start polling...");
-        updater.start_polling(poll_interval, timeout, network_delay, dispatcher);
-        updater
+        UpdaterBuilder {
+            token,
+            dispatcher,
+            poll_interval,
+            timeout,
+            network_delay,
+        }
     }
 
-    /// Starts the `Updater` and `Dispatcher` threads.
-    fn start_polling(&mut self,
-                     poll_interval: Option<u64>,
-                     timeout: Option<i32>,
-                     network_delay: Option<f32>,
-                     mut dispatcher: Dispatcher) {
-        // Making sure there are default values
-        let poll_interval = poll_interval.or(Some(0));
-        let timeout = timeout.or(Some(10));
-        let network_delay = network_delay.or(Some(0.0));
-
+    /// Constructs a new `Updater` and starts the threads, if token is `None` it will check the
+    /// environtment for the `TELEGRAM_BOT_TOKEN`.
+    pub fn start(self, mut dispatcher: Dispatcher) {
+        debug!("Starting updater...");
         let (tx, rx) = mpsc::channel();
         let bot = Arc::new(bot::Bot::new([BASE_URL, &self.token].concat()).unwrap());
         let updater_bot = bot.clone();
         let dispatcher_bot = bot.clone();
 
-        // Spawn threads
         thread::Builder::new()
             .name("dispatcher".to_string())
-            .spawn(move || { dispatcher.start_handling(rx, dispatcher_bot); })
+            .spawn(move || {
+                dispatcher.start_handling(rx, dispatcher_bot);
+            })
             .unwrap();
 
         thread::Builder::new()
             .name("updater".to_string())
             .spawn(move || {
-                       Self::start_polling_thread(poll_interval,
-                                                  timeout,
-                                                  network_delay,
-                                                  updater_bot,
-                                                  tx);
-                   })
+                self.start_polling_thread(updater_bot, tx);
+            })
             .unwrap()
             .join()
             .unwrap();
     }
 
     /// The method which will run in a thread and push the updates to the `Dispatcher`.
-    fn start_polling_thread(poll_interval: Option<u64>,
-                            timeout: Option<i32>,
-                            network_delay: Option<f32>,
-                            bot: Arc<bot::Bot>,
-                            tx: mpsc::Sender<Update>) {
+    fn start_polling_thread(&self, bot: Arc<bot::Bot>, tx: mpsc::Sender<Update>) {
         debug!("Going to start polling thread...");
-        let poll_interval = time::Duration::from_secs(poll_interval.unwrap_or(0));
+        let poll_interval = time::Duration::from_secs(self.poll_interval);
         let mut last_update_id = 0;
 
         loop {
-            let updates = bot.get_updates(last_update_id, None, timeout, network_delay);
+            let updates = bot.get_updates(last_update_id, None, self.timeout, self.network_delay);
 
             match updates {
                 Ok(Some(ref v)) => {
@@ -112,5 +103,47 @@ impl Updater {
 
             thread::sleep(poll_interval);
         }
+    }
+}
+
+impl UpdaterBuilder {
+    pub fn poll_interval(&mut self, amount: u64) -> &mut Self {
+        self.poll_interval = amount;
+        self
+    }
+
+    pub fn timeout(&mut self, amount: i32) -> &mut Self {
+        self.timeout = amount;
+        self
+    }
+
+    pub fn network_delay(&mut self, amount: f32) -> &mut Self {
+        self.network_delay = amount;
+        self
+    }
+
+    pub fn build(self) -> (Updater, Dispatcher) {
+        let UpdaterBuilder {
+            token,
+            dispatcher,
+            poll_interval,
+            timeout,
+            network_delay,
+        } = self;
+
+        (
+            Updater {
+                token,
+                poll_interval,
+                timeout,
+                network_delay,
+            },
+            dispatcher,
+        )
+    }
+
+    pub fn start(self) {
+        let (updater, dispatcher) = self.build();
+        updater.start(dispatcher);
     }
 }

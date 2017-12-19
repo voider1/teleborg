@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::sync::{Arc, mpsc};
+use std::sync::{mpsc, Arc};
 
 use command::Command;
 use bot::Bot;
@@ -47,8 +47,9 @@ impl Dispatcher {
                     let (_, bot_command) = msg[0].split_at(1);
                     let name_command = bot_command.split("@").collect::<Vec<&str>>();
 
-                    if name_command.len() == 1 ||
-                       name_command.len() == 2 && name_command[1] == bot.username {
+                    if name_command.len() == 1
+                        || name_command.len() == 2 && name_command[1] == bot.username
+                    {
                         let command = self.command_handlers.get_mut(name_command[0]);
 
                         if let Some(c) = command {

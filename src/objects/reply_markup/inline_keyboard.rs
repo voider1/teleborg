@@ -10,7 +10,9 @@ pub struct InlineKeyboardMarkup {
 impl InlineKeyboardMarkup {
     /// Constructs a new `InlineKeyboardMarkup`.
     pub fn new(inline_keyboard: Vec<Vec<InlineKeyboardButton>>) -> InlineKeyboardMarkup {
-        InlineKeyboardMarkup { inline_keyboard: inline_keyboard }
+        InlineKeyboardMarkup {
+            inline_keyboard: inline_keyboard,
+        }
     }
 }
 
