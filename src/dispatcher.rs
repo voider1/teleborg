@@ -58,9 +58,9 @@ impl Dispatcher {
                             if c.1 {
                                 let args = msg.clone().split_off(1);
                                 debug!("With these arguments: {:?}", args);
-                                c.0.execute(&bot, update, Some(args));
+                                c.0.execute(bot, update, Some(args));
                             } else {
-                                c.0.execute(&bot, update, None);
+                                c.0.execute(bot, update, None);
                             }
                             continue;
                         }
@@ -69,7 +69,7 @@ impl Dispatcher {
             }
             for message_handler in &mut self.message_handlers {
                 debug!("Going to execute a message handler...");
-                message_handler.execute(&bot, update.clone(), None);
+                message_handler.execute(bot, update.clone(), None);
             }
         }
     }

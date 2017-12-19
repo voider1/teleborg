@@ -116,7 +116,7 @@ impl Bot {
             .map(|i| i.to_string())
             .unwrap_or_else(|| "None".to_string());
         let reply_markup = &Box::new(reply_markup)
-            .map(|r| serde_json::to_string(&r).unwrap_or("".to_string()))
+            .map(|r| serde_json::to_string(&r).unwrap_or_else(|_| "".to_string()))
             .unwrap_or_else(|| "".to_string());
 
         let path = ["sendMessage"];
