@@ -1,3 +1,4 @@
+use failure::ResultExt;
 use reqwest::Client;
 use serde::Serialize;
 use serde::de::DeserializeOwned;
@@ -6,19 +7,13 @@ use serde_json::Value;
 
 pub use self::chat_action::{get_chat_action, ChatAction};
 pub use self::parse_mode::{get_parse_mode, ParseMode};
-use error::{ErrorKind};
-use error::Error::JsonNotFound;
-use marker::ReplyMarkup;
-use types::{Contact, File, Message, Update, User, UserProfilePhotos};
+use error::{ErrorKind, Result};
+use types::{Update, User};
 
 mod parse_mode;
 mod chat_action;
 
-const CHAT_ID: &str = "chat_id";
-const DISABLE_NOTIFICATION: &str = "disable_notification";
-const REPLY_TO_MESSAGE_ID: &str = "reply_to_message_id";
-const REPLY_MARKUP: &str = "reply_markup";
-const USER_ID: &str = "user_id";
+const BASE_URL: &str = "https://api.telegram.org/bot";
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -34,12 +29,20 @@ pub struct Bot {
     client: Client,
 }
 
+#[derive(Debug, Deserialize)]
+struct TelegramResponse {
+    ok: bool,
+    error_code: Option<i32>,
+    description: Option<String>,
+    result: Option<Value>,
+}
+
 impl Bot {
     /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
         debug!("Going to construct a new Bot...");
-        let client = Client::new()?;
-        let me = Bot::get_me(&client, &bot_url)?;
+        let client = Client::new();
+        let me = Self::get_me(&client, &bot_url)?;
         let id = me.id;
         let first_name = me.first_name;
         let last_name = me.last_name;
@@ -55,15 +58,17 @@ impl Bot {
         })
     }
 
-    /// API call which gets the information about your bot.
-    pub fn get_me(client: &Client, bot_url: &str) -> Result<User> {
+    fn get_me(client: &Client, bot_url: &str) -> Result<User> {
         debug!("Calling get_me...");
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
-        let mut data = client.get(&url)?.send()?;
-        let rjson: Value = check_for_error(data.json()?)?;
-        let user_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let user: User = serde_json::from_value(user_json.clone())?;
+        let resp = client
+            .get(&url)
+            .send()
+            .context(ErrorKind::NetworkingError)?
+            .json()
+            .context(ErrorKind::JSONDeserializationError)?;
+        let user: User = Self::get_result(resp)?;
         Ok(user)
     }
 
@@ -83,230 +88,46 @@ impl Bot {
             "{}?offset={}&limit={}&timeout={}&network_delay={}",
             path_url, offset, limit, timeout, network_delay
         );
-        let mut data = self.client.get(&url)?.send()?;
-        let rjson: Value = check_for_error(data.json()?)?;
-        let updates_json = rjson.get("result");
+        let resp = self.client
+            .get(&url)
+            .send()
+            .context(ErrorKind::NetworkingError)?
+            .json()
+            .context(ErrorKind::JSONDeserializationError)?;
+        let updates: Vec<Update> = Self::get_result(resp)?;
 
-        if let Some(result) = updates_json {
-            let updates: Vec<Update> = serde_json::from_value(result.clone())?;
-            Ok(Some(updates))
-        } else {
+        if updates.is_empty() {
             Ok(None)
+        } else {
+            Ok(Some(updates))
         }
     }
 
-    /// API call which will send a message to a chat which your bot participates in.
-    pub fn send_message<M: ReplyMarkup>(
-        &self,
-        chat_id: &i64,
-        text: &str,
-        parse_mode: Option<&ParseMode>,
-        disable_web_page_preview: Option<&bool>,
-        disable_notification: Option<&bool>,
-        reply_to_message_id: Option<&i64>,
-        reply_markup: Option<M>,
-    ) -> Result<Message> {
-        debug!("Calling send_message...");
-        let chat_id: &str = &chat_id.to_string();
-        let parse_mode = &get_parse_mode(parse_mode.unwrap_or(&ParseMode::Text));
-        let disable_web_page_preview: &str =
-            &disable_web_page_preview.unwrap_or(&false).to_string();
-        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id
-            .map(|i| i.to_string())
-            .unwrap_or_else(|| "None".to_string());
-        let reply_markup = &Box::new(reply_markup)
-            .map(|r| serde_json::to_string(&r).unwrap_or_else(|_| "".to_string()))
-            .unwrap_or_else(|| "".to_string());
-
-        let path = ["sendMessage"];
-        let params = [
-            (CHAT_ID, chat_id),
-            ("text", text),
-            ("parse_mode", parse_mode),
-            ("disable_web_page_preview", disable_web_page_preview),
-            (DISABLE_NOTIFICATION, disable_notification),
-            (REPLY_TO_MESSAGE_ID, reply_to_message_id),
-            (REPLY_MARKUP, reply_markup),
-        ];
-        self.call(&path, &params)
-    }
-
-    /// API call which will reply to a message directed to your bot.
-    pub fn reply_to_message(&self, update: &Update, text: &str) -> Result<Message> {
-        debug!("Calling reply_to_message...");
-        let message = update.clone().message.unwrap();
-        let message_id = message.message_id;
-        let chat_id = message.chat.id;
-        self.send_message(
-            &chat_id,
-            text,
-            None,
-            None,
-            None,
-            Some(&message_id),
-            ::NO_MARKUP,
-        )
-    }
-
-    /// API call which will forward a message.
-    pub fn forward_message(
-        &self,
-        update: &Update,
-        chat_id: &i64,
-        disable_notification: Option<&bool>,
-    ) -> Result<Message> {
-        debug!("Calling forward_message...");
-        let message = update.clone().message.unwrap();
-        let chat_id: &str = &chat_id.to_string();
-        let from_chat_id: &str = &message.chat.id.to_string();
-        let message_id: &str = &message.message_id.to_string();
-        let disable_notification: &str = &disable_notification.unwrap_or(&false).to_string();
-        let path = ["forwardMessage"];
-        let params = [
-            (CHAT_ID, chat_id),
-            ("from_chat_id", from_chat_id),
-            (DISABLE_NOTIFICATION, disable_notification),
-            ("message_id", message_id),
-        ];
-        self.call(&path, &params)
-    }
-
-    /// API call which will show the given chat action to the users.
-    pub fn send_chat_action(&self, chat_id: &i64, action: &ChatAction) -> Result<bool> {
-        debug!("Calling send_chat_action...");
-        let chat_id: &str = &chat_id.to_string();
-        let action = &get_chat_action(action);
-        let path = ["sendChatAction"];
-        let params = [(CHAT_ID, chat_id), ("action", action)];
-        self.call(&path, &params)
-    }
-
-    /// API call which will send the given contact.
-    pub fn send_contact<M: ReplyMarkup>(
-        &self,
-        chat_id: &i64,
-        contact: &Contact,
-        disable_notification: Option<&bool>,
-        reply_to_message_id: Option<&i64>,
-        reply_markup: Option<M>,
-    ) -> Result<Message> {
-        debug!("Calling send_contact...");
-        let chat_id: &str = &chat_id.to_string();
-        let phone_number = &contact.phone_number;
-        let first_name = &contact.first_name;
-        let last_name = &contact.clone().last_name.unwrap();
-        let disable_notification: &str =
-            &disable_notification.unwrap_or_else(|| &false).to_string();
-        let reply_to_message_id: &str = &reply_to_message_id
-            .map(|i| i.to_string())
-            .unwrap_or_else(|| "None".to_string());
-        let reply_markup = &Box::new(reply_markup)
-            .map(|r| serde_json::to_string(&r).unwrap_or_else(|_| "".to_string()))
-            .unwrap_or_else(|| "".to_string());
-        let path = ["sendContact"];
-        let params = [
-            (CHAT_ID, chat_id),
-            ("phone_number", phone_number),
-            ("first_name", first_name),
-            ("last_name", last_name),
-            (DISABLE_NOTIFICATION, disable_notification),
-            (REPLY_TO_MESSAGE_ID, reply_to_message_id),
-            (REPLY_MARKUP, reply_markup),
-        ];
-        self.call(&path, &params)
-    }
-
-    /// API call which will get a list of profile pictures for a user.
-    pub fn get_user_profile_photos(
-        &self,
-        user_id: &i64,
-        offset: Option<&i64>,
-        limit: Option<&i64>,
-    ) -> Result<UserProfilePhotos> {
-        debug!("Calling get_user_profile_photos...");
-        let user_id: &str = &user_id.to_string();
-        let offset: &str = &offset
-            .map(|i| i.to_string())
-            .unwrap_or_else(|| "None".to_string());
-        let limit: &str = &limit
-            .map(|i| i.to_string())
-            .unwrap_or_else(|| "None".to_string());
-        let path = ["getUserProfilePhotos"];
-        let params = [(USER_ID, user_id), ("offset", offset), ("limit", limit)];
-        self.call(&path, &params)
-    }
-
-    /// API call which will get basic info about a file and prepare it for donwloading.
-    pub fn get_file(&self, file_id: &str) -> Result<File> {
-        debug!("Calling get_file...");
-        let path = ["getFile"];
-        let params = [("file_id", file_id)];
-        self.call(&path, &params)
-    }
-
-    /// API call which will kick a user from a group, supergroup or a channel. The bot must be
-    /// an administrator in the chat and must have the appropiate rights for this call to succeed.
-    pub fn kick_chat_member(
-        &self,
-        chat_id: &i64,
-        user_id: &i64,
-        until_date: Option<i64>,
-    ) -> Result<bool> {
-        debug!("Calling kick_chat_member...");
-        let chat_id: &str = &chat_id.to_string();
-        let user_id: &str = &user_id.to_string();
-        let until_date: &str = &until_date
-            .map(|i| i.to_string())
-            .unwrap_or_else(|| "None".to_string());
-        let path = ["kickChatMember"];
-        let params = [
-            (CHAT_ID, chat_id),
-            (USER_ID, user_id),
-            ("until_date", until_date),
-        ];
-        self.call(&path, &params)
-    }
-
-    /// API call which will unban previously kicked members in a supergroup or channel. The bot
-    /// must be an administrator and must have the appropiate rights for this call to succeed.
-    pub fn unban_chat_member(&self, chat_id: &i64, user_id: &i64) -> Result<bool> {
-        debug!("Calling unban_chat_member...");
-        let chat_id: &str = &chat_id.to_string();
-        let user_id: &str = &user_id.to_string();
-        let path = ["unbanChatMember"];
-        let params = [(CHAT_ID, chat_id), (USER_ID, user_id)];
-        self.call(&path, &params)
-    }
-
-    /// API call which will export an invite link to a supergroup or channel. The bot must be an
-    /// administrator and must have the the appropiate rights for this call to succeed.
-    pub fn export_chat_invite_link(&self, chat_id: &i64) -> Result<String> {
-        debug!("Calling export_chat_invite_link...");
-        let chat_id: &str = &chat_id.to_string();
-        let path = ["exportChatInviteLink"];
-        let params = [(CHAT_ID, chat_id)];
-        self.call(&path, &params)
-    }
-
-    /// API call which will delete a chat photo. Photos can't be changed for private chats. The bot
-    /// must be an administrator and must have the appropiate rights for this call to succeed.
-    pub fn delete_chat_photo(&self, chat_id: &i64) -> Result<bool> {
-        debug!("Calling delete_chat_photo");
-        let chat_id: &str = &chat_id.to_string();
-        let path = ["deleteChatPhoto"];
-        let params = [(CHAT_ID, chat_id)];
-        self.call(&path, &params)
-    }
-
     /// The actual networking done for making API calls.
-    pub fn call<T: Serialize, R: DeserializeOwned>(&self, url: &str, request: &T) -> Result<R> {
+    pub fn call<T: Serialize, R: DeserializeOwned>(&self, path: &str, request: &T) -> Result<R> {
         debug!("Making API call...");
-        let ser_req = serde_json::to_string(request);
-        let mut data = self.client.post(url)?.json(&ser_req)?.send()?;
-        let rjson: Value = check_for_error(data.json()?)?;
-        let object_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let object = serde_json::from_value::<R>(object_json.clone())?;
-        Ok(object)
+        let url = [BASE_URL, path].join("/");
+        let ser_req = serde_json::to_string(request).context(ErrorKind::JSONSerializationError)?;
+        let resp = self.client
+            .post(&url)
+            .json(&ser_req)
+            .send()
+            .context(ErrorKind::NetworkingError)?
+            .json()
+            .context(ErrorKind::JSONDeserializationError)?;
+        let result = Self::get_result(resp)?;
+
+        Ok(result)
+    }
+
+    fn get_result<R: DeserializeOwned>(resp: TelegramResponse) -> Result<R> {
+        if resp.ok {
+            let result_val = resp.result.ok_or(ErrorKind::JSONDeserializationError)?;
+            let result: R =
+                serde_json::from_value(result_val).context(ErrorKind::JSONDeserializationError)?;
+            Ok(result)
+        } else {
+            Err(ErrorKind::TelegramAPIError)?
+        }
     }
 }

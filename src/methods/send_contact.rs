@@ -3,17 +3,17 @@ use types::Message;
 use marker::ReplyMarkup;
 
 #[derive(Debug, Builder, Serialize)]
-pub struct SendMessage<M: ReplyMarkup> {
+pub struct SendContact<M: ReplyMarkup> {
     chat_id: i32,
-    text: &'static str,
-    #[serde(skip_serializing_if = "Option::is_none")] parse_mode: Option<&'static str>,
-    #[serde(skip_serializing_if = "Option::is_none")] disable_web_page_view: Option<bool>,
+    phone_number: &'static str,
+    first_name: &'static str,
+    #[serde(skip_serializing_if = "Option::is_none")] last_name: Option<&'static str>,
     #[serde(skip_serializing_if = "Option::is_none")] disable_notification: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")] reply_to_message_id: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")] reply_markup: Option<M>,
 }
 
-impl<M: ReplyMarkup> Method for SendMessage<M> {
+impl<M: ReplyMarkup> Method for SendContact<M> {
     type Response = Message;
-    const PATH: &'static str = "sendMessage";
+    const PATH: &'static str = "sendContact";
 }
