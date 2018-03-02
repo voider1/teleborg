@@ -1,13 +1,12 @@
-use objects::PhotoSize;
+use super::PhotoSize;
 
-/// Represents a video file.
+/// Represents a sticker.
 #[derive(Clone, Deserialize, Debug)]
-pub struct Video {
+pub struct Sticker {
     pub file_id: String,
     pub width: i64,
     pub height: i64,
-    pub duration: i64,
     pub thumb: Option<PhotoSize>,
-    pub mime_type: Option<String>,
+    pub emoji: Option<String>,
     pub file_size: Option<i64>,
 }

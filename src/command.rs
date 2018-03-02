@@ -1,5 +1,5 @@
 use bot;
-use objects::Update;
+use types::Update;
 
 /// A trait which has to be implemented for all handlers.
 ///

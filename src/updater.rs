@@ -4,43 +4,29 @@ use std::sync::Arc;
 
 use bot;
 use dispatcher::Dispatcher;
-use objects::Update;
+use types::Update;
 
 const BASE_URL: &str = "https://api.telegram.org/bot";
 
-/// An `Updater` which will request updates from the API.
+/// An `Updater` which will keep track of the updates from the API.
 ///
 /// The `Updater` is the entry point of this library and will start threads
 /// which will poll for updates and dispatch them to the handlers.
+#[derive(Debug, Builder)]
 pub struct Updater {
     token: String,
+    #[builder(default = "0")]
     poll_interval: u64,
+    #[builder(default = "10")]
     timeout: i32,
-    network_delay: f32,
-}
-
-pub struct UpdaterBuilder {
-    token: String,
-    dispatcher: Dispatcher,
-    poll_interval: u64,
-    timeout: i32,
+    #[builder(default = "0.0")]
     network_delay: f32,
 }
 
 impl Updater {
     /// Constructs a new `UpdaterBuilder`.
-    pub fn new(token: String, dispatcher: Dispatcher) -> UpdaterBuilder {
-        let poll_interval = 0;
-        let timeout = 10;
-        let network_delay = 0.0;
-
-        UpdaterBuilder {
-            token,
-            dispatcher,
-            poll_interval,
-            timeout,
-            network_delay,
-        }
+    pub fn builder() -> UpdaterBuilder {
+        UpdaterBuilder::default()
     }
 
     /// Constructs a new `Updater` and starts the threads, if token is `None` it will check the
@@ -106,44 +92,9 @@ impl Updater {
     }
 }
 
+/// A builder to let you easily change the configuration of the updater
 impl UpdaterBuilder {
-    pub fn poll_interval(&mut self, amount: u64) -> &mut Self {
-        self.poll_interval = amount;
-        self
-    }
-
-    pub fn timeout(&mut self, amount: i32) -> &mut Self {
-        self.timeout = amount;
-        self
-    }
-
-    pub fn network_delay(&mut self, amount: f32) -> &mut Self {
-        self.network_delay = amount;
-        self
-    }
-
-    pub fn build(self) -> (Updater, Dispatcher) {
-        let UpdaterBuilder {
-            token,
-            dispatcher,
-            poll_interval,
-            timeout,
-            network_delay,
-        } = self;
-
-        (
-            Updater {
-                token,
-                poll_interval,
-                timeout,
-                network_delay,
-            },
-            dispatcher,
-        )
-    }
-
-    pub fn start(self) {
-        let (updater, dispatcher) = self.build();
-        updater.start(dispatcher);
+    pub fn start(self, dispatcher: Dispatcher) {
+        self.build().unwrap().start(dispatcher);
     }
 }

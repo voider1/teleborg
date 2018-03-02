@@ -1,6 +1,4 @@
-use objects::PhotoSize;
-use objects::MessageEntity;
-use objects::Animation;
+use super::{PhotoSize, MessageEntity, Animation};
 
 /// Represents a game.
 #[derive(Clone, Deserialize, Debug)]

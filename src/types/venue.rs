@@ -1,4 +1,4 @@
-use objects::Location;
+use super::Location;
 
 /// Represents a venue.
 #[derive(Clone, Deserialize, Debug)]

@@ -3,7 +3,7 @@ use std::sync::{mpsc, Arc};
 
 use command::Command;
 use bot::Bot;
-use objects::Update;
+use types::Update;
 
 /// A `Dispatcher` which will receive updates from the `Updater` and dispatches
 /// them to the registered handlers.

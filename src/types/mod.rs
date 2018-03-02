@@ -16,8 +16,7 @@ pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
 pub use self::user_profile_photos::UserProfilePhotos;
-pub use self::reply_markup::{ForceReply, InlineKeyboardButton, InlineKeyboardMarkup, NullMarkup,
-                             ReplyKeyboardMarkup};
+pub use self::reply_markup::*;
 pub use self::file::File;
 
 mod chat;

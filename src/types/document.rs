@@ -1,4 +1,4 @@
-use objects::PhotoSize;
+use super::PhotoSize;
 
 /// Represents a document.
 #[derive(Clone, Deserialize, Debug)]

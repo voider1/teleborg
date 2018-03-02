@@ -19,10 +19,10 @@ impl ReplyKeyboardMarkup {
         selective: Option<bool>,
     ) -> ReplyKeyboardMarkup {
         ReplyKeyboardMarkup {
-            keyboard: keyboard,
-            resize_keyboard: resize_keyboard,
-            one_time_keyboard: one_time_keyboard,
-            selective: selective,
+            keyboard,
+            resize_keyboard,
+            one_time_keyboard,
+            selective,
         }
     }
 }

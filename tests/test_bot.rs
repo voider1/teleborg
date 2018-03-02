@@ -8,7 +8,7 @@ mod tests {
     use reqwest::Client;
 
     use teleborg::{Bot, ChatAction, ParseMode, NO_MARKUP};
-    use teleborg::objects::{Contact, ForceReply, InlineKeyboardButton, InlineKeyboardMarkup};
+    use teleborg::types::{Contact, ForceReply, InlineKeyboardButton, InlineKeyboardMarkup};
 
     const BASE_URL: &str = "https://api.telegram.org/bot";
 

@@ -11,7 +11,7 @@
 //! extern crate teleborg;
 //!
 //! use teleborg::{Dispatcher, Bot, Updater};
-//! use teleborg::objects::Update;
+//! use teleborg::types::Update;
 //!
 //! fn main() {
 //!     // Make sure you have your token
@@ -22,7 +22,7 @@
 //!     dispatcher.add_command_handler("test", test, false);
 //!     // Start the updater, the Updater will start the threads, one of which will poll for updates
 //!     // and send those to the Dispatcher's thread which will act upon it with the registered handlers
-//!		Updater::new(token, dispatcher).start();
+//!     Updater::builder().token(token).start(dispatcher);
 //! }
 //!
 //! // Our first command handler
@@ -31,12 +31,12 @@
 //! }
 //! ```
 
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate derive_builder;
+#{macro_use] extern crate failure;
+#[macro_use] extern crate log;
 extern crate reqwest;
 extern crate serde;
-#[macro_use]
-extern crate serde_derive;
+#[macro_use] extern crate serde_derive;
 extern crate serde_json;
 
 pub use reqwest::StatusCode;
@@ -47,7 +47,8 @@ pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
 
 pub mod error;
-pub mod objects;
+pub mod methods;
+pub mod types;
 mod bot;
 mod command;
 mod dispatcher;
@@ -55,10 +56,10 @@ mod marker;
 mod updater;
 
 /// Pass this to a method which requires markup where you do not want markup.
-pub const NO_MARKUP: Option<objects::NullMarkup> = None;
+pub const NO_MARKUP: Option<types::NullMarkup> = None;
 
-impl<T: Sync + Send + 'static + FnMut(&Bot, objects::Update, Option<Vec<&str>>)> Command for T {
-    fn execute(&mut self, bot: &Bot, update: objects::Update, args: Option<Vec<&str>>) {
+impl<T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>)> Command for T {
+    fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {
         self(bot, update, args);
     }
 }

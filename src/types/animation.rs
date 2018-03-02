@@ -1,4 +1,4 @@
-use objects::PhotoSize;
+use super::PhotoSize;
 
 /// Represents an animation object.
 #[derive(Clone, Deserialize, Debug)]

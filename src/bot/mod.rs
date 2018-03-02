@@ -1,18 +1,18 @@
 use reqwest::Client;
+use serde::Serialize;
 use serde::de::DeserializeOwned;
 use serde_json;
 use serde_json::Value;
 
 pub use self::chat_action::{get_chat_action, ChatAction};
 pub use self::parse_mode::{get_parse_mode, ParseMode};
-use error::{check_for_error, Result};
+use error::{ErrorKind};
 use error::Error::JsonNotFound;
 use marker::ReplyMarkup;
-use objects::{Contact, File, Message, Update, User, UserProfilePhotos};
+use types::{Contact, File, Message, Update, User, UserProfilePhotos};
 
 mod parse_mode;
 mod chat_action;
-mod file;
 
 const CHAT_ID: &str = "chat_id";
 const DISABLE_NOTIFICATION: &str = "disable_notification";
@@ -46,12 +46,12 @@ impl Bot {
         let username = me.username.expect("Cannot find username of the bot");
 
         Ok(Bot {
-            id: id,
-            first_name: first_name,
-            last_name: last_name,
-            username: username,
-            client: client,
-            bot_url: bot_url,
+            id,
+            first_name,
+            last_name,
+            username,
+            client,
+            bot_url,
         })
     }
 
@@ -300,13 +300,13 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
+    pub fn call<T: Serialize, R: DeserializeOwned>(&self, url: &str, request: &T) -> Result<R> {
         debug!("Making API call...");
-        let url = ::construct_api_url(&self.bot_url, path);
-        let mut data = self.client.post(&url)?.form(&params)?.send()?;
+        let ser_req = serde_json::to_string(request);
+        let mut data = self.client.post(url)?.json(&ser_req)?.send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let object_json = rjson.get("result").ok_or(JsonNotFound)?;
-        let object = serde_json::from_value::<T>(object_json.clone())?;
+        let object = serde_json::from_value::<R>(object_json.clone())?;
         Ok(object)
     }
 }
