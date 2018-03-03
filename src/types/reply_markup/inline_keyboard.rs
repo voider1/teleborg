@@ -2,7 +2,7 @@ use super::InlineKeyboardButton;
 use marker::ReplyMarkup;
 
 /// Represents an inline keyboard that appears right next to the message it belongs to.
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Clone, Serialize)]
 pub struct InlineKeyboardMarkup {
     pub inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
 }
