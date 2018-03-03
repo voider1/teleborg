@@ -8,7 +8,9 @@ pub struct GetUserProfilePhotos {
     #[serde(skip_serializing_if = "Option::is_none")] limit: Option<i32>,
 }
 
-impl Method for GetUserProfilePhotos {
-    type Response = UserProfilePhotos;
-    const PATH: &'static str = "getUserProfilePhotos";
-}
+impl_builder!(GetUserProfilePhotos, GetUserProfilePhotosBuilder);
+impl_method!(
+    GetUserProfilePhotos,
+    UserProfilePhotos,
+    "getUserProfilePhotos"
+);

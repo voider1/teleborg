@@ -2,7 +2,7 @@ use super::InlineKeyboardButton;
 use marker::ReplyMarkup;
 
 /// Represents a reply keyboard markup.
-#[derive(Serialize, Debug)]
+#[derive(Debug, Default, Serialize)]
 pub struct ReplyKeyboardMarkup {
     pub keyboard: Vec<Vec<InlineKeyboardButton>>,
     pub resize_keyboard: Option<bool>,

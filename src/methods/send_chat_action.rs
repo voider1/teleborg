@@ -6,7 +6,5 @@ pub struct SendChatAction {
     action: &'static str,
 }
 
-impl Method for SendChatAction {
-    type Response = bool;
-    const PATH: &'static str = "sendChatAction";
-}
+impl_builder!(SendChatAction, SendChatActionBuilder);
+impl_method!(SendChatAction, bool, "sendChatAction");

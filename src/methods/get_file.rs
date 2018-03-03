@@ -6,7 +6,5 @@ pub struct GetFile {
     file_id: &'static str,
 }
 
-impl Method for GetFile {
-    type Response = File;
-    const PATH: &'static str = "getFile";
-}
+impl_builder!(GetFile, GetFileBuilder);
+impl_method!(GetFile, File, "getFile");

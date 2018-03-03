@@ -5,7 +5,5 @@ pub struct ExportChatInviteLink {
     chat_id: i32,
 }
 
-impl Method for ExportChatInviteLink {
-    type Response = String;
-    const PATH: &'static str = "exportChatInviteLink";
-}
+impl_builder!(ExportChatInviteLink, ExportChatInviteLinkBuilder);
+impl_method!(ExportChatInviteLink, String, "exportChatInviteLink");

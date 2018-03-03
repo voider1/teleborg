@@ -15,12 +15,9 @@ const BASE_URL: &str = "https://api.telegram.org/bot";
 #[derive(Debug, Builder)]
 pub struct Updater {
     token: String,
-    #[builder(default = "0")]
-    poll_interval: u64,
-    #[builder(default = "10")]
-    timeout: i32,
-    #[builder(default = "0.0")]
-    network_delay: f32,
+    #[builder(default = "0")] poll_interval: u64,
+    #[builder(default = "10")] timeout: i32,
+    #[builder(default = "0.0")] network_delay: f32,
 }
 
 impl Updater {

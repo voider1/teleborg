@@ -1,7 +1,7 @@
 use marker::ReplyMarkup;
 
 /// Empty Markup placeholder.
-#[derive(Serialize, Debug)]
+#[derive(Debug, Default, Serialize)]
 pub struct NullMarkup;
 
 impl ReplyMarkup for NullMarkup {}

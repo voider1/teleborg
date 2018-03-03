@@ -6,7 +6,5 @@ pub struct UnbanChatMember {
     user_id: i32,
 }
 
-impl Method for UnbanChatMember {
-    type Response = bool;
-    const PATH: &'static str = "unbanChatMember";
-}
+impl_builder!(UnbanChatMember, UnbanChatMemberBuilder);
+impl_method!(UnbanChatMember, bool, "unbanChatMember");

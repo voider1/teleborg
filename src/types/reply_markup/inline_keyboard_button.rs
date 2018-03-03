@@ -1,5 +1,5 @@
 /// Represents one button of an `InlineKeyboardMarkup`, you must use exactly one of the optional fields.
-#[derive(Serialize, Debug)]
+#[derive(Debug, Default, Serialize)]
 pub struct InlineKeyboardButton {
     text: String,
     url: Option<String>,

@@ -9,7 +9,5 @@ pub struct ForwardMessage {
     message_id: i32,
 }
 
-impl Method for ForwardMessage {
-    type Response = Message;
-    const PATH: &'static str = "forwardMessage";
-}
+impl_builder!(ForwardMessage, ForwardMessageBuilder);
+impl_method!(ForwardMessage, Message, "forwardMessage");

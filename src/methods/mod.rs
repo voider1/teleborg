@@ -1,17 +1,37 @@
-pub use self::send_message::SendMessage;
-pub use self::forward_message::ForwardMessage;
-pub use self::send_contact::SendContact;
-pub use self::send_chat_action::SendChatAction;
-pub use self::get_user_profile_photos::GetUserProfilePhotos;
-pub use self::get_file::GetFile;
-pub use self::kick_chat_member::KickChatMember;
-pub use self::unban_chat_member::UnbanChatMember;
-pub use self::export_chat_invite_link::ExportChatInviteLink;
+pub use self::send_message::{SendMessage, SendMessageBuilder};
+pub use self::forward_message::{ForwardMessage, ForwardMessageBuilder};
+pub use self::send_contact::{SendContact, SendContactBuilder};
+pub use self::send_chat_action::{SendChatAction, SendChatActionBuilder};
+pub use self::get_user_profile_photos::{GetUserProfilePhotos, GetUserProfilePhotosBuilder};
+pub use self::get_file::{GetFile, GetFileBuilder};
+pub use self::kick_chat_member::{KickChatMember, KickChatMemberBuilder};
+pub use self::unban_chat_member::{UnbanChatMember, UnbanChatMemberBuilder};
+pub use self::export_chat_invite_link::{ExportChatInviteLink, ExportChatInviteLinkBuilder};
+
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 
 use error::Result;
 use Bot;
+
+macro_rules! impl_builder {
+    ($struct:ident, $struct_builder:ident) => {
+        impl $struct {
+            pub fn builder() -> $struct_builder {
+                $struct_builder::default()
+            }
+        }
+    }
+}
+
+macro_rules! impl_method {
+    ($struct:ident, $response:ident, $path:expr) => {
+        impl Method for $struct {
+            type Response = $response;
+            const PATH: &'static str = $path;
+        }
+    }
+}
 
 mod send_message;
 mod forward_message;

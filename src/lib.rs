@@ -12,6 +12,7 @@
 //!
 //! use teleborg::{Dispatcher, Bot, Updater};
 //! use teleborg::types::Update;
+//! use teleborg::methods::SendMessage;
 //!
 //! fn main() {
 //!     // Make sure you have your token
@@ -27,16 +28,22 @@
 //!
 //! // Our first command handler
 //! fn test(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
-//!     bot.reply_to_message(&update, "It works!").unwrap();
+//!     let chat_id = update.message.unwrap().chat.id;
+//!     let text = "It works!";
+//!     SendMessage::builder().chat_id(chat_id).text(text).build().call(&bot).unwrap();
 //! }
 //! ```
 
-#[macro_use] extern crate derive_builder;
-#[macro_use] extern crate failure;
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate derive_builder;
+#[macro_use]
+extern crate failure;
+#[macro_use]
+extern crate log;
 extern crate reqwest;
 extern crate serde;
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde_json;
 
 pub use reqwest::StatusCode;
@@ -47,6 +54,7 @@ pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
 
 pub mod error;
+#[macro_use]
 pub mod methods;
 pub mod types;
 mod bot;
