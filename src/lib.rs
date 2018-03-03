@@ -46,12 +46,11 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
-pub use reqwest::StatusCode;
-
 pub use self::bot::{Bot, ChatAction, ParseMode};
 pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
+pub use self::methods::Method;
 
 pub mod error;
 #[macro_use]
