@@ -23,7 +23,7 @@ pub enum ErrorKind {
     JSONNotFoundError,
     #[fail(display = "An URL parsing error occured.")]
     URLParsingError,
-    #[fail(display = "The Telegram bot API therw an error")]
+    #[fail(display = "The Telegram bot API threw an error")]
     TelegramAPIError,
 }
 

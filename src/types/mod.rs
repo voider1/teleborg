@@ -1,4 +1,5 @@
 pub use self::chat::Chat;
+pub use self::chat_action::ChatAction;
 pub use self::message_entity::MessageEntity;
 pub use self::user::User;
 pub use self::message::Message;
@@ -18,8 +19,10 @@ pub use self::game::Game;
 pub use self::user_profile_photos::UserProfilePhotos;
 pub use self::reply_markup::*;
 pub use self::file::File;
+pub use self::parse_mode::ParseMode;
 
 mod chat;
+mod chat_action;
 mod message_entity;
 mod user;
 mod message;
@@ -39,3 +42,4 @@ mod game;
 mod user_profile_photos;
 mod reply_markup;
 mod file;
+mod parse_mode;

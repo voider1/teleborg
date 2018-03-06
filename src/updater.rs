@@ -26,8 +26,7 @@ impl Updater {
         UpdaterBuilder::default()
     }
 
-    /// Constructs a new `Updater` and starts the threads, if token is `None` it will check the
-    /// environtment for the `TELEGRAM_BOT_TOKEN`.
+    /// Constructs a new `Updater` and starts the threads.
     pub fn start(self, mut dispatcher: Dispatcher) {
         debug!("Starting updater...");
         let (tx, rx) = mpsc::channel();

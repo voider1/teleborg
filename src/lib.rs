@@ -46,7 +46,7 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
-pub use self::bot::{Bot, ChatAction, ParseMode};
+pub use self::bot::Bot;
 pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::updater::Updater;
@@ -64,6 +64,7 @@ mod updater;
 
 /// Pass this to a method which requires markup where you do not want markup.
 pub const NO_MARKUP: Option<types::NullMarkup> = None;
+pub type NoMarkup = types::NullMarkup;
 
 impl<T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>)> Command for T {
     fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {

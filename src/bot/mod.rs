@@ -5,15 +5,8 @@ use serde::de::DeserializeOwned;
 use serde_json;
 use serde_json::Value;
 
-pub use self::chat_action::{get_chat_action, ChatAction};
-pub use self::parse_mode::{get_parse_mode, ParseMode};
 use error::{ErrorKind, Result};
 use types::{Update, User};
-
-mod parse_mode;
-mod chat_action;
-
-const BASE_URL: &str = "https://api.telegram.org/bot";
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -41,7 +34,9 @@ impl Bot {
     /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
         debug!("Going to construct a new Bot...");
-        let client = Client::new();
+        let client = Client::builder()
+            .build()
+            .context(ErrorKind::URLParsingError)?;
         let me = Self::get_me(&client, &bot_url)?;
         let id = me.id;
         let first_name = me.first_name;
@@ -104,13 +99,16 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    pub fn call<T: Serialize, R: DeserializeOwned>(&self, path: &str, request: &T) -> Result<R> {
+    pub fn call<T, R>(&self, path: &str, request: &T) -> Result<R>
+    where
+        T: Serialize,
+        R: DeserializeOwned,
+    {
         debug!("Making API call...");
-        let url = [BASE_URL, path].join("/");
-        let ser_req = serde_json::to_string(request).context(ErrorKind::JSONSerializationError)?;
+        let url = [&self.bot_url, path].join("/");
         let resp = self.client
             .post(&url)
-            .json(&ser_req)
+            .json(&request)
             .send()
             .context(ErrorKind::NetworkingError)?
             .json()
@@ -120,7 +118,10 @@ impl Bot {
         Ok(result)
     }
 
-    fn get_result<R: DeserializeOwned>(resp: TelegramResponse) -> Result<R> {
+    fn get_result<R>(resp: TelegramResponse) -> Result<R>
+    where
+        R: DeserializeOwned,
+    {
         if resp.ok {
             let result_val = resp.result.ok_or(ErrorKind::JSONDeserializationError)?;
             let result: R =

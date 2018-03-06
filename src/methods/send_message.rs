@@ -1,16 +1,26 @@
 use super::Method;
-use types::Message;
+use types::{Message, ParseMode};
 use marker::ReplyMarkup;
 
 #[derive(Debug, Builder, Serialize)]
 pub struct SendMessage<M: ReplyMarkup + Default> {
-    chat_id: i32,
+    chat_id: i64,
     text: &'static str,
-    #[serde(skip_serializing_if = "Option::is_none")] parse_mode: Option<&'static str>,
-    #[serde(skip_serializing_if = "Option::is_none")] disable_web_page_view: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")] disable_notification: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")] reply_to_message_id: Option<i32>,
-    #[serde(skip_serializing_if = "Option::is_none")] reply_markup: Option<M>,
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    parse_mode: Option<ParseMode>,
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    disable_web_page_view: Option<bool>,
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    disable_notification: Option<bool>,
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reply_to_message_id: Option<i32>,
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reply_markup: Option<M>,
 }
 
 impl<M: ReplyMarkup + Default> SendMessage<M> {
