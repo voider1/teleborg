@@ -3,7 +3,7 @@ use types::ChatAction;
 
 #[derive(Debug, Builder, Serialize)]
 pub struct SendChatAction {
-    chat_id: i32,
+    chat_id: i64,
     action: ChatAction,
 }
 
