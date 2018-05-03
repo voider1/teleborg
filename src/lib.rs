@@ -59,7 +59,6 @@ pub mod types;
 mod bot;
 mod command;
 mod dispatcher;
-mod marker;
 mod updater;
 
 impl<T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>)> Command for T {
