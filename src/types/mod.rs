@@ -17,7 +17,8 @@ pub use self::venue::Venue;
 pub use self::animation::Animation;
 pub use self::game::Game;
 pub use self::user_profile_photos::UserProfilePhotos;
-pub use self::reply_markup::*;
+pub use self::reply_markup::ReplyMarkup;
+pub use self::inline_keyboard_button::InlineKeyboardButton;
 pub use self::file::File;
 pub use self::parse_mode::ParseMode;
 
@@ -39,6 +40,7 @@ mod location;
 mod venue;
 mod animation;
 mod game;
+mod inline_keyboard_button;
 mod user_profile_photos;
 mod reply_markup;
 mod file;

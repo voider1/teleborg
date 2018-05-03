@@ -12,20 +12,18 @@ const BASE_URL: &str = "https://api.telegram.org/bot";
 ///
 /// The `Updater` is the entry point of this library and will start threads
 /// which will poll for updates and dispatch them to the handlers.
-#[derive(Debug, Builder)]
+#[derive(Debug, TypedBuilder)]
 pub struct Updater {
     token: String,
-    #[builder(default = "0")] poll_interval: u64,
-    #[builder(default = "10")] timeout: i32,
-    #[builder(default = "0.0")] network_delay: f32,
+    #[default = "0"]
+    poll_interval: u64,
+    #[default = "10"]
+    timeout: i32,
+    #[default = "0.0"]
+    network_delay: f32,
 }
 
 impl Updater {
-    /// Constructs a new `UpdaterBuilder`.
-    pub fn builder() -> UpdaterBuilder {
-        UpdaterBuilder::default()
-    }
-
     /// Constructs a new `Updater` and starts the threads.
     pub fn start(self, mut dispatcher: Dispatcher) {
         debug!("Starting updater...");
@@ -85,12 +83,5 @@ impl Updater {
 
             thread::sleep(poll_interval);
         }
-    }
-}
-
-/// A builder to let you easily change the configuration of the updater
-impl UpdaterBuilder {
-    pub fn start(self, dispatcher: Dispatcher) {
-        self.build().unwrap().start(dispatcher);
     }
 }

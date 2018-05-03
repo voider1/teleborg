@@ -35,8 +35,6 @@
 //! ```
 
 #[macro_use]
-extern crate derive_builder;
-#[macro_use]
 extern crate failure;
 #[macro_use]
 extern crate log;
@@ -45,6 +43,8 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
+#[macro_use]
+extern crate typed_builder;
 
 pub use self::bot::Bot;
 pub use self::command::Command;
@@ -61,10 +61,6 @@ mod command;
 mod dispatcher;
 mod marker;
 mod updater;
-
-/// Pass this to a method which requires markup where you do not want markup.
-pub const NO_MARKUP: Option<types::NullMarkup> = None;
-pub type NoMarkup = types::NullMarkup;
 
 impl<T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>)> Command for T {
     fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {
