@@ -24,7 +24,7 @@ use teleborg::methods::{Method, SendMessage};
 
 fn main() {
     // Get bot your token from the environment
-    let token = env::var(TELEGARM_BOT_TOKEN).expect("No token found");
+    let token = env::var("TELEGARM_BOT_TOKEN").expect("No token found");
     // Creating a dispatcher which registers all the command and message handlers
     let mut dispatcher = Dispatcher::new();
     // Registering our command which we create below in the form as a function
