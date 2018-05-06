@@ -26,5 +26,5 @@ pub struct Update {
     /// New incomnig callback query.
     pub callback_query: Option<CallBackQuery>,
     /// New incoming shippinr query. Only for invoices with flexible price.
-    pub shipping_query: ShippingQuery,
+    pub shipping_query: Option<ShippingQuery>,
 }
