@@ -1,6 +1,7 @@
 use super::Method;
 use types::{Message, ParseMode, ReplyMarkup};
 
+/// Use this method to send text messages. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendMessage {
     chat_id: i64,

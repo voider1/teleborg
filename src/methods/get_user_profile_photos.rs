@@ -1,6 +1,8 @@
 use super::Method;
 use types::UserProfilePhotos;
 
+/// Use this method to get a list of profile pictures for a user. Returns a `UserProfilePhotos`
+/// struct instance.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetUserProfilePhotos {
     user_id: i32,

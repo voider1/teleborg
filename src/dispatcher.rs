@@ -39,6 +39,10 @@ impl Dispatcher {
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
     pub fn start_handling(&mut self, rx: &mpsc::Receiver<Update>, bot: &Arc<Bot>) {
         debug!("Going to start dispatcher thread...");
+        let username = bot.username
+            .as_ref()
+            .expect("A bot should have a username, this can't be None");
+
         loop {
             let update = rx.recv().unwrap();
 
@@ -49,7 +53,7 @@ impl Dispatcher {
                     let name_command = bot_command.split('@').collect::<Vec<&str>>();
 
                     if name_command.len() == 1
-                        || name_command.len() == 2 && name_command[1] == bot.username
+                        || name_command.len() == 2 && name_command[1] == username
                     {
                         let command = self.command_handlers.get_mut(name_command[0]);
 

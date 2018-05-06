@@ -1,6 +1,7 @@
 use super::Method;
 use types::{Message, ReplyMarkup};
 
+/// Use this method to send phone contacts. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendContact {
     chat_id: i32,

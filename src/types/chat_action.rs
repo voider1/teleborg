@@ -1,14 +1,21 @@
 use serde::ser::{Serialize, Serializer};
 
-/// Represents each chat action.
+/// This enum represents every possible chat action.
 #[derive(Debug, Clone, Copy)]
 pub enum ChatAction {
+    /// Sets the "typing" chat action.
     Typing,
+    /// Sets the "uploading photo" chat action.
     UploadPhoto,
+    /// Sets the "recording video" chat action.
     RecordVideo,
+    /// Sets the "upload video" chat action.
     UploadVideo,
+    /// Sets the "uploading audio" chat action.
     UploadAudio,
+    /// Sets the "uploading document" chat action.
     UploadDocument,
+    /// Sets the "finding location" chat action.
     FindLocation,
 }
 

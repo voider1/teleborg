@@ -1,6 +1,7 @@
 use super::Method;
 use types::Message;
 
+/// Use this method to forward messages of any kind. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct ForwardMessage {
     chat_id: i32,

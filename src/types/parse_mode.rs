@@ -3,8 +3,11 @@ use serde::ser::{Serialize, Serializer};
 /// The parse modes for messages.
 #[derive(Debug, Clone, Copy)]
 pub enum ParseMode {
+    /// Parse the text in a request as markdown.
     Markdown,
+    /// Parse the text in a request as HTML.
     Html,
+    /// Parse the text in a request as text (default).
     Text,
 }
 

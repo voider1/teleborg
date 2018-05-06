@@ -10,17 +10,18 @@ const BASE_URL: &str = "https://api.telegram.org/bot";
 
 /// An `Updater` which will keep track of the updates from the API.
 ///
-/// The `Updater` is the entry point of this library and will start threads
+/// The `Updater` is the entry point of this library and will start the threads
 /// which will poll for updates and dispatch them to the handlers.
 #[derive(Debug, TypedBuilder)]
 pub struct Updater {
+    /// The token of your bot for authentication.
     token: String,
+    /// Amount of seconds to wait between polling the Telegram server.
     #[default = "0"]
     poll_interval: u64,
+    /// Amount of time to wait for a request until trying again.
     #[default = "10"]
     timeout: i32,
-    #[default = "0.0"]
-    network_delay: f32,
 }
 
 impl Updater {
@@ -56,7 +57,7 @@ impl Updater {
         let mut last_update_id = 0;
 
         loop {
-            let updates = bot.get_updates(last_update_id, None, self.timeout, self.network_delay);
+            let updates = bot.get_updates(last_update_id, None, self.timeout);
 
             match updates {
                 Ok(Some(ref v)) => {

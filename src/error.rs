@@ -1,64 +1,25 @@
-use std::fmt;
-use std::fmt::Display;
-use std::result;
+use failure::Error as FailureError;
 
-use failure::{Backtrace, Context, Fail};
+/// Result which uses failure::Error by default.
+pub type Result<T> = ::std::result::Result<T, FailureError>;
 
-pub type Result<T> = result::Result<T, Error>;
-
-#[derive(Debug)]
-pub struct Error {
-    inner: Context<ErrorKind>,
-}
-
-#[derive(Copy, Clone, Eq, PartialEq, Debug, Fail)]
-pub enum ErrorKind {
-    #[fail(display = "A networking error occured.")]
-    NetworkingError,
+/// This enum represents all possible errors.
+#[derive(Fail, Debug)]
+pub enum Error {
+    /// Thrown when a networking error occurs.
+    #[fail(display = "{}", _0)]
+    NetworkingError(#[cause] ::reqwest::Error),
+    /// Thrown when a serialization error occurs.
     #[fail(display = "A JSON serialization error occured.")]
-    JSONSerializationError,
-    #[fail(display = "A JSON deserialization error occured, body is not in JSON format or is different from the target type.")]
-    JSONDeserializationError,
+    JsonSerializationError,
+    /// Thrown when a deserialization error occurs.
+    #[fail(display = "{}", _0)]
+    JsonDeserializationError(#[cause] ::serde_json::Error),
+    /// Thrown when the expected JSON response couldn't be found.
     #[fail(display = "A JSON parsing error occured, could not find key in response")]
-    JSONNotFoundError,
-    #[fail(display = "An URL parsing error occured.")]
-    URLParsingError,
-    #[fail(display = "The Telegram bot API threw an error")]
-    TelegramAPIError,
-}
-
-impl Error {
-    pub fn kind(&self) -> ErrorKind {
-        *self.inner.get_context()
-    }
-}
-
-impl Fail for Error {
-    fn cause(&self) -> Option<&Fail> {
-        self.inner.cause()
-    }
-
-    fn backtrace(&self) -> Option<&Backtrace> {
-        self.inner.backtrace()
-    }
-}
-
-impl Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        Display::fmt(&self.inner, f)
-    }
-}
-
-impl From<ErrorKind> for Error {
-    fn from(kind: ErrorKind) -> Error {
-        Error {
-            inner: Context::new(kind),
-        }
-    }
-}
-
-impl From<Context<ErrorKind>> for Error {
-    fn from(inner: Context<ErrorKind>) -> Error {
-        Error { inner }
-    }
+    JsonNotFoundError,
+    /// Thrown when the Telegram API returns an error.
+    #[fail(display = "The Telegram server threw an error\nError code: {}\nError description: {}",
+           _0, _1)]
+    TelegramApiError(String, i32),
 }
