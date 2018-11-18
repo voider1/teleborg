@@ -39,7 +39,7 @@ mod tests {
     fn test_get_me() {
         let token = get_token();
         let bot_url = [BASE_URL, &token].concat();
-        let client = Client::new().unwrap();
+        let client = Client::new();
         let bot = Bot::get_me(&client, &bot_url);
         assert!(bot.is_ok());
     }
