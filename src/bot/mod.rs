@@ -38,7 +38,7 @@ impl Bot {
     /// Constructs a new `Bot`.
     pub fn new(bot_url: String) -> Result<Self> {
         debug!("Going to construct a new Bot...");
-        let client = Client::new()?;
+        let client = Client::new();
         let me = Bot::get_me(&client, &bot_url)?;
         let id = me.id;
         let first_name = me.first_name;
@@ -60,7 +60,7 @@ impl Bot {
         debug!("Calling get_me...");
         let path = ["getMe"];
         let url = ::construct_api_url(bot_url, &path);
-        let mut data = client.get(&url)?.send()?;
+        let mut data = client.get(&url).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let user_json = rjson.get("result").ok_or(JsonNotFound)?;
         let user: User = serde_json::from_value(user_json.clone())?;
@@ -89,7 +89,7 @@ impl Bot {
             timeout,
             network_delay
         );
-        let mut data = self.client.get(&url)?.send()?;
+        let mut data = self.client.get(&url).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let updates_json = rjson.get("result");
 
@@ -306,7 +306,7 @@ impl Bot {
     fn call<T: DeserializeOwned>(&self, path: &[&str], params: &[(&str, &str)]) -> Result<T> {
         debug!("Making API call...");
         let url = ::construct_api_url(&self.bot_url, path);
-        let mut data = self.client.post(&url)?.form(&params)?.send()?;
+        let mut data = self.client.post(&url).form(&params).send()?;
         let rjson: Value = check_for_error(data.json()?)?;
         let object_json = rjson.get("result").ok_or(JsonNotFound)?;
         let object = serde_json::from_value::<T>(object_json.clone())?;
