@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct contains basic information about an invoice.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Invoice {

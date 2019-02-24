@@ -1,3 +1,5 @@
+use serde::{Deserialize, Serialize};
+
 /// This struct represents a phone contact.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Contact {

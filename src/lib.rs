@@ -47,39 +47,38 @@
 //!
 //! ```
 
-#[macro_use]
-extern crate failure;
-#[macro_use]
-extern crate log;
-extern crate reqwest;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-extern crate serde_json;
-#[macro_use]
-extern crate typed_builder;
-
 pub use self::bot::Bot;
 pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
-pub use self::updater::Updater;
 pub use self::methods::Method;
+pub use self::updater::Updater;
+
+use futures::Future;
 
 /// This module contains all the error-types.
 pub mod error;
 /// This module contains all the method-builders.
 #[macro_use]
 pub mod methods;
-/// This module contains all the types which you can send an receive.
-pub mod types;
 mod bot;
 mod command;
 mod dispatcher;
+/// This module contains all the types which you can send an receive.
+pub mod types;
 mod updater;
 
-impl<T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>)> Command for T {
-    fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {
-        self(bot, update, args);
+impl<T, R> Command for T
+where
+    T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>) -> Box<R>,
+    R: Future<Item = (), Error = ()> + Send + 'static,
+{
+    fn execute(
+        &mut self,
+        bot: &Bot,
+        update: types::Update,
+        args: Option<Vec<&str>>,
+    ) -> Box<dyn Future<Item = (), Error = ()> + Send> {
+        self(bot, update, args)
     }
 }
 

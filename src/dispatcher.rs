@@ -1,9 +1,11 @@
 use std::collections::HashMap;
-use std::sync::{mpsc, Arc};
 
-use command::Command;
-use bot::Bot;
-use types::Update;
+use futures::future;
+use futures::Future;
+
+use crate::bot::Bot;
+use crate::command::Command;
+use crate::types::Update;
 
 /// A `Dispatcher` which will receive updates from the `Updater` and dispatches
 /// them to the registered handlers.
@@ -11,14 +13,13 @@ use types::Update;
 /// You can add your command and message handlers to the `Dispatcher`.
 #[derive(Default)]
 pub struct Dispatcher {
-    command_handlers: HashMap<String, (Box<Command>, bool)>,
-    message_handlers: Vec<Box<Command>>,
+    command_handlers: HashMap<String, (Box<dyn Command>, bool)>,
+    message_handlers: Vec<Box<dyn Command>>,
 }
 
 impl Dispatcher {
     /// Constructs a new `Dispatcher`.
     pub fn new() -> Self {
-        debug!("Going to construct a new Dispatcher...");
         Dispatcher {
             command_handlers: HashMap::new(),
             message_handlers: Vec::new(),
@@ -37,44 +38,42 @@ impl Dispatcher {
     }
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
-    pub fn start_handling(&mut self, rx: &mpsc::Receiver<Update>, bot: &Arc<Bot>) {
-        debug!("Going to start dispatcher thread...");
-        let username = bot.username
+    pub fn handle(
+        &mut self,
+        bot: &Bot,
+        update: Update,
+    ) -> Box<dyn Future<Item = (), Error = ()> + Send + 'static> {
+        let username = bot
+            .username
             .as_ref()
             .expect("A bot should have a username, this can't be None");
 
-        loop {
-            let update = rx.recv().unwrap();
+        if let Some(t) = update.clone().message.and_then(|t| t.text) {
+            if t.starts_with('/') {
+                let msg = t.split_whitespace().collect::<Vec<&str>>();
+                let (_, bot_command) = msg[0].split_at(1);
+                let name_command = bot_command.split('@').collect::<Vec<&str>>();
 
-            if let Some(t) = update.clone().message.and_then(|t| t.text) {
-                if t.starts_with('/') {
-                    let msg = t.split_whitespace().collect::<Vec<&str>>();
-                    let (_, bot_command) = msg[0].split_at(1);
-                    let name_command = bot_command.split('@').collect::<Vec<&str>>();
+                if name_command.len() == 1 || name_command.len() == 2 && name_command[1] == username
+                {
+                    let command = self.command_handlers.get_mut(name_command[0]);
 
-                    if name_command.len() == 1
-                        || name_command.len() == 2 && name_command[1] == username
-                    {
-                        let command = self.command_handlers.get_mut(name_command[0]);
-
-                        if let Some(c) = command {
-                            debug!("Going to execute the {} command...", name_command[0]);
-                            if c.1 {
-                                let args = msg.clone().split_off(1);
-                                debug!("With these arguments: {:?}", args);
-                                c.0.execute(bot, update, Some(args));
-                            } else {
-                                c.0.execute(bot, update, None);
-                            }
-                            continue;
+                    if let Some(c) = command {
+                        if c.1 {
+                            let args = msg.clone().split_off(1);
+                            return c.0.execute(bot, update, Some(args));
+                        } else {
+                            return c.0.execute(bot, update, None);
                         }
                     }
                 }
             }
-            for message_handler in &mut self.message_handlers {
-                debug!("Going to execute a message handler...");
-                message_handler.execute(bot, update.clone(), None);
-            }
         }
+        for message_handler in &mut self.message_handlers {
+            // TODO: Make sure alle message handlers are executed
+            return message_handler.execute(bot, update.clone(), None);
+        }
+
+        Box::new(future::ok(()))
     }
 }

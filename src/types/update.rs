@@ -1,5 +1,7 @@
 use super::{CallBackQuery, Message, ShippingQuery};
 
+use serde::Deserialize;
+
 /// This struct represents an incoming update. At most one of the optional parameters can be
 /// present in any given update.
 #[derive(Clone, Deserialize, Debug)]

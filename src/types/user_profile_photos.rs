@@ -1,5 +1,7 @@
 use super::PhotoSize;
 
+use serde::Deserialize;
+
 /// This struct represents a user's profile pictures.
 #[derive(Clone, Deserialize, Debug)]
 pub struct UserProfilePhotos {

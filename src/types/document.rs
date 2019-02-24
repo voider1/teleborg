@@ -1,5 +1,7 @@
 use super::PhotoSize;
 
+use serde::Deserialize;
+
 /// This struct represents a general file (as opposed to photos, voice messages and audio files).
 #[derive(Clone, Deserialize, Debug)]
 pub struct Document {

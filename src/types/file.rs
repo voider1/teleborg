@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct represents a Telegram [File](https://core.telegram.org/bots/api#file).
 #[derive(Clone, Deserialize, Debug)]
 pub struct File {

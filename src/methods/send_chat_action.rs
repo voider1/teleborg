@@ -1,5 +1,8 @@
 use super::Method;
-use types::ChatAction;
+use crate::types::ChatAction;
+
+use serde::Serialize;
+use typed_builder::TypedBuilder;
 
 /// Use this method when you need to tell the user that something is happening on the bot's side.
 /// That status is set for 5 seconds or less (when a message from your bot arrives, Telegram

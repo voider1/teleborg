@@ -8,12 +8,15 @@ description = "A Telegram bot API."
 repository = "https://github.com/voider1/teleborg"
 readme = "README.md"
 keywords = ["telegram-bot", "rust", "telegram-api"]
+edition = "2018"
 
 [dependencies]
-typed-builder = "0.1"
+typed-builder = "0.3"
 failure = "0.1"
 log = { version = "0.3", features = ["release_max_level_info"] }
-reqwest = "0.8"
-serde = "1.0"
+reqwest = "0.9"
+serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 serde_derive = "1.0"
+tokio = "0.1"
+futures = "0.1"

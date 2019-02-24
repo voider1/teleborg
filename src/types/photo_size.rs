@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct represents one size of a photo or a or a file / sticker thumbnail.
 #[derive(Clone, Deserialize, Debug)]
 pub struct PhotoSize {

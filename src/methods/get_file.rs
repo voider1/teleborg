@@ -1,5 +1,8 @@
 use super::Method;
-use types::File;
+use crate::types::File;
+
+use serde::Serialize;
+use typed_builder::TypedBuilder;
 
 /// Use this method to get basic information about a file and prepare it for downloading. For the
 /// moment, bots can download files of up to 20MB in size. On success, a `File` struct instance is

@@ -1,4 +1,5 @@
 use super::{InlineKeyboardButton, KeyboardButton};
+use serde::Serialize;
 
 /// This enum represents all the possible reply markups.
 #[derive(Serialize, Debug)]

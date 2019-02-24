@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct represents a voice note.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Voice {

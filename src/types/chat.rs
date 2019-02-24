@@ -1,5 +1,7 @@
 use super::{ChatPhoto, Message};
 
+use serde::Deserialize;
+
 /// This struct represents a chat.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Chat {

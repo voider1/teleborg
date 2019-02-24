@@ -1,5 +1,7 @@
 use super::ShippingAddress;
 
+use serde::Deserialize;
+
 /// This struct represents information about an order.
 #[derive(Clone, Deserialize, Debug)]
 pub struct OrderInfo {

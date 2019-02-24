@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct represents a point on the map.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Location {

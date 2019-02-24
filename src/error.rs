@@ -1,4 +1,5 @@
 use failure::Error as FailureError;
+use failure::Fail;
 
 /// Result which uses failure::Error by default.
 pub type Result<T> = ::std::result::Result<T, FailureError>;
@@ -19,7 +20,9 @@ pub enum Error {
     #[fail(display = "A JSON parsing error occured, could not find key in response")]
     JsonNotFoundError,
     /// Thrown when the Telegram API returns an error.
-    #[fail(display = "The Telegram server threw an error\nError code: {}\nError description: {}",
-           _0, _1)]
+    #[fail(
+        display = "The Telegram server threw an error\nError code: {}\nError description: {}",
+        _0, _1
+    )]
     TelegramApiError(String, i32),
 }

@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// This struct describes the position on faces where a mask should be placed by default.
 #[derive(Clone, Deserialize, Debug)]
 pub struct MaskPosition {

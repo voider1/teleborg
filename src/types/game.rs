@@ -1,5 +1,7 @@
 use super::{Animation, MessageEntity, PhotoSize};
 
+use serde::Deserialize;
+
 /// Represents a game.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Game {

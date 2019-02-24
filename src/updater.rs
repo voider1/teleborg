@@ -1,12 +1,12 @@
-use std::{thread, time};
-use std::sync::mpsc;
 use std::sync::Arc;
 
-use bot;
-use dispatcher::Dispatcher;
-use types::Update;
+use futures::{Async, Poll, Stream};
+use tokio;
+use typed_builder::TypedBuilder;
 
-const BASE_URL: &str = "https://api.telegram.org/bot";
+use crate::bot::Bot;
+use crate::dispatcher::Dispatcher;
+use crate::types::Update;
 
 /// An `Updater` which will keep track of the updates from the API.
 ///
@@ -14,75 +14,54 @@ const BASE_URL: &str = "https://api.telegram.org/bot";
 /// which will poll for updates and dispatch them to the handlers.
 #[derive(Debug, TypedBuilder)]
 pub struct Updater {
-    /// The token of your bot for authentication.
-    token: String,
     /// Amount of seconds to wait between polling the Telegram server.
-    #[default = "0"]
-    poll_interval: u64,
+    #[builder(default = 0)]
+    poll_interval: usize,
     /// Amount of time to wait for a request until trying again.
-    #[default = "10"]
-    timeout: i32,
+    #[builder(default = 10)]
+    timeout: usize,
+    #[builder(default = 0)]
+    offset: usize,
+    #[builder(default = 100)]
+    limit: usize,
+    /// Updates buffer
+    updates: Vec<Update>,
+    bot: Arc<Bot>,
 }
 
 impl Updater {
     /// Constructs a new `Updater` and starts the threads.
-    pub fn start(self, mut dispatcher: Dispatcher) {
-        debug!("Starting updater...");
-        let (tx, rx) = mpsc::channel();
-        let bot = Arc::new(bot::Bot::new([BASE_URL, &self.token].concat()).unwrap());
-        let updater_bot = Arc::clone(&bot);
-        let dispatcher_bot = Arc::clone(&bot);
-
-        thread::Builder::new()
-            .name("dispatcher".to_string())
-            .spawn(move || {
-                dispatcher.start_handling(&rx, &dispatcher_bot);
-            })
-            .unwrap();
-
-        thread::Builder::new()
-            .name("updater".to_string())
-            .spawn(move || {
-                self.start_polling_thread(&updater_bot, &tx);
-            })
-            .unwrap()
-            .join()
-            .unwrap();
+    pub fn start(mut self, token: &str, mut dispatcher: Dispatcher) {
+        self.bot = Arc::new(Bot::new(token).unwrap());
+        let bot = Arc::clone(&self.bot);
+        let start = self.for_each(move |update| dispatcher.handle(&bot, update));
+        tokio::run(start);
     }
+}
 
-    /// The method which will run in a thread and push the updates to the `Dispatcher`.
-    fn start_polling_thread(&self, bot: &Arc<bot::Bot>, tx: &mpsc::Sender<Update>) {
-        debug!("Going to start polling thread...");
-        let poll_interval = time::Duration::from_secs(self.poll_interval);
-        let mut last_update_id = 0;
+impl Stream for Updater {
+    type Item = Update;
 
-        loop {
-            let updates = bot.get_updates(last_update_id, None, self.timeout);
+    type Error = ();
 
-            match updates {
-                Ok(Some(ref v)) => {
-                    if let Some(u) = v.last() {
-                        for update in v {
-                            tx.send(update.clone()).unwrap();
-                        }
-                        last_update_id = (u.update_id + 1) as i32;
-                    } else {
-                        // Do nothing, the vector is empty
-                        continue;
-                    }
-                }
-                Ok(None) => {
-                    // Do nothing, we have nothing
-                    continue;
-                }
-                Err(e) => {
-                    // Handle error
-                    debug!("Error while polling updates: {:?}", e);
-                    continue;
-                }
-            };
+    fn poll(&mut self) -> Poll<Option<Update>, ()> {
+        let update = self.updates.pop();
 
-            thread::sleep(poll_interval);
+        if let Some(u) = update {
+            self.offset = (u.update_id + 1) as usize;
+            Ok(Async::Ready(Some(u)))
+        } else {
+            let updates = self.bot.get_updates(self.offset, self.limit, self.timeout);
+
+            if let Ok(Some(mut updates)) = updates {
+                updates.reverse();
+                self.updates.append(&mut updates);
+                let u = self.updates.pop().unwrap();
+                self.offset = (u.update_id + 1) as usize;
+                Ok(Async::Ready(Some(u)))
+            } else {
+                Ok(Async::NotReady)
+            }
         }
     }
 }

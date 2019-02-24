@@ -1,5 +1,7 @@
 use super::{MaskPosition, PhotoSize};
 
+use serde::Deserialize;
+
 /// This struct represents a sticker.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Sticker {

@@ -1,5 +1,7 @@
 use super::Location;
 
+use serde::Deserialize;
+
 /// This struct represents a venue.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Venue {

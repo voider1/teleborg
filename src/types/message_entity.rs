@@ -1,5 +1,7 @@
 use super::User;
 
+use serde::Deserialize;
+
 /// Represents a Telegram message entity.
 #[derive(Clone, Deserialize, Debug)]
 pub struct MessageEntity {

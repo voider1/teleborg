@@ -1,13 +1,18 @@
 use std::ops::Deref;
 
-use reqwest::Client;
-use serde::Serialize;
+use failure::{ensure, Error as FailureError};
+use futures::Future;
+use reqwest::{r#async::Client as AsyncClient, Client};
 use serde::de::DeserializeOwned;
+use serde::Deserialize;
 use serde_json;
 use serde_json::Value;
 
-use error::{Error, Result};
-use types::{Update, User};
+use crate::error::{Error, Result};
+use crate::methods::Method;
+use crate::types::{Update, User};
+
+const BASE_URL: &str = "https://api.telegram.org/bot";
 
 /// A `Bot` which will do all the API calls.
 ///
@@ -18,6 +23,7 @@ pub struct Bot {
     /// The bot's URL to which it will be making requests.
     pub bot_url: String,
     client: Client,
+    async_client: AsyncClient,
     inner: User,
 }
 
@@ -31,22 +37,23 @@ struct TelegramResponse {
 
 impl Bot {
     /// Constructs a new `Bot`.
-    pub fn new(bot_url: String) -> Result<Self> {
-        debug!("Going to construct a new Bot...");
+    pub fn new(token: &str) -> Result<Self> {
         let client = Client::new();
+        let async_client = AsyncClient::new();
+        let bot_url = [BASE_URL, token].concat();
         let inner = Self::get_me(&client, &bot_url)?;
 
         Ok(Bot {
             bot_url,
             client,
+            async_client,
             inner,
         })
     }
 
     fn get_me(client: &Client, bot_url: &str) -> Result<User> {
-        debug!("Calling get_me...");
         let path = ["getMe"];
-        let url = ::construct_api_url(bot_url, &path);
+        let url = crate::construct_api_url(bot_url, &path);
         let resp = client.get(&url).send()?.json()?;
         let bot: User = Self::get_result(resp)?;
 
@@ -56,19 +63,19 @@ impl Bot {
     /// API call which will get called to get the updates for your bot.
     pub fn get_updates(
         &self,
-        offset: i32,
-        limit: Option<i32>,
-        timeout: i32,
+        offset: usize,
+        limit: usize,
+        timeout: usize,
     ) -> Result<Option<Vec<Update>>> {
-        debug!("Calling get_updates...");
-        let limit = limit.unwrap_or(100);
+        let limit = limit;
         let path = ["getUpdates"];
-        let path_url = ::construct_api_url(&self.bot_url, &path);
-        let url = format!(
-            "{}?offset={}&limit={}&timeout={}",
-            path_url, offset, limit, timeout
-        );
-        let resp = self.client.get(&url).send()?.json()?;
+        let path_url = crate::construct_api_url(&self.bot_url, &path);
+        let resp = self
+            .client
+            .get(&path_url)
+            .query(&[("offset", offset), ("limit", limit), ("timeout", timeout)])
+            .send()?
+            .json()?;
         let updates: Vec<Update> = Self::get_result(resp)?;
 
         if updates.is_empty() {
@@ -79,17 +86,18 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    pub fn call<T, R>(&self, path: &str, request: &T) -> Result<R>
+    pub fn call<M>(&self, m: &M) -> impl Future<Item = M::Response, Error = FailureError>
     where
-        T: Serialize,
-        R: DeserializeOwned,
+        M: Method,
     {
-        debug!("Making API call...");
-        let url = [&self.bot_url, path].join("/");
-        let resp = self.client.post(&url).json(&request).send()?.json()?;
-        let result = Self::get_result(resp)?;
-
-        Ok(result)
+        let url = [&self.bot_url, M::PATH].join("/");
+        self.async_client
+            .post(&url)
+            .json(m)
+            .send()
+            .and_then(|mut res| res.json::<TelegramResponse>())
+            .from_err()
+            .and_then(|json| Self::get_result(json))
     }
 
     fn get_result<R>(resp: TelegramResponse) -> Result<R>

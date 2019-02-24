@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// The struct represents a shipping address.
 #[derive(Clone, Deserialize, Debug)]
 pub struct ShippingAddress {

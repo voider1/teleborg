@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 /// Represents a Telegram user or bot.
 #[derive(Clone, Deserialize, Debug)]
 pub struct User {

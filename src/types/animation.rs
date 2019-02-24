@@ -1,5 +1,7 @@
 use super::PhotoSize;
 
+use serde::Deserialize;
+
 /// This struct represents an animation file to be displayed in the message containing a `Game`.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Animation {

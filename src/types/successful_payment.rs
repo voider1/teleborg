@@ -1,5 +1,7 @@
 use super::OrderInfo;
 
+use serde::Deserialize;
+
 /// This struct contains basic information about a successful payment.
 #[derive(Clone, Deserialize, Debug)]
 pub struct SuccessfulPayment {

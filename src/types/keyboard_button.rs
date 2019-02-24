@@ -1,3 +1,5 @@
+use serde::Serialize;
+
 /// This struct represents one button of the `ReplyKeyboard`.
 #[derive(Debug, Default, Clone, Serialize)]
 pub struct KeyboardButton {

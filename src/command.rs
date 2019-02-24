@@ -1,5 +1,7 @@
-use bot;
-use types::Update;
+use crate::types::Update;
+use crate::Bot;
+
+use futures::Future;
 
 /// A trait which has to be implemented for all handlers.
 ///
@@ -29,5 +31,5 @@ use types::Update;
 /// This implements the `Command` trait for the Test struct.
 pub trait Command: Sync + Send + 'static {
     /// Execute the logic for each handler.
-    fn execute(&mut self, bot: &bot::Bot, update: Update, args: Option<Vec<&str>>);
+    fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>) -> impl Future;
 }

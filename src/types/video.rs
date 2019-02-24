@@ -1,5 +1,7 @@
 use super::PhotoSize;
 
+use serde::Deserialize;
+
 /// This struct represents a video file.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Video {

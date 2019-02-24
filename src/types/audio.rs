@@ -1,3 +1,5 @@
+use serde::{Deserialize, Serialize};
+
 /// This struct represents an audio file to be treated as music by the Telegram clients.
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Audio {

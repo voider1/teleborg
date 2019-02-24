@@ -1,6 +1,8 @@
 use super::Message;
 use super::User;
 
+use serde::Deserialize;
+
 /// This struct represents an incoming callback query from a callback button in an [inline
 /// keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating). If the
 /// button that originated the query was attached to a message sent by the bot, the field `message`
