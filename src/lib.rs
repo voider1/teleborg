@@ -67,6 +67,7 @@ mod dispatcher;
 pub mod types;
 mod updater;
 
+// TODO: Reconsider redesign
 impl<T, R> Command for T
 where
     T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>) -> Box<R>,
