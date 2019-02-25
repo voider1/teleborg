@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
-use futures::{future, Async, Poll, Stream};
+use failure::Error as FailureError;
+use futures::{future, try_ready, Async, Future, Poll, Stream};
 use tokio;
 
 use crate::bot::Bot;
@@ -11,14 +12,12 @@ use crate::types::Update;
 ///
 /// The `Updater` is the entry point of this library and will start the threads
 /// which will poll for updates and dispatch them to the handlers.
-#[derive(Debug)]
 pub struct Updater {
-    /// Amount of seconds to wait between polling the Telegram server.
-    poll_interval: usize,
     /// Amount of time to wait for a request until trying again.
     timeout: usize,
     offset: usize,
     limit: usize,
+    update_future: Option<Box<dyn Future<Item = Vec<Update>, Error = FailureError> + Send>>,
     /// Updates buffer
     updates: Vec<Update>,
     bot: Arc<Bot>,
@@ -26,7 +25,6 @@ pub struct Updater {
 
 #[derive(Debug, Default)]
 pub struct UpdaterBuilder {
-    poll_interval: usize,
     timeout: usize,
     offset: usize,
     limit: usize,
@@ -36,7 +34,6 @@ impl Updater {
     /// Create a new UpdaterBuilder with sane defaults for configuration
     pub fn new() -> UpdaterBuilder {
         UpdaterBuilder {
-            poll_interval: 0,
             timeout: 10,
             offset: 0,
             limit: 100,
@@ -61,33 +58,35 @@ impl Stream for Updater {
     type Error = ();
 
     fn poll(&mut self) -> Poll<Option<Update>, ()> {
-        let update = self.updates.pop();
+        loop {
+            let update = self.updates.pop();
 
-        if let Some(u) = update {
-            self.offset = (u.update_id + 1) as usize;
-            Ok(Async::Ready(Some(u)))
-        } else {
-            let updates = self.bot.get_updates(self.offset, self.limit, self.timeout);
+            if let Some(u) = update {
+                self.offset = (u.update_id + 1) as usize;
+                return Ok(Async::Ready(Some(u)));
+            } else if let Some(ref mut f) = self.update_future {
+                let mut updates = try_ready!(f.poll().map_err(|_| ()));
+                self.update_future = None;
 
-            if let Ok(Some(mut updates)) = updates {
+                if updates.is_empty() {
+                    continue;
+                }
+
                 updates.reverse();
                 self.updates.append(&mut updates);
                 let u = self.updates.pop().unwrap();
                 self.offset = (u.update_id + 1) as usize;
-                Ok(Async::Ready(Some(u)))
+
+                return Ok(Async::Ready(Some(u)));
             } else {
-                Ok(Async::NotReady)
+                let updates = self.bot.get_updates(self.offset, self.limit, self.timeout);
+                self.update_future = Some(Box::new(updates));
             }
         }
     }
 }
 
 impl UpdaterBuilder {
-    pub fn poll_interval(mut self, interval: usize) -> Self {
-        self.poll_interval = interval;
-        self
-    }
-
     pub fn timeout(mut self, timeout: usize) -> Self {
         self.timeout = timeout;
         self
@@ -105,7 +104,6 @@ impl UpdaterBuilder {
 
     pub fn build(self, token: &str) -> Updater {
         let Self {
-            poll_interval,
             timeout,
             offset,
             limit,
@@ -113,14 +111,15 @@ impl UpdaterBuilder {
 
         let bot = Arc::new(Bot::new(token).unwrap());
         let updates = Vec::new();
+        let update_future = None;
 
         Updater {
-            poll_interval,
             timeout,
             offset,
             limit,
             updates,
             bot,
+            update_future,
         }
     }
 }

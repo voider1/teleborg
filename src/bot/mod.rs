@@ -66,23 +66,18 @@ impl Bot {
         offset: usize,
         limit: usize,
         timeout: usize,
-    ) -> Result<Option<Vec<Update>>> {
+    ) -> impl Future<Item = Vec<Update>, Error = FailureError> {
         let limit = limit;
         let path = ["getUpdates"];
         let path_url = crate::construct_api_url(&self.bot_url, &path);
-        let resp = self
-            .client
+
+        self.async_client
             .get(&path_url)
             .query(&[("offset", offset), ("limit", limit), ("timeout", timeout)])
-            .send()?
-            .json()?;
-        let updates: Vec<Update> = Self::get_result(resp)?;
-
-        if updates.is_empty() {
-            Ok(None)
-        } else {
-            Ok(Some(updates))
-        }
+            .send()
+            .and_then(|mut res| res.json::<TelegramResponse>())
+            .from_err()
+            .and_then(Self::get_result)
     }
 
     /// The actual networking done for making API calls.
