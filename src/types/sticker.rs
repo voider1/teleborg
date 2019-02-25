@@ -18,7 +18,7 @@ pub struct Sticker {
     /// Name of the sticker set to which the sticker belongs.
     pub set_name: Option<String>,
     /// For mask stickers, the position where the mask should be placed.
-    pub mask_position: MaskPosition,
+    pub mask_position: Option<MaskPosition>,
     /// File size.
     pub file_size: Option<i64>,
 }
