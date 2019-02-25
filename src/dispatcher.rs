@@ -1,8 +1,5 @@
 use std::collections::HashMap;
 
-use futures::future;
-use futures::Future;
-
 use crate::bot::Bot;
 use crate::command::Command;
 use crate::types::Update;
@@ -38,15 +35,15 @@ impl Dispatcher {
     }
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
-    pub fn handle(
-        &mut self,
-        bot: &Bot,
-        update: Update,
-    ) -> Box<dyn Future<Item = (), Error = ()> + Send + 'static> {
+    pub fn handle(&mut self, bot: &Bot, update: Update) {
         let username = bot
             .username
             .as_ref()
             .expect("A bot should have a username, this can't be None");
+
+        for message_handler in &mut self.message_handlers {
+            message_handler.execute(bot, update.clone(), None);
+        }
 
         if let Some(t) = update.clone().message.and_then(|t| t.text) {
             if t.starts_with('/') {
@@ -61,19 +58,13 @@ impl Dispatcher {
                     if let Some(c) = command {
                         if c.1 {
                             let args = msg.clone().split_off(1);
-                            return c.0.execute(bot, update, Some(args));
+                            c.0.execute(bot, update, Some(args));
                         } else {
-                            return c.0.execute(bot, update, None);
+                            c.0.execute(bot, update, None);
                         }
                     }
                 }
             }
         }
-        for message_handler in &mut self.message_handlers {
-            // TODO: Make sure alle message handlers are executed
-            return message_handler.execute(bot, update.clone(), None);
-        }
-
-        Box::new(future::ok(()))
     }
 }

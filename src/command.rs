@@ -1,8 +1,6 @@
 use crate::types::Update;
 use crate::Bot;
 
-use futures::Future;
-
 /// A trait which has to be implemented for all handlers.
 ///
 /// With this trait you can create your own custom commands.
@@ -31,10 +29,5 @@ use futures::Future;
 /// This implements the `Command` trait for the Test struct.
 pub trait Command: Sync + Send + 'static {
     /// Execute the logic for each handler.
-    fn execute(
-        &mut self,
-        bot: &Bot,
-        update: Update,
-        args: Option<Vec<&str>>,
-    ) -> Box<dyn Future<Item = (), Error = ()> + Send>;
+    fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>);
 }

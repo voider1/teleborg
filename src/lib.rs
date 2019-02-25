@@ -52,8 +52,7 @@ pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::methods::Method;
 pub use self::updater::Updater;
-
-use futures::Future;
+pub use tokio::spawn;
 
 /// This module contains all the error-types.
 pub mod error;
@@ -68,18 +67,12 @@ pub mod types;
 mod updater;
 
 // TODO: Reconsider redesign
-impl<T, R> Command for T
+impl<T> Command for T
 where
-    T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>) -> Box<R>,
-    R: Future<Item = (), Error = ()> + Send + 'static,
+    T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>),
 {
-    fn execute(
-        &mut self,
-        bot: &Bot,
-        update: types::Update,
-        args: Option<Vec<&str>>,
-    ) -> Box<dyn Future<Item = (), Error = ()> + Send> {
-        self(bot, update, args)
+    fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {
+        self(bot, update, args);
     }
 }
 
