@@ -43,8 +43,12 @@ impl Updater {
     /// Constructs a new `Updater` and starts the threads.
     pub fn start(self, mut dispatcher: Dispatcher) {
         let bot = Arc::clone(&self.bot);
-        let start = self.for_each(move |update| {
-            dispatcher.handle(&bot, update);
+
+        let start = self.then(|update| Ok(update)).for_each(move |update| {
+            match update {
+                Ok(u) => dispatcher.handle(&bot, u),
+                Err(e) => eprintln!("Error: {}", e.as_fail()),
+            }
             future::ok(())
         });
 
@@ -55,9 +59,9 @@ impl Updater {
 impl Stream for Updater {
     type Item = Update;
 
-    type Error = ();
+    type Error = FailureError;
 
-    fn poll(&mut self) -> Poll<Option<Update>, ()> {
+    fn poll(&mut self) -> Poll<Option<Update>, FailureError> {
         loop {
             let update = self.updates.pop();
 
@@ -65,7 +69,7 @@ impl Stream for Updater {
                 self.offset = (u.update_id + 1) as usize;
                 return Ok(Async::Ready(Some(u)));
             } else if let Some(ref mut f) = self.update_future {
-                let mut updates = try_ready!(f.poll().map_err(|_| ()));
+                let mut updates = try_ready!(f.poll());
                 self.update_future = None;
 
                 if updates.is_empty() {
