@@ -36,11 +36,7 @@
 //!     let chat_id = update.message.unwrap().chat.id;
 //!     let text = "It works!";
 //!
-//!     SendMessage::builder()
-//!         .chat_id(chat_id)
-//!         .text(text)
-//!         .build()
-//!     }
+//!     let msg = SendMessage::builder().chat_id(chat_id).text(text).build();
 //!
 //!     spawn(bot.call(&msg).then(|_| Ok(())));
 //! }
