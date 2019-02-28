@@ -28,7 +28,7 @@
 //!     // Create an Updater builder and configure it as you like, after that build it and start it.
 //!     // The Updater will start the Tokio runtime, this ensures you can spawn tasks inside of
 //!     // your command handlers.
-//!     Updater::builder().token(token).build().start(dispatcher);
+//!     Updater::builder().build(token).start(dispatcher);
 //! }
 //!
 //! // Our first command handler
@@ -43,6 +43,7 @@
 //!     }
 //!
 //!     spawn(bot.call(&msg).then(|_| Ok(())));
+//! }
 //!
 //! ```
 
