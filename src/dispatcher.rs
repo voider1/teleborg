@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{self, Debug};
 
 use crate::bot::Bot;
 use crate::command::Command;
@@ -8,7 +9,7 @@ use crate::types::Update;
 /// them to the registered handlers.
 ///
 /// You can add your command and message handlers to the `Dispatcher`.
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct Dispatcher {
     command_handlers: HashMap<String, (Box<dyn Command>, bool)>,
     message_handlers: Vec<Box<dyn Command>>,
@@ -66,5 +67,11 @@ impl Dispatcher {
                 }
             }
         }
+    }
+}
+
+impl Debug for dyn Command + 'static {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_fmt(format_args!("{:?}", self))
     }
 }

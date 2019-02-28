@@ -1,3 +1,4 @@
+use std::fmt::{self, Debug};
 use std::sync::Arc;
 
 use failure::Error as FailureError;
@@ -87,6 +88,24 @@ impl Stream for Updater {
                 self.update_future = Some(Box::new(updates));
             }
         }
+    }
+}
+
+impl Debug for Updater {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let update_future = match &self.update_future {
+            Some(_) => "Some(Box<dyn Future<Item = Vec<Update>, Error = FailureError> + Send>)",
+            None => "None",
+        };
+
+        f.debug_struct("Updater")
+            .field("timeout", &self.timeout)
+            .field("offset", &self.offset)
+            .field("limit", &self.limit)
+            .field("update_future", &update_future)
+            .field("updates", &self.updates)
+            .field("bot", &self.bot)
+            .finish()
     }
 }
 
