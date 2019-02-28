@@ -14,9 +14,7 @@
 //! ``` no_run
 //! use std::env;
 //!
-//! use teleborg::{Bot, Dispatcher, Updater, Future, spawn};
-//! use teleborg::types::Update;
-//! use teleborg::methods::SendMessage;
+//! use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater};
 //!
 //! fn main() {
 //!     // Get bot your token from the environment
