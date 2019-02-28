@@ -32,7 +32,7 @@ pub struct UpdaterBuilder {
 
 impl Updater {
     /// Create a new UpdaterBuilder with sane defaults for configuration
-    pub fn new() -> UpdaterBuilder {
+    pub fn builder() -> UpdaterBuilder {
         UpdaterBuilder {
             timeout: 10,
             offset: 0,
