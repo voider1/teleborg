@@ -12,8 +12,6 @@
 //! ## Getting started
 //!
 //! ``` no_run
-//! extern crate teleborg;
-//!
 //! use std::env;
 //!
 //! use teleborg::{Bot, Dispatcher, Updater};
@@ -53,6 +51,7 @@ pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::methods::Method;
 pub use self::updater::Updater;
+pub use futures::future::Future;
 pub use tokio::spawn;
 
 /// This module contains all the error-types.
