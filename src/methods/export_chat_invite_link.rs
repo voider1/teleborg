@@ -8,7 +8,8 @@ use typed_builder::TypedBuilder;
 /// appropiate administrator rights. Returns the new invite link on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct ExportChatInviteLink {
-    chat_id: i32,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
 }
 
 impl_method!(ExportChatInviteLink, String, "exportChatInviteLink");

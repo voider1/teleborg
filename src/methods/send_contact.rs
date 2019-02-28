@@ -7,21 +7,33 @@ use typed_builder::TypedBuilder;
 /// Use this method to send phone contacts. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendContact {
-    chat_id: i32,
-    phone_number: &'static str,
-    first_name: &'static str,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
+    /// Contact's phone number.
+    pub phone_number: &'static str,
+    /// Contact's first name.
+    pub first_name: &'static str,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    last_name: Option<&'static str>,
+    /// Contact's last name.
+    pub last_name: Option<&'static str>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    disable_notification: Option<bool>,
+    /// Additional data about the contact in the form of
+    /// [vCard](https://en.wikipedia.org/wiki/VCard), 0-2048 bytes.
+    pub vcard: Option<&'static str>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    reply_to_message_id: Option<i32>,
+    /// Sends the message silently. Users get a notification without sound.
+    pub disable_notification: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    reply_markup: Option<ReplyMarkup>,
+    /// If the message is a reply, ID of the original message.
+    pub reply_to_message_id: Option<i32>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    /// Interface options.
+    pub reply_markup: Option<ReplyMarkup>,
 }
 
 impl_method!(SendContact, Message, "sendContact");

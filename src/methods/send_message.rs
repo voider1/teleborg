@@ -7,23 +7,30 @@ use typed_builder::TypedBuilder;
 /// Use this method to send text messages. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendMessage {
-    chat_id: i64,
-    text: &'static str,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
+    /// Text of the message to be sent.
+    pub text: &'static str,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    parse_mode: Option<ParseMode>,
+    /// Select the way your message should be parsed using the `ParseMode` struct.
+    pub parse_mode: Option<ParseMode>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    disable_web_page_view: Option<bool>,
+    /// Disable link previews for links in messages
+    pub disable_web_page_view: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    disable_notification: Option<bool>,
+    /// Sends the message silently. Users get a notification without sound.
+    pub disable_notification: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    reply_to_message_id: Option<i32>,
+    /// If the message is a reply, ID of the original message.
+    pub reply_to_message_id: Option<i32>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    reply_markup: Option<ReplyMarkup>,
+    /// Interface options.
+    pub reply_markup: Option<ReplyMarkup>,
 }
 
 impl_method!(SendMessage, Message, "sendMessage");

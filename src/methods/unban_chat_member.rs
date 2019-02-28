@@ -8,8 +8,10 @@ use typed_builder::TypedBuilder;
 /// must be an administrator for this to work. Returns `true` on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct UnbanChatMember {
-    chat_id: i32,
-    user_id: i32,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
+    /// Unique identifier of the target user.
+    pub user_id: i32,
 }
 
 impl_method!(UnbanChatMember, bool, "unbanChatMember");

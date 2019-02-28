@@ -12,6 +12,7 @@ use typed_builder::TypedBuilder;
 /// expires, a new one can be requested by calling `GetFile` again.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetFile {
+    /// File identifier to get information about.
     file_id: &'static str,
 }
 

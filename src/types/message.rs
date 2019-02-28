@@ -9,11 +9,11 @@ use serde::Deserialize;
 #[derive(Clone, Deserialize, Debug)]
 pub struct Message {
     /// Unique message identifier inside this chat.
-    pub message_id: i64,
+    pub message_id: i32,
     /// Sender, empty for messages sent to channels.
     pub from: Option<User>,
     /// Date the message was sent (Unix time).
-    pub date: i64,
+    pub date: i32,
     /// Chat the message belongs to.
     pub chat: Chat,
     /// For forwarded messages, sender of the original message.
@@ -21,16 +21,16 @@ pub struct Message {
     /// For messages forwarded from channels, infomration about the original channel.
     pub forward_from_chat: Option<Chat>,
     /// For messages forwarded from channels, identifier of the original message in the channel.
-    pub forward_from_message_id: Option<i64>,
+    pub forward_from_message_id: Option<i32>,
     /// For messages forwarded from channels, signature of the post author if present.
     pub forward_signature: Option<String>,
     /// For forwarded messages, date of the original message was sent (Unix time).
-    pub forward_date: Option<i64>,
+    pub forward_date: Option<i32>,
     /// For replies, the original message. Note that the `Message` struct in this field will not
     /// contain further `reply_to_message` fields, even if it itself is a reply.
     pub reply_to_message: Option<Box<Message>>,
     /// Date the message was last edited (Unix time).
-    pub edit_date: Option<i64>,
+    pub edit_date: Option<i32>,
     /// The unique identifier of a media message group this message belongs to.
     pub media_group_id: Option<String>,
     /// Signature of the post author for messages in channels.

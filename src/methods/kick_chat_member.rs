@@ -9,11 +9,15 @@ use typed_builder::TypedBuilder;
 /// must have the appropiate administrator rights. Returns `true` on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct KickChatMember {
-    chat_id: i32,
-    user_id: i32,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
+    /// Unique identifier of the target user.
+    pub user_id: i32,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    until_date: Option<i32>,
+    /// Date when the user will be unbanned, unix time. If the user is banned for more than 366
+    /// days or less than 30 seconds from the current time they are considered banned forever.
+    pub until_date: Option<i32>,
 }
 
 impl_method!(KickChatMember, bool, "kickChatMember");

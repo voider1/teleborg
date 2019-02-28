@@ -9,8 +9,10 @@ use typed_builder::TypedBuilder;
 /// clients clear its typing status). Returns `true` on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendChatAction {
-    chat_id: i64,
-    action: ChatAction,
+    /// Unique identifier for the target chat.
+    pub chat_id: i64,
+    /// Type of action to broadcast. Use the `ChatAction` enum to specify this.
+    pub action: ChatAction,
 }
 
 impl_method!(SendChatAction, bool, "sendChatAction");
