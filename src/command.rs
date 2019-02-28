@@ -8,9 +8,7 @@ use crate::Bot;
 /// # Examples
 ///
 /// ```
-/// use teleborg::{Bot, Command, Future, spawn};
-/// use teleborg::objects::Update;
-/// use teleborg::methods::SendMessage;
+/// use teleborg::{Command, methods::SendMessage, spawn, types::Update, Bot, Future};
 ///
 /// struct Test;
 ///
@@ -19,11 +17,10 @@ use crate::Bot;
 ///         let chat_id = update.message.unwrap().chat.id;
 ///         let text = "It works!";
 ///
-///         SendMessage::builder()
+///         let msg = SendMessage::builder()
 ///             .chat_id(chat_id)
 ///             .text(text)
-///             .build()
-///         }
+///             .build();
 ///
 ///         spawn(bot.call(&msg).then(|_| Ok(())));
 ///     }
