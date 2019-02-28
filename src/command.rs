@@ -8,14 +8,24 @@ use crate::Bot;
 /// # Examples
 ///
 /// ```
-/// use teleborg::{Bot, Command};
+/// use teleborg::{Bot, Command, Future, spawn};
 /// use teleborg::objects::Update;
+/// use teleborg::methods::SendMessage;
 ///
 /// struct Test;
 ///
 /// impl Test {
-///     fn test(&self, bot: &Bot, update: Update, args: Option<Vec<&str>>) {
-///         bot.reply_to_message(&update, "It works!");
+///     fn test(&self, bot: &Bot, update: Update, _: Option<Vec<&str>>) {
+///         let chat_id = update.message.unwrap().chat.id;
+///         let text = "It works!";
+///
+///         SendMessage::builder()
+///             .chat_id(chat_id)
+///             .text(text)
+///             .build()
+///         }
+///
+///         spawn(bot.call(&msg).then(|_| Ok(())));
 ///     }
 /// }
 ///

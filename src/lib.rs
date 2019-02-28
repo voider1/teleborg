@@ -14,9 +14,9 @@
 //! ``` no_run
 //! use std::env;
 //!
-//! use teleborg::{Bot, Dispatcher, Updater};
+//! use teleborg::{Bot, Dispatcher, Updater, Future, spawn};
 //! use teleborg::types::Update;
-//! use teleborg::methods::{Method, SendMessage};
+//! use teleborg::methods::SendMessage;
 //!
 //! fn main() {
 //!     // Get bot your token from the environment
@@ -26,8 +26,8 @@
 //!     // Registering our command which we create below in the form as a function
 //!     dispatcher.add_command_handler("test", test, false);
 //!     // Create an Updater builder and configure it as you like, after that build it and start it.
-//!     // The Updater will start the threads, one of which will poll for updates
-//!     // and send those to the Dispatcher's thread which will act upon it with the registered handlers
+//!     // The Updater will start the Tokio runtime, this ensures you can spawn tasks inside of
+//!     // your command handlers.
 //!     Updater::builder().token(token).build().start(dispatcher);
 //! }
 //!
@@ -40,9 +40,9 @@
 //!         .chat_id(chat_id)
 //!         .text(text)
 //!         .build()
-//!         .call(&bot)
-//!         .unwrap();
-//! }
+//!     }
+//!
+//!     spawn(bot.call(&msg).then(|_| Ok(())));
 //!
 //! ```
 
@@ -51,7 +51,7 @@ pub use self::command::Command;
 pub use self::dispatcher::Dispatcher;
 pub use self::methods::Method;
 pub use self::updater::Updater;
-pub use futures::future::Future;
+pub use futures::Future;
 pub use tokio::spawn;
 
 /// This module contains all the error-types.
@@ -66,7 +66,6 @@ mod dispatcher;
 pub mod types;
 mod updater;
 
-// TODO: Reconsider redesign
 impl<T> Command for T
 where
     T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>),
