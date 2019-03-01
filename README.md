@@ -14,7 +14,7 @@ An example
 Here we'll show you the bare minimum needed to register a command which sends a hardcoded reply when issued.
 
 ```rust
-use std::env;
+use std::{sync::Arc, env};
 
 use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater};
 
@@ -32,9 +32,9 @@ fn main() {
 }
 
 // Our first command handler
-fn test(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
+fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
     let chat_id = update.message.unwrap().chat.id;
-    let text = "It works!";
+    let text = String::from("It works!");
 
     let msg = SendMessage::builder().chat_id(chat_id).text(text).build();
 
