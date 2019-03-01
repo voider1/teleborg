@@ -5,6 +5,7 @@ pub use self::get_user_profile_photos::GetUserProfilePhotos;
 pub use self::kick_chat_member::KickChatMember;
 pub use self::send_chat_action::SendChatAction;
 pub use self::send_contact::SendContact;
+pub use self::send_location::SendLocation;
 pub use self::send_message::SendMessage;
 pub use self::unban_chat_member::UnbanChatMember;
 
@@ -27,6 +28,7 @@ mod get_user_profile_photos;
 mod kick_chat_member;
 mod send_chat_action;
 mod send_contact;
+mod send_location;
 mod send_message;
 mod unban_chat_member;
 
