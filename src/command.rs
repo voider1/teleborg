@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use crate::types::Update;
 use crate::Bot;
 
@@ -8,14 +10,16 @@ use crate::Bot;
 /// # Examples
 ///
 /// ```
+/// use std::sync::Arc;
+///
 /// use teleborg::{Command, methods::SendMessage, spawn, types::Update, Bot, Future};
 ///
 /// struct Test;
 ///
 /// impl Test {
-///     fn test(&self, bot: &Bot, update: Update, _: Option<Vec<&str>>) {
+///     fn test(&self, bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
 ///         let chat_id = update.message.unwrap().chat.id;
-///         let text = "It works!";
+///         let text = String::from("It works!");
 ///
 ///         let msg = SendMessage::builder()
 ///             .chat_id(chat_id)
@@ -27,7 +31,7 @@ use crate::Bot;
 /// }
 ///
 /// impl Command for Test {
-///     fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>) {
+///     fn execute(&mut self, bot: &Arc<Bot>, update: Update, args: Option<Vec<&str>>) {
 ///         self.test(bot, update, args);
 ///     }
 /// }
@@ -36,5 +40,5 @@ use crate::Bot;
 /// This implements the `Command` trait for the Test struct.
 pub trait Command: Sync + Send + 'static {
     /// Execute the logic for each handler.
-    fn execute(&mut self, bot: &Bot, update: Update, args: Option<Vec<&str>>);
+    fn execute(&mut self, bot: &Arc<Bot>, update: Update, args: Option<Vec<&str>>);
 }

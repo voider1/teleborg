@@ -12,7 +12,7 @@
 //! ## Getting started
 //!
 //! ``` no_run
-//! use std::env;
+//! use std::{sync::Arc, env};
 //!
 //! use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater};
 //!
@@ -30,9 +30,9 @@
 //! }
 //!
 //! // Our first command handler
-//! fn test(bot: &Bot, update: Update, _: Option<Vec<&str>>) {
+//! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
 //!     let chat_id = update.message.unwrap().chat.id;
-//!     let text = "It works!";
+//!     let text = String::from("It works!");
 //!
 //!     let msg = SendMessage::builder().chat_id(chat_id).text(text).build();
 //!
@@ -47,6 +47,7 @@ pub use self::dispatcher::Dispatcher;
 pub use self::methods::Method;
 pub use self::updater::Updater;
 pub use futures::Future;
+use std::sync::Arc;
 pub use tokio::spawn;
 
 /// This module contains all the error-types.
@@ -63,9 +64,9 @@ mod updater;
 
 impl<T> Command for T
 where
-    T: Sync + Send + 'static + FnMut(&Bot, types::Update, Option<Vec<&str>>),
+    T: Sync + Send + 'static + FnMut(&Arc<Bot>, types::Update, Option<Vec<&str>>),
 {
-    fn execute(&mut self, bot: &Bot, update: types::Update, args: Option<Vec<&str>>) {
+    fn execute(&mut self, bot: &Arc<Bot>, update: types::Update, args: Option<Vec<&str>>) {
         self(bot, update, args);
     }
 }

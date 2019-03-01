@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fmt::{self, Debug};
+use std::sync::Arc;
 
 use crate::bot::Bot;
 use crate::command::Command;
@@ -36,14 +37,14 @@ impl Dispatcher {
     }
 
     /// Starts the update handling process and dispatches all the updates to the assigned handlers.
-    pub fn handle(&mut self, bot: &Bot, update: Update) {
-        let username = bot
+    pub fn handle(&mut self, bot: &Arc<Bot>, update: Update) {
+        let username = &bot
             .username
             .as_ref()
             .expect("A bot should have a username, this can't be None");
 
         for message_handler in &mut self.message_handlers {
-            message_handler.execute(bot, update.clone(), None);
+            message_handler.execute(&bot, update.clone(), None);
         }
 
         if let Some(t) = update.clone().message.and_then(|t| t.text) {
@@ -52,7 +53,8 @@ impl Dispatcher {
                 let (_, bot_command) = msg[0].split_at(1);
                 let name_command = bot_command.split('@').collect::<Vec<&str>>();
 
-                if name_command.len() == 1 || name_command.len() == 2 && name_command[1] == username
+                if name_command.len() == 1
+                    || name_command.len() == 2 && &name_command[1] == username
                 {
                     let command = self.command_handlers.get_mut(name_command[0]);
 

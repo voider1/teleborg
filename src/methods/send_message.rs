@@ -10,7 +10,7 @@ pub struct SendMessage {
     /// Unique identifier for the target chat.
     pub chat_id: i64,
     /// Text of the message to be sent.
-    pub text: &'static str,
+    pub text: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Select the way your message should be parsed using the `ParseMode` struct.

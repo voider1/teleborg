@@ -13,7 +13,7 @@ use typed_builder::TypedBuilder;
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetFile {
     /// File identifier to get information about.
-    file_id: &'static str,
+    file_id: String,
 }
 
 impl_method!(GetFile, File, "getFile");
