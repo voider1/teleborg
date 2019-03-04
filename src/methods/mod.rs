@@ -1,3 +1,4 @@
+pub use self::edit_message_text::EditMessageText;
 pub use self::export_chat_invite_link::ExportChatInviteLink;
 pub use self::forward_message::ForwardMessage;
 pub use self::get_file::GetFile;
@@ -21,6 +22,7 @@ macro_rules! impl_method {
     };
 }
 
+mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
 mod get_file;
