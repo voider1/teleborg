@@ -45,7 +45,7 @@ impl Updater {
     pub fn start(self, mut dispatcher: Dispatcher) {
         let bot = Arc::clone(&self.bot);
 
-        let start = self.then(|update| Ok(update)).for_each(move |update| {
+        let start = self.then(Ok).for_each(move |update| {
             match update {
                 Ok(u) => dispatcher.handle(&bot, u),
                 Err(e) => eprintln!("Error: {}", e.as_fail()),
