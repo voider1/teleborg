@@ -46,12 +46,20 @@ macro_rules! impl_method_multipart {
                         let mut buffer = Vec::new();
                         // Check if file reads successfully.
                         if let Ok(_) = file.read_to_end(&mut buffer) {
-                            let name = Path::new(&photo_file).file_name();
-                            let name = name.unwrap().to_str().unwrap();
+                            let path = Path::new(&photo_file);
+
+                            let name = path.file_name().unwrap().to_str().unwrap();
+                            let extension = path.extension().unwrap().to_str().unwrap();
 
                             let part = Part::bytes(buffer);
-                            let part = part.mime_str("image/png").unwrap();
+                            let mime = match extension {
+                                "jpeg" => "image/jpeg",
+                                "jpg" => "image/jpeg",
+                                "png" => "image/png",
+                                &_ => "image/png"
+                            };
                             let part = part.file_name(String::from(name));
+                            let part = part.mime_str(mime).unwrap();
                             
                             let form = Form::new().part("photo", part);
                             return builder.query(self).multipart(form);
