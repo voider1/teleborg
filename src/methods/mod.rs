@@ -39,22 +39,27 @@ macro_rules! impl_method_multipart {
             const PATH: &'static str = $path;
             
             fn build(&self, builder: RequestBuilder) -> RequestBuilder {
+                // Check if file field was filled.
                 if let Some(photo_file) = &self.photo_file {
-                    let mut f = File::open(&photo_file).unwrap();
-                    let mut buffer = Vec::new();
-                    f.read_to_end(&mut buffer).ok();
+                    // Check if path opens.
+                    if let Ok(mut file) = File::open(&photo_file) {
+                        let mut buffer = Vec::new();
+                        // Check if file reads successfully.
+                        if let Ok(_) = file.read_to_end(&mut buffer) {
+                            let name = Path::new(&photo_file).file_name();
+                            let name = name.unwrap().to_str().unwrap();
 
-                    let name = Path::new(&photo_file).file_name();
-                    let name = name.unwrap().to_str().unwrap();
-
-                    let part = Part::bytes(buffer);
-                    let part = part.mime_str("image/png").unwrap();
-                    
-                    let form = Form::new().part("photo", part);
-                    builder.query(self).multipart(form)
-                } else {
-                    builder.json(self)
+                            let part = Part::bytes(buffer);
+                            let part = part.mime_str("image/png").unwrap();
+                            let part = part.file_name(String::from(name));
+                            
+                            let form = Form::new().part("photo", part);
+                            return builder.query(self).multipart(form);
+                        }
+                    }
                 }
+                // default output
+                builder.json(self)
             }
         }
     };
