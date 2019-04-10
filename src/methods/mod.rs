@@ -24,6 +24,37 @@ macro_rules! impl_method {
     };
 }
 
+
+macro_rules! impl_method_multipart {
+    ($struct:ident, $response:ident, $path:expr) => {
+        use reqwest::r#async::RequestBuilder;
+        use reqwest::r#async::multipart::{Form, Part};
+        use std::fs::File;
+        use std::io::Read;
+
+        impl Method for $struct {
+            type Response = $response;
+            const PATH: &'static str = $path;
+            
+            fn build(&self, builder: RequestBuilder) -> RequestBuilder {
+                if let Some(photo_file) = &self.photo_file {
+                    let mut f = File::open(photo_file).unwrap();
+                    let mut buffer = Vec::new();
+                    f.read_to_end(&mut buffer).ok();
+
+                    let part = Part::bytes(buffer);
+                    
+
+                    let form = Form::new().part("photo", part);
+                    builder.query(self).multipart(form)
+                } else {
+                    builder.json(self)
+                }
+            }
+        }
+    };
+}
+
 mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;

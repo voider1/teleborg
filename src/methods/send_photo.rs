@@ -12,7 +12,11 @@ pub struct SendPhoto {
     /// Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), 
     /// pass an HTTP URL as a String for Telegram to get a photo from the Internet, 
     /// or upload a new photo using multipart/form-data.
-    pub photo: String,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub photo: Option<String>,
+    #[serde(skip_serializing)]
+    pub photo_file: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Caption text for the photo.
@@ -35,4 +39,4 @@ pub struct SendPhoto {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendPhoto, Message, "sendPhoto");
+impl_method_multipart!(SendPhoto, Message, "sendPhoto");
