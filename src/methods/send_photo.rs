@@ -35,3 +35,4 @@ pub struct SendPhoto {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
+impl_method!(SendPhoto, Message, "sendPhoto");

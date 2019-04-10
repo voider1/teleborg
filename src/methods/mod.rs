@@ -13,6 +13,8 @@ pub use self::unban_chat_member::UnbanChatMember;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 
+use reqwest::r#async::RequestBuilder;
+
 macro_rules! impl_method {
     ($struct:ident, $response:ident, $path:expr) => {
         impl Method for $struct {
@@ -32,6 +34,7 @@ mod send_chat_action;
 mod send_contact;
 mod send_location;
 mod send_message;
+mod send_photo;
 mod unban_chat_member;
 
 /// This trait gets implemented for every method-builder and makes sure that they all have an
@@ -42,4 +45,9 @@ pub trait Method: Serialize + Sized {
 
     /// Associated path for the method we implement this on.
     const PATH: &'static str;
+
+    /// Method for building the request.
+    fn build(&self, builder: RequestBuilder) -> RequestBuilder {
+        builder.json(self)
+    }
 }

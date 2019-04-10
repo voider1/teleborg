@@ -86,13 +86,11 @@ impl Bot {
         M: Method,
     {
         let url = [&self.bot_url, M::PATH].join("/");
-        self.async_client
-            .post(&url)
-            .json(m)
-            .send()
-            .and_then(|mut res| res.json::<TelegramResponse>())
-            .from_err()
-            .and_then(Self::get_result)
+        m.build(self.async_client.post(&url))
+         .send()
+         .and_then(|mut res| res.json::<TelegramResponse>())
+         .from_err()
+         .and_then(Self::get_result)
     }
 
     fn get_result<R>(resp: TelegramResponse) -> Result<R>
