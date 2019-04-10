@@ -38,14 +38,15 @@ macro_rules! impl_method_multipart {
             const PATH: &'static str = $path;
             
             fn build(&self, builder: RequestBuilder) -> RequestBuilder {
-                if let Some(photo_file) = &self.photo_file {
-                    let mut f = File::open(photo_file).unwrap();
+                if let Some(photo_file) = self.photo_file.clone() {
+                    let mut f = File::open(photo_file.clone()).unwrap();
                     let mut buffer = Vec::new();
                     f.read_to_end(&mut buffer).ok();
 
                     let part = Part::bytes(buffer);
+                    let part = part.mime_str("image/png").unwrap();
+                    let part = part.file_name(photo_file.clone());
                     
-
                     let form = Form::new().part("photo", part);
                     builder.query(self).multipart(form)
                 } else {

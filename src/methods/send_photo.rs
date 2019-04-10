@@ -15,6 +15,7 @@ pub struct SendPhoto {
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub photo: Option<String>,
+    /// path of the photo file that should be used.
     #[serde(skip_serializing)]
     pub photo_file: Option<String>,
     #[builder(default)]
