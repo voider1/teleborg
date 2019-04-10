@@ -8,6 +8,7 @@ pub use self::send_chat_action::SendChatAction;
 pub use self::send_contact::SendContact;
 pub use self::send_location::SendLocation;
 pub use self::send_message::SendMessage;
+pub use self::send_photo::SendPhoto;
 pub use self::unban_chat_member::UnbanChatMember;
 
 use serde::de::DeserializeOwned;
