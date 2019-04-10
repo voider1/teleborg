@@ -30,6 +30,7 @@ macro_rules! impl_method_multipart {
     ($struct:ident, $response:ident, $path:expr) => {
         use reqwest::r#async::RequestBuilder;
         use reqwest::r#async::multipart::{Form, Part};
+        use std::path::Path;
         use std::fs::File;
         use std::io::Read;
 
@@ -38,14 +39,17 @@ macro_rules! impl_method_multipart {
             const PATH: &'static str = $path;
             
             fn build(&self, builder: RequestBuilder) -> RequestBuilder {
-                if let Some(photo_file) = self.photo_file.clone() {
-                    let mut f = File::open(photo_file.clone()).unwrap();
+                if let Some(photo_file) = &self.photo_file {
+                    let mut f = File::open(&photo_file).unwrap();
                     let mut buffer = Vec::new();
                     f.read_to_end(&mut buffer).ok();
 
+                    let name = Path::new(&photo_file).file_name();
+                    let name = name.unwrap().to_str().unwrap();
+
                     let part = Part::bytes(buffer);
                     let part = part.mime_str("image/png").unwrap();
-                    let part = part.file_name(photo_file.clone());
+                    let part = part.file_name(String::from(name));
                     
                     let form = Form::new().part("photo", part);
                     builder.query(self).multipart(form)
