@@ -43,7 +43,7 @@ macro_rules! impl_method_multipart {
                     if let Ok(mut file) = File::open(&file_path) {
                         let mut buffer = Vec::new();
                         // Check if file reads successfully.
-                        if let Ok(_) = file.read_to_end(&mut buffer) {
+                        if file.read_to_end(&mut buffer).is_ok() {
                             let path = Path::new(&file_path);
 
                             let name = path.file_name().unwrap().to_str().unwrap();
