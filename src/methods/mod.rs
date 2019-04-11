@@ -25,19 +25,18 @@ macro_rules! impl_method {
     };
 }
 
-
 macro_rules! impl_method_multipart {
     ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
-        use reqwest::r#async::RequestBuilder;
         use reqwest::r#async::multipart::{Form, Part};
-        use std::path::Path;
+        use reqwest::r#async::RequestBuilder;
         use std::fs::File;
         use std::io::Read;
+        use std::path::Path;
 
         impl Method for $struct {
             type Response = $response;
             const PATH: &'static str = $path;
-            
+
             fn build(&self, builder: RequestBuilder) -> RequestBuilder {
                 // Check if file field was filled.
                 if let Some(file_path) = &self.file {
@@ -50,9 +49,8 @@ macro_rules! impl_method_multipart {
 
                             let name = path.file_name().unwrap().to_str().unwrap();
 
-                            let part = Part::bytes(buffer);
-                            let part = part.file_name(String::from(name));
-                            
+                            let part = Part::bytes(buffer).file_name(String::from(name));
+
                             let form = Form::new().part($filefield, part);
                             return builder.query(self).multipart(form);
                         }
