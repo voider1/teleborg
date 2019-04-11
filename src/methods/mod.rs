@@ -13,7 +13,6 @@ pub use self::unban_chat_member::UnbanChatMember;
 
 use serde::de::DeserializeOwned;
 use serde::Serialize;
-
 use reqwest::r#async::RequestBuilder;
 
 macro_rules! impl_method {
