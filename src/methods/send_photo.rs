@@ -4,7 +4,7 @@ use crate::types::{Message, ParseMode, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method to send text messages. On success, the sent `Message` is returned.
+/// Use this method to send photos. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendPhoto {
     /// Unique identifier for the target chat.
