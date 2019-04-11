@@ -49,16 +49,8 @@ macro_rules! impl_method_multipart {
                             let path = Path::new(&photo_file);
 
                             let name = path.file_name().unwrap().to_str().unwrap();
-                            let extension = path.extension().unwrap().to_str().unwrap();
 
                             let part = Part::bytes(buffer);
-                            let mime = match extension {
-                                "jpeg" => "image/jpeg",
-                                "jpg" => "image/jpeg",
-                                "png" => "image/png",
-                                &_ => "image/png"
-                            };
-                            print!("{}", mime);
                             let part = part.file_name(String::from(name));
                             
                             let form = Form::new().part("photo", part);
