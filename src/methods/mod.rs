@@ -58,8 +58,8 @@ macro_rules! impl_method_multipart {
                                 "png" => "image/png",
                                 &_ => "image/png"
                             };
+                            print!("{}", mime);
                             let part = part.file_name(String::from(name));
-                            let part = part.mime_str(mime).unwrap();
                             
                             let form = Form::new().part("photo", part);
                             return builder.query(self).multipart(form);
