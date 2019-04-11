@@ -45,12 +45,10 @@ macro_rules! impl_method_multipart {
                         // Check if file reads successfully.
                         if file.read_to_end(&mut buffer).is_ok() {
                             let path = Path::new(&file_path);
-
                             let name = path.file_name().unwrap().to_str().unwrap();
-
                             let part = Part::bytes(buffer).file_name(String::from(name));
-
                             let form = Form::new().part($filefield, part);
+
                             return builder.query(self).multipart(form);
                         }
                     }
