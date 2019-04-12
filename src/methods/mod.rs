@@ -14,6 +14,8 @@ pub use self::unban_chat_member::UnbanChatMember;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use reqwest::r#async::RequestBuilder;
+use crate::error::Result;
+
 
 macro_rules! impl_method {
     ($struct:ident, $response:ident, $path:expr) => {
@@ -28,33 +30,36 @@ macro_rules! impl_method_multipart {
     ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
         use reqwest::r#async::multipart::{Form, Part};
         use reqwest::r#async::RequestBuilder;
+        use failure::ensure;
         use std::fs::File;
         use std::io::Read;
         use std::path::Path;
+        use crate::error::Error;
+        use crate::error::Result;
 
         impl Method for $struct {
             type Response = $response;
             const PATH: &'static str = $path;
 
-            fn build(&self, builder: RequestBuilder) -> RequestBuilder {
-                // Check if file field was filled.
-                if let Some(file_path) = &self.file {
-                    // Check if path opens.
-                    if let Ok(mut file) = File::open(&file_path) {
-                        let mut buffer = Vec::new();
-                        // Check if file reads successfully.
-                        if file.read_to_end(&mut buffer).is_ok() {
-                            let path = Path::new(&file_path);
-                            let name = path.file_name().unwrap().to_str().unwrap();
-                            let part = Part::bytes(buffer).file_name(String::from(name));
-                            let form = Form::new().part($filefield, part);
-
-                            return builder.query(self).multipart(form);
-                        }
-                    }
+            fn build(&self, builder: RequestBuilder) -> Result<RequestBuilder> {
+                if self.file.is_none() {
+                    return Ok(builder.json(self));
                 }
-                // default output
-                builder.json(self)
+
+                let file_path = &self.file.unwrap();
+                let file = File::open(&file_path);
+
+                ensure!(file.is_ok(), Error::MultiPartBuilderError(format!("File couldn't open {}", &file_path)));
+                let file = file.unwrap();
+                let mut buffer = Vec::new();
+
+                ensure!(file.read_to_end(&mut buffer), Error::MultiPartBuilderError(format!("Could not read file: {}", &file_path)));
+                let path = Path::new(&file_path);
+                let name = path.file_name().unwrap().to_str().unwrap();
+                let part = Part::bytes(buffer).file_name(String::from(name));
+                let form = Form::new().part($filefield, part);
+
+                return Ok(builder.query(self).multipart(form));
             }
         }
     };
@@ -83,7 +88,7 @@ pub trait Method: Serialize + Sized {
     const PATH: &'static str;
 
     /// Method for building the request.
-    fn build(&self, builder: RequestBuilder) -> RequestBuilder {
-        builder.json(self)
+    fn build(&self, builder: RequestBuilder) -> Result<RequestBuilder> {
+        Ok(builder.json(self))
     }
 }

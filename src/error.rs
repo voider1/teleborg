@@ -25,4 +25,7 @@ pub enum Error {
         _0, _1
     )]
     TelegramApiError(String, i32),
+    /// Thrown when the multipart builder fails.
+    #[fail(display = "MultiPartBuilder failed because: {}", _0)]
+    MultiPartBuilderError(String),
 }

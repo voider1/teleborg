@@ -2,6 +2,7 @@ use std::ops::Deref;
 
 use failure::{ensure, Error as FailureError};
 use futures::Future;
+use futures::future::err;
 use reqwest::{r#async::Client as AsyncClient, Client};
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
@@ -86,7 +87,12 @@ impl Bot {
         M: Method,
     {
         let url = [&self.bot_url, M::PATH].join("/");
-        m.build(self.async_client.post(&url))
+        let body = m.build(self.async_client.post(&url));
+        //if let Err(body) = body {
+        //    return err(body.unwrap());
+        //}
+        body.ok()
+            .unwrap()
             .send()
             .and_then(|mut res| res.json::<TelegramResponse>())
             .from_err()
