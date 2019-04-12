@@ -39,12 +39,12 @@ macro_rules! impl_method_multipart {
             type Response = $response;
             const PATH: &'static str = $path;
 
-            fn build(&self, builder: RequestBuilder) -> Result<RequestBuilder> {
+            fn build(mut self, builder: RequestBuilder) -> Result<RequestBuilder> {
                 if self.file.is_none() {
-                    return Ok(builder.json(self));
+                    return Ok(builder.json(&self));
                 }
 
-                let file_path = self.file.clone().unwrap();
+                let file_path = self.file.take().unwrap();
                 let mut file = File::open(&file_path).map_err(|e| {
                     Error::MultiPartBuilderError(format!("File couldn't open: {}", e))
                 })?;
@@ -59,7 +59,7 @@ macro_rules! impl_method_multipart {
                 let part = Part::bytes(buffer).file_name(String::from(name));
                 let form = Form::new().part($filefield, part);
 
-                Ok(builder.query(self).multipart(form))
+                Ok(builder.query(&self).multipart(form))
             }
         }
     };
@@ -88,7 +88,7 @@ pub trait Method: Serialize + Sized {
     const PATH: &'static str;
 
     /// Method for building the request.
-    fn build(&self, builder: RequestBuilder) -> Result<RequestBuilder> {
-        Ok(builder.json(self))
+    fn build(self, builder: RequestBuilder) -> Result<RequestBuilder> {
+        Ok(builder.json(&self))
     }
 }
