@@ -83,7 +83,7 @@ mod unban_chat_member;
 /// associated path and that we know what we're expecting to receive from the server.
 pub trait Method: Serialize + Sized {
     /// Expected response from the server.
-    type Response: DeserializeOwned;
+    type Response: DeserializeOwned + Send;
 
     /// Associated path for the method we implement this on.
     const PATH: &'static str;
