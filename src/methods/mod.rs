@@ -30,7 +30,6 @@ macro_rules! impl_method_multipart {
     ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
         use reqwest::r#async::multipart::{Form, Part};
         use reqwest::r#async::RequestBuilder;
-        use failure::ensure;
         use std::fs::File;
         use std::io::Read;
         use std::path::Path;
@@ -46,14 +45,12 @@ macro_rules! impl_method_multipart {
                     return Ok(builder.json(self));
                 }
 
-                let file_path = &self.file.unwrap();
-                let file = File::open(&file_path);
+                let file_path = self.file.clone().unwrap();
+                let mut file = File::open(&file_path).map_err(|e| Error::MultiPartBuilderError(format!("File couldn't open: {}", e)))?;
 
-                ensure!(file.is_ok(), Error::MultiPartBuilderError(format!("File couldn't open {}", &file_path)));
-                let file = file.unwrap();
                 let mut buffer = Vec::new();
 
-                ensure!(file.read_to_end(&mut buffer), Error::MultiPartBuilderError(format!("Could not read file: {}", &file_path)));
+                file.read_to_end(&mut buffer).map_err(|e| Error::MultiPartBuilderError(format!("File couldn't read: {}", e)))?;
                 let path = Path::new(&file_path);
                 let name = path.file_name().unwrap().to_str().unwrap();
                 let part = Part::bytes(buffer).file_name(String::from(name));
