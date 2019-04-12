@@ -36,7 +36,7 @@
 //!
 //!     let msg = SendMessage::builder().chat_id(chat_id).text(text).build();
 //!
-//!     spawn(bot.call(&msg).then(|_| Ok(())));
+//!     spawn(bot.call(msg).then(|_| Ok(())));
 //! }
 //!
 //! ```
