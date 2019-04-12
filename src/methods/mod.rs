@@ -44,7 +44,7 @@ macro_rules! impl_method_multipart {
                     return Ok(builder.json(self));
                 }
 
-                let file_path = &self.file.clone().unwrap();
+                let file_path = self.file.clone().unwrap();
                 let mut file = File::open(&file_path).map_err(|e| {
                     Error::MultiPartBuilderError(format!("File couldn't open: {}", e))
                 })?;
