@@ -91,6 +91,7 @@ impl Bot {
             Ok(o) => o,
             Err(e) => return Box::new(err(e)),
         };
+
         Box::new(
             body.send()
                 .and_then(|mut res| res.json::<TelegramResponse>())
