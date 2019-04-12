@@ -84,7 +84,7 @@ impl Bot {
     /// The actual networking done for making API calls.
     pub fn call<M>(&self, m: &M) -> Box<Future<Item = M::Response, Error = FailureError>>
     where
-        M: Method + 'static,
+        M: Method + 'static + Send,
     {
         let url = [&self.bot_url, M::PATH].join("/");
         let body = match m.build(self.async_client.post(&url)) {
