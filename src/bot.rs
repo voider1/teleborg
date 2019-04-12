@@ -82,7 +82,7 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    pub fn call<M>(&self, m: &M) -> Box<dyn Future<Item = M::Response, Error = FailureError>>
+    pub fn call<M>(&self, m: &M) -> Box<Future<Item = M::Response, Error = FailureError>>
     where
         M: Method + 'static,
     {
