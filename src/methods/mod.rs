@@ -11,11 +11,10 @@ pub use self::send_message::SendMessage;
 pub use self::send_photo::SendPhoto;
 pub use self::unban_chat_member::UnbanChatMember;
 
+use crate::error::Result;
+use reqwest::r#async::RequestBuilder;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
-use reqwest::r#async::RequestBuilder;
-use crate::error::Result;
-
 
 macro_rules! impl_method {
     ($struct:ident, $response:ident, $path:expr) => {
@@ -28,13 +27,13 @@ macro_rules! impl_method {
 
 macro_rules! impl_method_multipart {
     ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
+        use crate::error::Error;
+        use crate::error::Result;
         use reqwest::r#async::multipart::{Form, Part};
         use reqwest::r#async::RequestBuilder;
         use std::fs::File;
         use std::io::Read;
         use std::path::Path;
-        use crate::error::Error;
-        use crate::error::Result;
 
         impl Method for $struct {
             type Response = $response;
@@ -46,11 +45,15 @@ macro_rules! impl_method_multipart {
                 }
 
                 let file_path = self.file.clone().unwrap();
-                let mut file = File::open(&file_path).map_err(|e| Error::MultiPartBuilderError(format!("File couldn't open: {}", e)))?;
+                let mut file = File::open(&file_path).map_err(|e| {
+                    Error::MultiPartBuilderError(format!("File couldn't open: {}", e))
+                })?;
 
                 let mut buffer = Vec::new();
 
-                file.read_to_end(&mut buffer).map_err(|e| Error::MultiPartBuilderError(format!("File couldn't read: {}", e)))?;
+                file.read_to_end(&mut buffer).map_err(|e| {
+                    Error::MultiPartBuilderError(format!("File couldn't read: {}", e))
+                })?;
                 let path = Path::new(&file_path);
                 let name = path.file_name().unwrap().to_str().unwrap();
                 let part = Part::bytes(buffer).file_name(String::from(name));

@@ -1,8 +1,8 @@
 use std::ops::Deref;
 
 use failure::{ensure, Error as FailureError};
-use futures::Future;
 use futures::future::err;
+use futures::Future;
 use reqwest::{r#async::Client as AsyncClient, Client};
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
@@ -86,16 +86,17 @@ impl Bot {
     where
         M: Method + 'static,
     {
-        let m = m.clone();
         let url = [&self.bot_url, M::PATH].join("/");
         let body = match m.build(self.async_client.post(&url)) {
             Ok(o) => o,
             Err(e) => return Box::new(err(e)),
         };
-        Box::new(body.send()
-            .and_then(|mut res| res.json::<TelegramResponse>())
-            .from_err()
-            .and_then(Self::get_result))
+        Box::new(
+            body.send()
+                .and_then(|mut res| res.json::<TelegramResponse>())
+                .from_err()
+                .and_then(Self::get_result),
+        )
     }
 
     fn get_result<R>(resp: TelegramResponse) -> Result<R>
