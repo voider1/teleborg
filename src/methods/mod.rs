@@ -50,7 +50,6 @@ macro_rules! impl_method_multipart {
                 })?;
 
                 let mut buffer = Vec::new();
-
                 file.read_to_end(&mut buffer).map_err(|e| {
                     Error::MultiPartBuilderError(format!("File couldn't read: {}", e))
                 })?;
