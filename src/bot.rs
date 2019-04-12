@@ -82,20 +82,20 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    pub fn call<M>(&self, m: &M) -> impl Future<Item = M::Response, Error = FailureError>
+    pub fn call<M>(&self, m: &M) -> Box<dyn Future<Item = M::Response, Error = FailureError>>
     where
-        M: Method,
+        M: Method + 'static,
     {
+        let m = m.clone();
         let url = [&self.bot_url, M::PATH].join("/");
         let body = match m.build(self.async_client.post(&url)) {
-            Ok(o) => 0,
-            Err(e) => return err(e),
+            Ok(o) => o,
+            Err(e) => return Box::new(err(e)),
         };
-
-        body.send()
+        Box::new(body.send()
             .and_then(|mut res| res.json::<TelegramResponse>())
             .from_err()
-            .and_then(Self::get_result)
+            .and_then(Self::get_result))
     }
 
     fn get_result<R>(resp: TelegramResponse) -> Result<R>
