@@ -44,7 +44,7 @@ macro_rules! impl_method_multipart {
                     return Ok(builder.json(self));
                 }
 
-                let file_path = &self.file.unwrap();
+                let file_path = &self.file.clone().unwrap();
                 let mut file = File::open(&file_path).map_err(|e| {
                     Error::MultiPartBuilderError(format!("File couldn't open: {}", e))
                 })?;
@@ -60,7 +60,7 @@ macro_rules! impl_method_multipart {
                 let part = Part::bytes(buffer).file_name(String::from(name));
                 let form = Form::new().part($filefield, part);
 
-                return Ok(builder.query(self).multipart(form));
+                Ok(builder.query(self).multipart(form))
             }
         }
     };
