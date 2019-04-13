@@ -49,7 +49,7 @@ macro_rules! impl_method_multipart {
                     Error::MultiPartBuilderError(format!("File couldn't open: {}", e))
                 })?;
 
-                let mut buffer = Vec::new();
+                let mut buffer = Vec::with_capacity(50000000); // 50 million bytes is the maximum for the bot api
                 file.read_to_end(&mut buffer).map_err(|e| {
                     Error::MultiPartBuilderError(format!("File couldn't read: {}", e))
                 })?;
