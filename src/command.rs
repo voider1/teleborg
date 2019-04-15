@@ -26,7 +26,7 @@ use crate::Bot;
 ///             .text(text)
 ///             .build();
 ///
-///         spawn(bot.call(&msg).then(|_| Ok(())));
+///         spawn(bot.call(msg).then(|_| Ok(())));
 ///     }
 /// }
 ///

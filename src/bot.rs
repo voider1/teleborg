@@ -1,16 +1,15 @@
-use std::ops::Deref;
-
+use crate::{
+    error::{Error, Result},
+    methods::Method,
+    types::{Update, User},
+};
 use failure::{ensure, Error as FailureError};
-use futures::Future;
+use futures::{future::err, Future};
 use reqwest::{r#async::Client as AsyncClient, Client};
-use serde::de::DeserializeOwned;
-use serde::Deserialize;
+use serde::{de::DeserializeOwned, Deserialize};
 use serde_json;
 use serde_json::Value;
-
-use crate::error::{Error, Result};
-use crate::methods::Method;
-use crate::types::{Update, User};
+use std::ops::Deref;
 
 const BASE_URL: &str = "https://api.telegram.org/bot";
 
@@ -81,18 +80,22 @@ impl Bot {
     }
 
     /// The actual networking done for making API calls.
-    pub fn call<M>(&self, m: &M) -> impl Future<Item = M::Response, Error = FailureError>
+    pub fn call<M>(&self, m: M) -> Box<dyn Future<Item = M::Response, Error = FailureError> + Send>
     where
-        M: Method,
+        M: Method + 'static + Send,
     {
         let url = [&self.bot_url, M::PATH].join("/");
-        self.async_client
-            .post(&url)
-            .json(m)
-            .send()
-            .and_then(|mut res| res.json::<TelegramResponse>())
-            .from_err()
-            .and_then(Self::get_result)
+        let body = match m.build(self.async_client.post(&url)) {
+            Ok(o) => o,
+            Err(e) => return Box::new(err(e)),
+        };
+
+        Box::new(
+            body.send()
+                .and_then(|mut res| res.json::<TelegramResponse>())
+                .from_err()
+                .and_then(Self::get_result),
+        )
     }
 
     fn get_result<R>(resp: TelegramResponse) -> Result<R>
