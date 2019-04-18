@@ -1,11 +1,12 @@
 pub use self::{
-    edit_message_text::EditMessageText, export_chat_invite_link::ExportChatInviteLink,
-    forward_message::ForwardMessage, get_file::GetFile,
-    get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
-    send_animation::SendAnimation, send_audio::SendAudio, send_chat_action::SendChatAction,
-    send_contact::SendContact, send_document::SendDocument, send_location::SendLocation,
-    send_message::SendMessage, send_photo::SendPhoto, send_video::SendVideo,
-    send_video_note::SendVideoNote, send_voice::SendVoice, unban_chat_member::UnbanChatMember,
+    edit_message_live_location::EditMessageLiveLocation, edit_message_text::EditMessageText,
+    export_chat_invite_link::ExportChatInviteLink, forward_message::ForwardMessage,
+    get_file::GetFile, get_user_profile_photos::GetUserProfilePhotos,
+    kick_chat_member::KickChatMember, send_animation::SendAnimation, send_audio::SendAudio,
+    send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
+    send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
+    send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
+    unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
 use reqwest::r#async::RequestBuilder;
@@ -109,6 +110,7 @@ fn read_file(file_path: &str) -> Result<Vec<u8>> {
     Ok(buffer)
 }
 
+mod edit_message_live_location;
 mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
