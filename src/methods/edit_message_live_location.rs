@@ -1,9 +1,7 @@
 use super::Method;
-
+use crate::types::{Message, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
-
-use crate::types::{Message, ReplyMarkup};
 
 /// Use this method to point on the map. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
@@ -21,10 +19,10 @@ pub struct EditMessageLiveLocation {
     pub inline_message_id: Option<i64>,
     /// Latitude of the location.
     #[builder(default)]
-    pub latitude: f32,
+    pub latitude: f64,
     /// Longitude of the location.
     #[builder(default)]
-    pub longitude: f32,
+    pub longitude: f64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Interface options.

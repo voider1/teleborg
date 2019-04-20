@@ -11,9 +11,9 @@ pub struct SendLocation {
     /// Unique identifier for the target chat.
     pub chat_id: i64,
     /// Latitude of the location.
-    pub latitude: f32,
+    pub latitude: f64,
     /// Longitude of the location.
-    pub longitude: f32,
+    pub longitude: f64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Period in seconds for which the location will be updated. Should be between 60 and 86400.
