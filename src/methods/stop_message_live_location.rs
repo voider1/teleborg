@@ -1,9 +1,7 @@
 use super::Method;
-
+use crate::types::{Message, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
-
-use crate::types::{Message, ReplyMarkup};
 
 /// Use this method to stop updating a live location message before live_period expires.
 /// On success, if the message was sent by the bot, the sent Message is returned,
