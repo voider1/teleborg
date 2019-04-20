@@ -5,7 +5,8 @@ pub use self::{
     send_animation::SendAnimation, send_audio::SendAudio, send_chat_action::SendChatAction,
     send_contact::SendContact, send_document::SendDocument, send_location::SendLocation,
     send_message::SendMessage, send_photo::SendPhoto, send_video::SendVideo,
-    send_video_note::SendVideoNote, send_voice::SendVoice, unban_chat_member::UnbanChatMember,
+    send_video_note::SendVideoNote, send_voice::SendVoice, set_chat_photo::SetChatPhoto,
+    unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
 use reqwest::r#async::RequestBuilder;
@@ -126,6 +127,7 @@ mod send_photo;
 mod send_video;
 mod send_video_note;
 mod send_voice;
+mod set_chat_photo;
 mod unban_chat_member;
 
 /// This trait gets implemented for every method-builder and makes sure that they all have an
