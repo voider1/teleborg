@@ -1,12 +1,12 @@
 pub use self::{
-    edit_message_text::EditMessageText, export_chat_invite_link::ExportChatInviteLink,
-    forward_message::ForwardMessage, get_file::GetFile,
-    get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
-    send_animation::SendAnimation, send_audio::SendAudio, send_chat_action::SendChatAction,
-    send_contact::SendContact, send_document::SendDocument, send_location::SendLocation,
-    send_message::SendMessage, send_photo::SendPhoto, send_video::SendVideo,
-    send_video_note::SendVideoNote, send_voice::SendVoice, set_chat_photo::SetChatPhoto,
-    unban_chat_member::UnbanChatMember,
+    delete_chat_photo::DeleteChatPhoto, edit_message_text::EditMessageText,
+    export_chat_invite_link::ExportChatInviteLink, forward_message::ForwardMessage,
+    get_file::GetFile, get_user_profile_photos::GetUserProfilePhotos,
+    kick_chat_member::KickChatMember, send_animation::SendAnimation, send_audio::SendAudio,
+    send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
+    send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
+    send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
+    set_chat_photo::SetChatPhoto, set_chat_title::SetChatTitle, unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
 use reqwest::r#async::RequestBuilder;
@@ -110,6 +110,7 @@ fn read_file(file_path: &str) -> Result<Vec<u8>> {
     Ok(buffer)
 }
 
+mod delete_chat_photo;
 mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
@@ -128,6 +129,7 @@ mod send_video;
 mod send_video_note;
 mod send_voice;
 mod set_chat_photo;
+mod set_chat_title;
 mod unban_chat_member;
 
 /// This trait gets implemented for every method-builder and makes sure that they all have an
