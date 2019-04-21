@@ -6,7 +6,8 @@ pub use self::{
     send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
     send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
     send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
-    set_chat_photo::SetChatPhoto, set_chat_title::SetChatTitle, unban_chat_member::UnbanChatMember,
+    set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
+    set_chat_title::SetChatTitle, unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
 use reqwest::r#async::RequestBuilder;
@@ -128,6 +129,7 @@ mod send_photo;
 mod send_video;
 mod send_video_note;
 mod send_voice;
+mod set_chat_description;
 mod set_chat_photo;
 mod set_chat_title;
 mod unban_chat_member;
