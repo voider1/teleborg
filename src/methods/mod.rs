@@ -1,12 +1,13 @@
 pub use self::{
     delete_chat_photo::DeleteChatPhoto, edit_message_text::EditMessageText,
     export_chat_invite_link::ExportChatInviteLink, forward_message::ForwardMessage,
-    get_chat::GetChat, get_file::GetFile, get_user_profile_photos::GetUserProfilePhotos,
-    kick_chat_member::KickChatMember, leave_chat::LeaveChat, send_animation::SendAnimation,
-    send_audio::SendAudio, send_chat_action::SendChatAction, send_contact::SendContact,
-    send_document::SendDocument, send_location::SendLocation, send_message::SendMessage,
-    send_photo::SendPhoto, send_video::SendVideo, send_video_note::SendVideoNote,
-    send_voice::SendVoice, set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
+    get_chat::GetChat, get_chat_administrators::GetChatAdministrators, get_file::GetFile,
+    get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
+    leave_chat::LeaveChat, send_animation::SendAnimation, send_audio::SendAudio,
+    send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
+    send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
+    send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
+    set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
     set_chat_title::SetChatTitle, unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
@@ -116,6 +117,7 @@ mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
 mod get_chat;
+mod get_chat_administrators;
 mod get_file;
 mod get_user_profile_photos;
 mod kick_chat_member;
