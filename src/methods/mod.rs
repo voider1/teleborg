@@ -1,7 +1,7 @@
 pub use self::{
     delete_chat_photo::DeleteChatPhoto, edit_message_text::EditMessageText,
     export_chat_invite_link::ExportChatInviteLink, forward_message::ForwardMessage,
-    get_file::GetFile, get_user_profile_photos::GetUserProfilePhotos,
+    get_chat::GetChat, get_file::GetFile, get_user_profile_photos::GetUserProfilePhotos,
     kick_chat_member::KickChatMember, send_animation::SendAnimation, send_audio::SendAudio,
     send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
     send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
@@ -115,6 +115,7 @@ mod delete_chat_photo;
 mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
+mod get_chat;
 mod get_file;
 mod get_user_profile_photos;
 mod kick_chat_member;
