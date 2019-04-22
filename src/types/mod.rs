@@ -1,7 +1,8 @@
 pub use self::{
     animation::Animation, audio::Audio, call_back_query::CallBackQuery, chat::Chat,
-    chat_action::ChatAction, chat_photo::ChatPhoto, contact::Contact, document::Document,
-    file::File, game::Game, inline_keyboard_button::InlineKeyboardButton, invoice::Invoice,
+    chat_action::ChatAction, chat_member::ChatMember, chat_member_status::ChatMemberStatus,
+    chat_photo::ChatPhoto, contact::Contact, document::Document, file::File, game::Game,
+    inline_keyboard_button::InlineKeyboardButton, invoice::Invoice,
     keyboard_button::KeyboardButton, location::Location, mask_position::MaskPosition,
     message::Message, message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
     photo_size::PhotoSize, reply_markup::ReplyMarkup, shipping_address::ShippingAddress,
@@ -15,6 +16,8 @@ mod audio;
 mod call_back_query;
 mod chat;
 mod chat_action;
+mod chat_member;
+mod chat_member_status;
 mod chat_photo;
 mod contact;
 mod document;
