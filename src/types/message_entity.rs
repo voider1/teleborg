@@ -1,5 +1,4 @@
 use super::User;
-
 use serde::Deserialize;
 
 /// Represents a Telegram message entity.

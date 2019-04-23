@@ -1,10 +1,9 @@
-use std::collections::HashMap;
-use std::fmt::{self, Debug};
-use std::sync::Arc;
-
-use crate::bot::Bot;
-use crate::command::Command;
-use crate::types::Update;
+use crate::{bot::Bot, command::Command, types::Update};
+use std::{
+    collections::HashMap,
+    fmt::{self, Debug},
+    sync::Arc,
+};
 
 /// A `Dispatcher` which will receive updates from the `Updater` and dispatches
 /// them to the registered handlers.

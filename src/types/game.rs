@@ -1,5 +1,4 @@
 use super::{Animation, MessageEntity, PhotoSize};
-
 use serde::Deserialize;
 
 /// Represents a game.

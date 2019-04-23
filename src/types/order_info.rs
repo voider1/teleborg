@@ -1,5 +1,4 @@
 use super::ShippingAddress;
-
 use serde::Deserialize;
 
 /// This struct represents information about an order.

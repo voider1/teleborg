@@ -1,13 +1,11 @@
-use std::fmt::{self, Debug};
-use std::sync::Arc;
-
+use crate::{bot::Bot, dispatcher::Dispatcher, types::Update};
 use failure::Error as FailureError;
 use futures::{future, try_ready, Async, Future, Poll, Stream};
+use std::{
+    fmt::{self, Debug},
+    sync::Arc,
+};
 use tokio;
-
-use crate::bot::Bot;
-use crate::dispatcher::Dispatcher;
-use crate::types::Update;
 
 /// An `Updater` which will keep track of the updates from the API.
 ///

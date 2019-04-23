@@ -1,6 +1,5 @@
 use super::Method;
 use crate::types::{Message, ReplyMarkup};
-
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

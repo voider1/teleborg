@@ -1,5 +1,4 @@
 use super::Location;
-
 use serde::Deserialize;
 
 /// This struct represents a venue.

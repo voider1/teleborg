@@ -1,5 +1,4 @@
 use super::PhotoSize;
-
 use serde::Deserialize;
 
 /// This struct represents a [video note](https://telegram.org/blog/video-messages-and-telescope).

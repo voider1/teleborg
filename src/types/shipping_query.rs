@@ -1,5 +1,4 @@
 use super::{ShippingAddress, User};
-
 use serde::Deserialize;
 
 /// This struct contains information about an incoming shipping query.

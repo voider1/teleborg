@@ -1,5 +1,4 @@
 use super::Method;
-
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

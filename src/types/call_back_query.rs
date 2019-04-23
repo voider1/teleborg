@@ -1,6 +1,4 @@
-use super::Message;
-use super::User;
-
+use super::{Message, User};
 use serde::Deserialize;
 
 /// This struct represents an incoming callback query from a callback button in an [inline

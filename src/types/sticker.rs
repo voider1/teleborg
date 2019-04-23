@@ -1,5 +1,4 @@
 use super::{MaskPosition, PhotoSize};
-
 use serde::Deserialize;
 
 /// This struct represents a sticker.

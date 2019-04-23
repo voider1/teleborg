@@ -7,8 +7,7 @@ use failure::{ensure, Error as FailureError};
 use futures::{future::err, Future};
 use reqwest::{r#async::Client as AsyncClient, Client};
 use serde::{de::DeserializeOwned, Deserialize};
-use serde_json;
-use serde_json::Value;
+use serde_json::{self, Value};
 use std::ops::Deref;
 
 const BASE_URL: &str = "https://api.telegram.org/bot";

@@ -2,7 +2,6 @@ use super::{
     Audio, Chat, Contact, Document, Game, Invoice, Location, MessageEntity, PhotoSize, Sticker,
     SuccessfulPayment, User, Venue, Video, VideoNote, Voice,
 };
-
 use serde::Deserialize;
 
 /// This struct represents a message.
