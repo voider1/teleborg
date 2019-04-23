@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-/// The parse modes for messages.
+/// The status for a chat member.
 #[derive(Deserialize, Debug, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum ChatMemberStatus {
