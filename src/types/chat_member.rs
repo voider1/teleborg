@@ -5,7 +5,7 @@ use serde::Deserialize;
 #[derive(Clone, Deserialize, Debug)]
 pub struct ChatMember {
     /// Information about the user
-    user: User,
+    pub user: User,
     /// The member's status in the chat. Can be “creator”, “administrator”, “member”, “restricted”, “left” or “kicked”
     pub status: ChatMemberStatus,
     /// Optional. Restricted and kicked only. Date when restrictions will be lifted for this user,
