@@ -1,5 +1,4 @@
 use super::PhotoSize;
-
 use serde::Deserialize;
 
 /// This struct represents a video file.

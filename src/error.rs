@@ -1,5 +1,4 @@
-use failure::Error as FailureError;
-use failure::Fail;
+use failure::{Error as FailureError, Fail};
 
 /// Result which uses failure::Error by default.
 pub type Result<T> = ::std::result::Result<T, FailureError>;

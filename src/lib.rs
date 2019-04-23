@@ -41,11 +41,9 @@
 //!
 //! ```
 
-pub use self::bot::Bot;
-pub use self::command::Command;
-pub use self::dispatcher::Dispatcher;
-pub use self::methods::Method;
-pub use self::updater::Updater;
+pub use self::{
+    bot::Bot, command::Command, dispatcher::Dispatcher, methods::Method, updater::Updater,
+};
 pub use futures::Future;
 use std::sync::Arc;
 pub use tokio::spawn;

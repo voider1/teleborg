@@ -1,5 +1,4 @@
 use super::{ChatPhoto, Message};
-
 use serde::Deserialize;
 
 /// This struct represents a chat.

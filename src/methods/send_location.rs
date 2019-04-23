@@ -1,9 +1,7 @@
 use super::Method;
-
+use crate::types::{Message, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
-
-use crate::types::{Message, ReplyMarkup};
 
 /// Use this method to point on the map. On success, the sent `Message` is returned.
 #[derive(Debug, TypedBuilder, Serialize)]

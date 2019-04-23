@@ -1,35 +1,14 @@
-pub use self::animation::Animation;
-pub use self::audio::Audio;
-pub use self::call_back_query::CallBackQuery;
-pub use self::chat::Chat;
-pub use self::chat_action::ChatAction;
-pub use self::chat_photo::ChatPhoto;
-pub use self::contact::Contact;
-pub use self::document::Document;
-pub use self::file::File;
-pub use self::game::Game;
-pub use self::inline_keyboard_button::InlineKeyboardButton;
-pub use self::invoice::Invoice;
-pub use self::keyboard_button::KeyboardButton;
-pub use self::location::Location;
-pub use self::mask_position::MaskPosition;
-pub use self::message::Message;
-pub use self::message_entity::MessageEntity;
-pub use self::order_info::OrderInfo;
-pub use self::parse_mode::ParseMode;
-pub use self::photo_size::PhotoSize;
-pub use self::reply_markup::ReplyMarkup;
-pub use self::shipping_address::ShippingAddress;
-pub use self::shipping_query::ShippingQuery;
-pub use self::sticker::Sticker;
-pub use self::successful_payment::SuccessfulPayment;
-pub use self::update::Update;
-pub use self::user::User;
-pub use self::user_profile_photos::UserProfilePhotos;
-pub use self::venue::Venue;
-pub use self::video::Video;
-pub use self::video_note::VideoNote;
-pub use self::voice::Voice;
+pub use self::{
+    animation::Animation, audio::Audio, call_back_query::CallBackQuery, chat::Chat,
+    chat_action::ChatAction, chat_photo::ChatPhoto, contact::Contact, document::Document,
+    file::File, game::Game, inline_keyboard_button::InlineKeyboardButton, invoice::Invoice,
+    keyboard_button::KeyboardButton, location::Location, mask_position::MaskPosition,
+    message::Message, message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
+    photo_size::PhotoSize, reply_markup::ReplyMarkup, shipping_address::ShippingAddress,
+    shipping_query::ShippingQuery, sticker::Sticker, successful_payment::SuccessfulPayment,
+    update::Update, user::User, user_profile_photos::UserProfilePhotos, venue::Venue, video::Video,
+    video_note::VideoNote, voice::Voice,
+};
 
 mod animation;
 mod audio;

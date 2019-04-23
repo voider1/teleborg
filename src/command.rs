@@ -1,7 +1,5 @@
+use crate::{types::Update, Bot};
 use std::sync::Arc;
-
-use crate::types::Update;
-use crate::Bot;
 
 /// A trait which has to be implemented for all handlers.
 ///
@@ -11,7 +9,6 @@ use crate::Bot;
 ///
 /// ```
 /// use std::sync::Arc;
-///
 /// use teleborg::{Command, methods::SendMessage, spawn, types::Update, Bot, Future};
 ///
 /// struct Test;
