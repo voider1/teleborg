@@ -5,13 +5,13 @@ pub use self::{
     get_chat_administrators::GetChatAdministrators, get_chat_member::GetChatMember,
     get_chat_members_count::GetChatMembersCount, get_file::GetFile,
     get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
-    leave_chat::LeaveChat, send_animation::SendAnimation, send_audio::SendAudio,
-    send_chat_action::SendChatAction, send_contact::SendContact, send_document::SendDocument,
-    send_location::SendLocation, send_message::SendMessage, send_photo::SendPhoto,
-    send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
-    set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
+    leave_chat::LeaveChat, pin_chat_message::PinChatMessage, send_animation::SendAnimation,
+    send_audio::SendAudio, send_chat_action::SendChatAction, send_contact::SendContact,
+    send_document::SendDocument, send_location::SendLocation, send_message::SendMessage,
+    send_photo::SendPhoto, send_video::SendVideo, send_video_note::SendVideoNote,
+    send_voice::SendVoice, set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
     set_chat_sticker_set::SetChatStickerSet, set_chat_title::SetChatTitle,
-    unban_chat_member::UnbanChatMember,
+    unban_chat_member::UnbanChatMember, unpin_chat_message::UnpinChatMessage,
 };
 use crate::error::{Error, Result};
 use reqwest::r#async::RequestBuilder;
@@ -128,6 +128,7 @@ mod get_file;
 mod get_user_profile_photos;
 mod kick_chat_member;
 mod leave_chat;
+mod pin_chat_message;
 mod send_animation;
 mod send_audio;
 mod send_chat_action;
@@ -144,6 +145,7 @@ mod set_chat_photo;
 mod set_chat_sticker_set;
 mod set_chat_title;
 mod unban_chat_member;
+mod unpin_chat_message;
 
 /// This trait gets implemented for every method-builder and makes sure that they all have an
 /// associated path and that we know what we're expecting to receive from the server.
