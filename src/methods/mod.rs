@@ -4,7 +4,7 @@ pub use self::{
     get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
     send_animation::SendAnimation, send_audio::SendAudio, send_chat_action::SendChatAction,
     send_contact::SendContact, send_document::SendDocument, send_location::SendLocation,
-    send_message::SendMessage, send_photo::SendPhoto, send_video::SendVideo,
+    send_message::SendMessage, send_photo::SendPhoto, send_venue::SendVenue, send_video::SendVideo,
     send_video_note::SendVideoNote, send_voice::SendVoice, unban_chat_member::UnbanChatMember,
 };
 use crate::error::{Error, Result};
@@ -123,6 +123,7 @@ mod send_document;
 mod send_location;
 mod send_message;
 mod send_photo;
+mod send_venue;
 mod send_video;
 mod send_video_note;
 mod send_voice;
