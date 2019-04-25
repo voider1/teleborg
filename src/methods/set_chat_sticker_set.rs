@@ -14,4 +14,4 @@ pub struct SetChatStickerSet {
     pub sticker_set_name: String,
 }
 
-impl_method!(SetChatStickerSet, Chat, "setChatStickerSet");
+impl_method!(SetChatStickerSet, bool, "setChatStickerSet");
