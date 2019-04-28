@@ -1,6 +1,6 @@
 pub use self::{
     edit_message_text::EditMessageText, export_chat_invite_link::ExportChatInviteLink,
-    forward_message::ForwardMessage, get_file::GetFile,
+    forward_message::ForwardMessage, get_file::GetFile, get_updates::GetUpdates,
     get_user_profile_photos::GetUserProfilePhotos, kick_chat_member::KickChatMember,
     send_animation::SendAnimation, send_audio::SendAudio, send_chat_action::SendChatAction,
     send_contact::SendContact, send_document::SendDocument, send_location::SendLocation,
@@ -13,7 +13,7 @@ use serde::{de::DeserializeOwned, Serialize};
 use std::{fs::File, io::Read};
 
 macro_rules! impl_method {
-    ($struct:ident, $response:ident, $path:expr) => {
+    ($struct:ident, $response:ty, $path:expr) => {
         impl Method for $struct {
             type Response = $response;
             const PATH: &'static str = $path;
@@ -113,6 +113,7 @@ mod edit_message_text;
 mod export_chat_invite_link;
 mod forward_message;
 mod get_file;
+mod get_updates;
 mod get_user_profile_photos;
 mod kick_chat_member;
 mod send_animation;
