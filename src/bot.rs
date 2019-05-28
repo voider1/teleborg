@@ -1,7 +1,7 @@
 use crate::{
     error::{Error, Result},
     methods::Method,
-    types::{Update, User},
+    types::User,
 };
 use failure::{ensure, Error as FailureError};
 use futures::{future::err, Future};
@@ -56,26 +56,6 @@ impl Bot {
         let bot: User = Self::get_result(resp)?;
 
         Ok(bot)
-    }
-
-    /// API call which will get called to get the updates for your bot.
-    pub fn get_updates(
-        &self,
-        offset: usize,
-        limit: usize,
-        timeout: usize,
-    ) -> impl Future<Item = Vec<Update>, Error = FailureError> {
-        let limit = limit;
-        let path = ["getUpdates"];
-        let path_url = crate::construct_api_url(&self.bot_url, &path);
-
-        self.async_client
-            .get(&path_url)
-            .query(&[("offset", offset), ("limit", limit), ("timeout", timeout)])
-            .send()
-            .and_then(|mut res| res.json::<TelegramResponse>())
-            .from_err()
-            .and_then(Self::get_result)
     }
 
     /// The actual networking done for making API calls.

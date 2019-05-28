@@ -1,4 +1,6 @@
-use super::{CallBackQuery, Message, ShippingQuery};
+use super::{
+    CallbackQuery, ChosenInlineResult, InlineQuery, Message, Poll, PreCheckoutQuery, ShippingQuery,
+};
 use serde::Deserialize;
 
 /// This struct represents an incoming update. At most one of the optional parameters can be
@@ -20,12 +22,16 @@ pub struct Update {
     /// New version of a channel post that is known to the bot and was edited.
     pub edited_channel_post: Option<Message>,
     /// New incoming [inline](https://core.telegram.org/bots/api#inline-mode) query.
-    pub inline_query: Option<String>,
+    pub inline_query: Option<InlineQuery>,
     /// The result of an [inline](https://core.telegram.org/bots/api#inline-mode) query that was
     /// chosen by a user and sent to their chat partner.
-    pub chosen_inline_result: Option<String>,
+    pub chosen_inline_result: Option<ChosenInlineResult>,
     /// New incomnig callback query.
-    pub callback_query: Option<CallBackQuery>,
+    pub callback_query: Option<CallbackQuery>,
     /// New incoming shippinr query. Only for invoices with flexible price.
     pub shipping_query: Option<ShippingQuery>,
+    /// New incoming pre-checkout query. Contains full information about checkout
+    pub pre_checkout_query: Option<PreCheckoutQuery>,
+    /// New poll state. Bots receive only updates about polls, which are sent or stopped by the bot
+    pub poll: Option<Poll>,
 }
