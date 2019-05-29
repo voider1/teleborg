@@ -10,6 +10,7 @@ pub struct SetChatDescription {
     /// Unique identifier for the target chat.
     pub chat_id: i64,
     #[builder(default)]
+    #[serde(skip_serializing)]
     /// New chat description, 0-255 characters
     pub description: Option<String>,
 }
