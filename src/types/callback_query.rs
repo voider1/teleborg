@@ -8,7 +8,7 @@ use serde::Deserialize;
 /// mode](https://core.telegram.org/bots/api#inline-mode), the field `inline_message_id` will be
 /// present. Exactly one of the fields `data` or `game_short_name` will be present.
 #[derive(Clone, Deserialize, Debug)]
-pub struct CallBackQuery {
+pub struct CallbackQuery {
     /// Unique identifier for this query.
     pub id: String,
     /// Sender.
