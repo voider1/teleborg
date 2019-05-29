@@ -1,10 +1,11 @@
 pub use self::{
     animation::Animation, audio::Audio, callback_query::CallbackQuery, chat::Chat,
-    chat_action::ChatAction, chat_photo::ChatPhoto, chosen_inline_result::ChosenInlineResult,
-    contact::Contact, document::Document, file::File, game::Game,
-    inline_keyboard_button::InlineKeyboardButton, inline_query::InlineQuery, invoice::Invoice,
-    keyboard_button::KeyboardButton, location::Location, mask_position::MaskPosition,
-    message::Message, message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
+    chat_action::ChatAction, chat_member::ChatMember, chat_member_status::ChatMemberStatus,
+    chat_photo::ChatPhoto, chosen_inline_result::ChosenInlineResult, contact::Contact,
+    document::Document, file::File, game::Game, inline_keyboard_button::InlineKeyboardButton,
+    inline_query::InlineQuery, invoice::Invoice, keyboard_button::KeyboardButton,
+    location::Location, mask_position::MaskPosition, message::Message,
+    message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
     photo_size::PhotoSize, poll::Poll, poll_option::PollOption,
     pre_checkout_query::PreCheckoutQuery, reply_markup::ReplyMarkup,
     shipping_address::ShippingAddress, shipping_query::ShippingQuery, sticker::Sticker,
@@ -18,6 +19,8 @@ mod audio;
 mod callback_query;
 mod chat;
 mod chat_action;
+mod chat_member;
+mod chat_member_status;
 mod chat_photo;
 mod chosen_inline_result;
 mod contact;

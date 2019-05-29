@@ -2,13 +2,17 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method to delete a chat photo. Photos can't be changed for private chats.
+/// Use this method to change the description of a supergroup or a channel.
 /// The bot must be an administrator in the chat for this to work and must have the appropriate admin rights.
 /// Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
-pub struct DeleteChatPhoto {
+pub struct SetChatDescription {
     /// Unique identifier for the target chat.
     pub chat_id: i64,
+    #[builder(default)]
+    #[serde(skip_serializing)]
+    /// New chat description, 0-255 characters
+    pub description: Option<String>,
 }
 
-impl_method!(DeleteChatPhoto, bool, "deleteChatPhoto");
+impl_method!(SetChatDescription, bool, "setChatDescription");
