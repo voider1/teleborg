@@ -1,5 +1,5 @@
 pub use self::{
-    animation::Animation, audio::Audio, call_back_query::CallBackQuery, chat::Chat,
+    animation::Animation, audio::Audio, callback_query::CallbackQuery, chat::Chat,
     chat_action::ChatAction, chat_member::ChatMember, chat_member_status::ChatMemberStatus,
     chat_photo::ChatPhoto, chosen_inline_result::ChosenInlineResult, contact::Contact,
     document::Document, file::File, game::Game, inline_keyboard_button::InlineKeyboardButton,
