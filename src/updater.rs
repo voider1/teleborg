@@ -1,4 +1,4 @@
-use crate::{bot::Bot, dispatcher::Dispatcher, types::Update};
+use crate::{bot::Bot, dispatcher::Dispatcher, methods::GetUpdates, types::Update};
 use failure::Error as FailureError;
 use futures::{future, try_ready, Async, Future, Poll, Stream};
 use std::{
@@ -65,9 +65,11 @@ impl Stream for Updater {
             let update = self.updates.pop();
 
             if let Some(u) = update {
+                // Check if we have any updates left
                 self.offset = (u.update_id + 1) as usize;
                 return Ok(Async::Ready(Some(u)));
             } else if let Some(ref mut f) = self.update_future {
+                // Check if we're waiting for the server to respond
                 let mut updates = try_ready!(f.poll());
                 self.update_future = None;
 
@@ -82,8 +84,13 @@ impl Stream for Updater {
 
                 return Ok(Async::Ready(Some(u)));
             } else {
-                let updates = self.bot.get_updates(self.offset, self.limit, self.timeout);
-                self.update_future = Some(Box::new(updates));
+                // Request updates from the server
+                let updates = GetUpdates::builder()
+                    .offset(self.offset)
+                    .limit(self.limit)
+                    .timeout(self.timeout)
+                    .build();
+                self.update_future = Some(self.bot.call(updates));
             }
         }
     }
