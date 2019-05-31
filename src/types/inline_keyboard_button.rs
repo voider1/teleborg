@@ -5,8 +5,16 @@ use typed_builder::TypedBuilder;
 #[derive(Debug, Default, Clone, TypedBuilder, Serialize)]
 pub struct InlineKeyboardButton {
     text: String,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     url: Option<String>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     callback_data: Option<String>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     switch_inline_query: Option<String>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     switch_inline_query_current_chat: Option<String>,
 }
