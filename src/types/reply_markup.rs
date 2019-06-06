@@ -1,8 +1,8 @@
 use super::{InlineKeyboardButton, KeyboardButton};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 /// This enum represents all the possible reply markups.
-#[derive(Serialize, Debug)]
+#[derive(Clone, Serialize, Debug, Deserialize)]
 #[serde(untagged)]
 pub enum ReplyMarkup {
     /// This variant represents an [inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating)
