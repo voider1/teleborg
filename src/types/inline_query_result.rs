@@ -6,7 +6,7 @@ use serde::Deserialize;
 #[serde(untagged)]
 pub enum InlineQueryResult {
     /// Represents a link to an article or web page.
-    InlineQueryResultArticle {
+    Article {
         /// Type of the result, must be article
         #[serde(rename = "type")]
         kind: String,
@@ -34,7 +34,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a photo. By default, this photo will be sent by the user with optional
     /// caption. Alternatively, you can use input_message_content to send a message with the
     /// specified content instead of the photo.
-    InlineQueryResultPhoto {
+    Photo {
         /// Type of the result, must be photo
         #[serde(rename = "type")]
         kind: String,
@@ -64,7 +64,7 @@ pub enum InlineQueryResult {
     /// Represents a link to an animated GIF file. By default, this animated GIF file will be sent
     /// by the user with optional caption. Alternatively, you can use input_message_content to send
     /// a message with the specified content instead of the animation.
-    InlineQueryResultGif {
+    Gif {
         /// Type of the result, must be gif
         #[serde(rename = "type")]
         kind: String,
@@ -95,7 +95,7 @@ pub enum InlineQueryResult {
     /// this animated MPEG-4 file will be sent by the user with optional caption. Alternatively,
     /// you can use input_message_content to send a message with the specified content instead of
     /// the animation.
-    InlineQueryResultMpeg4Gif {
+    Mpeg4Gif {
         /// Type of the result, must be mpeg4_gif
         #[serde(rename = "type")]
         kind: String,
@@ -126,7 +126,7 @@ pub enum InlineQueryResult {
     /// default, this video file will be sent by the user with an optional caption. Alternatively,
     /// you can use input_message_content to send a message with the specified content instead of
     /// the video.
-    InlineQueryResultVideo {
+    Video {
         /// Type of the result, must be video
         #[serde(rename = "type")]
         kind: String,
@@ -154,13 +154,13 @@ pub enum InlineQueryResult {
         description: Option<String>,
         /// Optional. Inline keyboard attached to the message
         reply_markup: Option<ReplyMarkup>,
-        /// Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+        /// Optional. Content of the message to be sent instead of the video. This field is required if Video is used to send an HTML-page as a result (e.g., a YouTube video).
         input_message_content: Option<InputMessageContent>,
     },
     /// Represents a link to an mp3 audio file. By default, this audio file will be sent by the
     /// user. Alternatively, you can use input_message_content to send a message with the specified
     /// content instead of the audio.
-    InlineQueryResultAudio {
+    Audio {
         /// Type of the result, must be audio
         #[serde(rename = "type")]
         kind: String,
@@ -187,7 +187,7 @@ pub enum InlineQueryResult {
     /// this voice recording will be sent by the user. Alternatively, you can use
     /// input_message_content to send a message with the specified content instead of the the voice
     /// message.
-    InlineQueryResultVoice {
+    Voice {
         /// Type of the result, must be voice
         #[serde(rename = "type")]
         kind: String,
@@ -212,7 +212,7 @@ pub enum InlineQueryResult {
     /// optional caption. Alternatively, you can use input_message_content to send a message with
     /// the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent
     /// using this method.
-    InlineQueryResultDocument {
+    Document {
         /// Type of the result, must be document
         #[serde(rename = "type")]
         kind: String,
@@ -244,7 +244,7 @@ pub enum InlineQueryResult {
     /// Represents a location on a map. By default, the location will be sent by the user.
     /// Alternatively, you can use input_message_content to send a message with the specified
     /// content instead of the location.
-    InlineQueryResultLocation {
+    Location {
         /// Type of the result, must be location
         #[serde(rename = "type")]
         kind: String,
@@ -272,7 +272,7 @@ pub enum InlineQueryResult {
     /// Represents a venue. By default, the venue will be sent by the user. Alternatively, you can
     /// use input_message_content to send a message with the specified content instead of the
     /// venue.
-    InlineQueryResultVenue {
+    Venue {
         /// Type of the result, must be venue
         #[serde(rename = "type")]
         kind: String,
@@ -304,7 +304,7 @@ pub enum InlineQueryResult {
     /// Represents a contact with a phone number. By default, this contact will be sent by the
     /// user. Alternatively, you can use input_message_content to send a message with the specified
     /// content instead of the contact.
-    InlineQueryResultContact {
+    Contact {
         /// Type of the result, must be contact
         #[serde(rename = "type")]
         kind: String,
@@ -330,7 +330,7 @@ pub enum InlineQueryResult {
         thumb_height: Option<i64>,
     },
     /// Represents a Game.
-    InlineQueryResultGame {
+    Game {
         /// Type of the result, must be game
         #[serde(rename = "type")]
         kind: String,
@@ -345,7 +345,7 @@ pub enum InlineQueryResult {
     /// this photo will be sent by the user with an optional caption.
     /// Alternatively, you can use input_message_content to send a message with
     /// the specified content instead of the photo.
-    InlineQueryResultCachedPhoto {
+    CachedPhoto {
         /// Type of the result, must be photo
         #[serde(rename = "type")]
         kind: String,
@@ -370,7 +370,7 @@ pub enum InlineQueryResult {
     /// animated GIF file will be sent by the user with an optional caption. Alternatively, you can
     /// use input_message_content to send a message with specified content instead of the
     /// animation.
-    InlineQueryResultCachedGif {
+    CachedGif {
         /// Type of the result, must be gif
         #[serde(rename = "type")]
         kind: String,
@@ -392,7 +392,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers.
     /// By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively,
     /// you can use input_message_content to send a message with the specified content instead of the animation.
-    InlineQueryResultCachedMpeg4Gif {
+    CachedMpeg4Gif {
         /// Type of the result, must be mpeg4_gif
         #[serde(rename = "type")]
         kind: String,
@@ -414,7 +414,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a sticker stored on the Telegram servers. By default, this sticker
     /// will be sent by the user. Alternatively, you can use input_message_content to send a
     /// message with the specified content instead of the sticker.
-    InlineQueryResultCachedSticker {
+    CachedSticker {
         /// Type of the result, must be sticker
         #[serde(rename = "type")]
         kind: String,
@@ -430,7 +430,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a file stored on the Telegram servers. By default, this file will be
     /// sent by the user with an optional caption. Alternatively, you can use input_message_content
     /// to send a message with the specified content instead of the file.
-    InlineQueryResultCachedDocument {
+    CachedDocument {
         /// Type of the result, must be document
         #[serde(rename = "type")]
         kind: String,
@@ -454,7 +454,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a video file stored on the Telegram servers. By default, this video
     /// file will be sent by the user with an optional caption. Alternatively, you can use
     /// input_message_content to send a message with the specified content instead of the video.
-    InlineQueryResultCachedVideo {
+    CachedVideo {
         /// Type of the result, must be video
         #[serde(rename = "type")]
         kind: String,
@@ -478,7 +478,7 @@ pub enum InlineQueryResult {
     /// Represents a link to a voice message stored on the Telegram servers. By default, this voice
     /// message will be sent by the user. Alternatively, you can use input_message_content to send
     /// a message with the specified content instead of the voice message.
-    InlineQueryResultCachedVoice {
+    CachedVoice {
         /// Type of the result, must be voice
         #[serde(rename = "type")]
         kind: String,
@@ -500,7 +500,7 @@ pub enum InlineQueryResult {
     /// Represents a link to an mp3 audio file stored on the Telegram servers. By default, this
     /// audio file will be sent by the user. Alternatively, you can use input_message_content to
     /// send a message with the specified content instead of the audio.
-    InlineQueryResultCachedAudio {
+    CachedAudio {
         /// Type of the result, must be audio
         #[serde(rename = "type")]
         kind: String,
