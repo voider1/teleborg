@@ -6,7 +6,7 @@ use serde::Deserialize;
 #[serde(untagged)]
 pub enum InputMessageContent {
     /// Represents the content of a text message to be sent as the result of an inline query.
-    InputTextMessageContent {
+    Text {
         /// Text of the message to be sent, 1-4096 characters
         message_text: String,
         /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
@@ -15,7 +15,7 @@ pub enum InputMessageContent {
         disable_web_page_preview: Option<bool>,
     },
     /// Represents the content of a location message to be sent as the result of an inline query.
-    InputLocationMessageContent {
+    Location {
         /// Latitude of the location in degrees
         latitude: f64,
         /// Longitude of the location in degrees
@@ -24,7 +24,7 @@ pub enum InputMessageContent {
         live_period: Option<i64>,
     },
     /// Represents the content of a venue message to be sent as the result of an inline query.
-    InputVenueMessageContent {
+    Venue {
         /// Latitude of the venue in degrees
         latitude: f64,
         /// Longitude of the venue in degrees
@@ -39,7 +39,7 @@ pub enum InputMessageContent {
         foursquare_type: Option<String>,
     },
     /// Represents the content of a contact message to be sent as the result of an inline query.
-    InputContactMessageContent {
+    Contact {
         /// Contact's phone number
         phone_number: String,
         /// Contact's first name
