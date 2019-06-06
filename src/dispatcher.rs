@@ -5,9 +5,12 @@ use std::{
     sync::Arc,
 };
 
+/// Indicated wheter your command takes any arguments or not.
 #[derive(Debug)]
 pub enum HasArgs {
+    /// Command takes arguments.
     Yes,
+    /// Command doesn't take arguments.
     No,
 }
 

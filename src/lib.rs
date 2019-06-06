@@ -42,7 +42,11 @@
 //! ```
 
 pub use self::{
-    bot::Bot, command::Command, dispatcher::Dispatcher, methods::Method, updater::Updater,
+    bot::Bot,
+    command::Command,
+    dispatcher::{Dispatcher, HasArgs},
+    methods::Method,
+    updater::Updater,
 };
 pub use futures::Future;
 use std::sync::Arc;
