@@ -15,15 +15,15 @@ pub struct GetUpdates {
     /// queue. All previous updates will forgotten.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub offset: Option<usize>,
+    pub offset: Option<i64>,
     /// Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub limit: Option<usize>,
+    pub limit: Option<u8>,
     /// Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<usize>,
+    pub timeout: Option<u32>,
     /// List the types of updates you want your bot to receive. For example, specify [“message”,
     /// “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update
     /// for a complete list of available update types. Specify an empty list to receive all updates
