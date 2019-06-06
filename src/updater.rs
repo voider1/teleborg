@@ -13,9 +13,9 @@ use tokio;
 /// which will poll for updates and dispatch them to the handlers.
 pub struct Updater {
     /// Amount of time to wait for a request until trying again.
-    timeout: usize,
-    offset: usize,
-    limit: usize,
+    timeout: u32,
+    offset: i64,
+    limit: u8,
     update_future: Option<Box<dyn Future<Item = Vec<Update>, Error = FailureError> + Send>>,
     /// Updates buffer
     updates: Vec<Update>,
@@ -24,9 +24,9 @@ pub struct Updater {
 
 #[derive(Debug, Default)]
 pub struct UpdaterBuilder {
-    timeout: usize,
-    offset: usize,
-    limit: usize,
+    timeout: u32,
+    offset: i64,
+    limit: u8,
 }
 
 impl Updater {
@@ -66,7 +66,7 @@ impl Stream for Updater {
 
             if let Some(u) = update {
                 // Check if we have any updates left
-                self.offset = (u.update_id + 1) as usize;
+                self.offset = u.update_id + 1;
                 return Ok(Async::Ready(Some(u)));
             } else if let Some(ref mut f) = self.update_future {
                 // Check if we're waiting for the server to respond
@@ -80,7 +80,7 @@ impl Stream for Updater {
                 updates.reverse();
                 self.updates.append(&mut updates);
                 let u = self.updates.pop().unwrap();
-                self.offset = (u.update_id + 1) as usize;
+                self.offset = u.update_id + 1;
 
                 return Ok(Async::Ready(Some(u)));
             } else {
@@ -115,17 +115,17 @@ impl Debug for Updater {
 }
 
 impl UpdaterBuilder {
-    pub fn timeout(mut self, timeout: usize) -> Self {
+    pub fn timeout(mut self, timeout: u32) -> Self {
         self.timeout = timeout;
         self
     }
 
-    pub fn offset(mut self, offset: usize) -> Self {
+    pub fn offset(mut self, offset: i64) -> Self {
         self.offset = offset;
         self
     }
 
-    pub fn limit(mut self, limit: usize) -> Self {
+    pub fn limit(mut self, limit: u8) -> Self {
         self.limit = limit;
         self
     }
