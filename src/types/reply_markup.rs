@@ -1,5 +1,5 @@
 use super::{InlineKeyboardButton, KeyboardButton};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// This enum represents all the possible reply markups.
 #[derive(Clone, Serialize, Debug, Deserialize)]
