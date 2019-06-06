@@ -1,17 +1,24 @@
-use super::PhotoSize;
 use serde::Deserialize;
+use crate::types::{PhotoSize};
 
-/// This struct represents an animation file to be displayed in the message containing a `Game`.
+/// This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
 #[derive(Clone, Deserialize, Debug)]
 pub struct Animation {
-    /// Unique file identifier.
+    /// Unique file identifier
     pub file_id: String,
-    /// Animation thumbnail as defined by the sender.
+    /// Video width as defined by sender
+    pub width: i64,
+    /// Video height as defined by sender
+    pub height: i64,
+    /// Duration of the video in seconds as defined by sender
+    pub duration: i64,
+    /// Optional. Animation thumbnail as defined by sender
     pub thumb: Option<PhotoSize>,
-    /// Original animation filename as defined by the sender.
+    /// Optional. Original animation filename as defined by sender
     pub file_name: Option<String>,
-    /// MIME type of the file as defined by the sender.
+    /// Optional. MIME type of the file as defined by sender
     pub mime_type: Option<String>,
-    /// File size.
+    /// Optional. File size
     pub file_size: Option<i64>,
 }
+

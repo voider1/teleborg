@@ -1,55 +1,93 @@
 pub use self::{
-    animation::Animation, audio::Audio, callback_query::CallbackQuery, chat::Chat,
-    chat_action::ChatAction, chat_member::ChatMember, chat_member_status::ChatMemberStatus,
-    chat_photo::ChatPhoto, chosen_inline_result::ChosenInlineResult, contact::Contact,
-    document::Document, file::File, game::Game, inline_keyboard_button::InlineKeyboardButton,
-    inline_query::InlineQuery, invoice::Invoice, keyboard_button::KeyboardButton,
-    location::Location, mask_position::MaskPosition, message::Message,
-    message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
-    photo_size::PhotoSize, poll::Poll, poll_option::PollOption,
-    pre_checkout_query::PreCheckoutQuery, reply_markup::ReplyMarkup,
-    shipping_address::ShippingAddress, shipping_query::ShippingQuery, sticker::Sticker,
-    successful_payment::SuccessfulPayment, update::Update, user::User,
-    user_profile_photos::UserProfilePhotos, venue::Venue, video::Video, video_note::VideoNote,
-    voice::Voice,
+reply_markup::ReplyMarkup, parse_mode::ParseMode, chat_action::ChatAction, update::Update, webhook_info::WebhookInfo, user::User, chat::Chat, message::Message, message_entity::MessageEntity, photo_size::PhotoSize, audio::Audio, document::Document, video::Video, animation::Animation, voice::Voice, video_note::VideoNote, contact::Contact, location::Location, venue::Venue, poll_option::PollOption, poll::Poll, user_profile_photos::UserProfilePhotos, file::File, keyboard_button::KeyboardButton, reply_keyboard_remove::ReplyKeyboardRemove, inline_keyboard_button::InlineKeyboardButton, login_url::LoginUrl, callback_query::CallbackQuery, force_reply::ForceReply, chat_photo::ChatPhoto, chat_member::ChatMember, response_parameters::ResponseParameters, input_media_photo::InputMediaPhoto, input_media_video::InputMediaVideo, input_media_animation::InputMediaAnimation, input_media_audio::InputMediaAudio, input_media_document::InputMediaDocument, sticker::Sticker, sticker_set::StickerSet, mask_position::MaskPosition, inline_query::InlineQuery, inline_query_result_article::InlineQueryResultArticle, inline_query_result_photo::InlineQueryResultPhoto, inline_query_result_gif::InlineQueryResultGif, inline_query_result_mpeg4_gif::InlineQueryResultMpeg4Gif, inline_query_result_video::InlineQueryResultVideo, inline_query_result_audio::InlineQueryResultAudio, inline_query_result_voice::InlineQueryResultVoice, inline_query_result_document::InlineQueryResultDocument, inline_query_result_location::InlineQueryResultLocation, inline_query_result_venue::InlineQueryResultVenue, inline_query_result_contact::InlineQueryResultContact, inline_query_result_game::InlineQueryResultGame, inline_query_result_cached_photo::InlineQueryResultCachedPhoto, inline_query_result_cached_gif::InlineQueryResultCachedGif, inline_query_result_cached_mpeg4_gif::InlineQueryResultCachedMpeg4Gif, inline_query_result_cached_sticker::InlineQueryResultCachedSticker, inline_query_result_cached_document::InlineQueryResultCachedDocument, inline_query_result_cached_video::InlineQueryResultCachedVideo, inline_query_result_cached_voice::InlineQueryResultCachedVoice, inline_query_result_cached_audio::InlineQueryResultCachedAudio, input_text_message_content::InputTextMessageContent, input_location_message_content::InputLocationMessageContent, input_venue_message_content::InputVenueMessageContent, input_contact_message_content::InputContactMessageContent, chosen_inline_result::ChosenInlineResult, labeled_price::LabeledPrice, invoice::Invoice, shipping_address::ShippingAddress, order_info::OrderInfo, shipping_option::ShippingOption, successful_payment::SuccessfulPayment, shipping_query::ShippingQuery, pre_checkout_query::PreCheckoutQuery, passport_data::PassportData, passport_file::PassportFile, encrypted_passport_element::EncryptedPassportElement, encrypted_credentials::EncryptedCredentials, passport_element_error_data_field::PassportElementErrorDataField, passport_element_error_front_side::PassportElementErrorFrontSide, passport_element_error_reverse_side::PassportElementErrorReverseSide, passport_element_error_selfie::PassportElementErrorSelfie, passport_element_error_file::PassportElementErrorFile, passport_element_error_files::PassportElementErrorFiles, passport_element_error_translation_file::PassportElementErrorTranslationFile, passport_element_error_translation_files::PassportElementErrorTranslationFiles, passport_element_error_unspecified::PassportElementErrorUnspecified, game::Game, game_high_score::GameHighScore
 };
 
-mod animation;
-mod audio;
-mod callback_query;
-mod chat;
+mod reply_markup;
+mod parse_mode;
 mod chat_action;
-mod chat_member;
-mod chat_member_status;
-mod chat_photo;
-mod chosen_inline_result;
-mod contact;
-mod document;
-mod file;
-mod game;
-mod inline_keyboard_button;
-mod inline_query;
-mod invoice;
-mod keyboard_button;
-mod location;
-mod mask_position;
+mod update;
+mod webhook_info;
+mod user;
+mod chat;
 mod message;
 mod message_entity;
-mod order_info;
-mod parse_mode;
 mod photo_size;
-mod poll;
-mod poll_option;
-mod pre_checkout_query;
-mod reply_markup;
-mod shipping_address;
-mod shipping_query;
-mod sticker;
-mod successful_payment;
-mod update;
-mod user;
-mod user_profile_photos;
-mod venue;
+mod audio;
+mod document;
 mod video;
-mod video_note;
+mod animation;
 mod voice;
+mod video_note;
+mod contact;
+mod location;
+mod venue;
+mod poll_option;
+mod poll;
+mod user_profile_photos;
+mod file;
+mod keyboard_button;
+mod reply_keyboard_remove;
+mod inline_keyboard_button;
+mod login_url;
+mod callback_query;
+mod force_reply;
+mod chat_photo;
+mod chat_member;
+mod response_parameters;
+mod input_media_photo;
+mod input_media_video;
+mod input_media_animation;
+mod input_media_audio;
+mod input_media_document;
+mod sticker;
+mod sticker_set;
+mod mask_position;
+mod inline_query;
+mod inline_query_result_article;
+mod inline_query_result_photo;
+mod inline_query_result_gif;
+mod inline_query_result_mpeg4_gif;
+mod inline_query_result_video;
+mod inline_query_result_audio;
+mod inline_query_result_voice;
+mod inline_query_result_document;
+mod inline_query_result_location;
+mod inline_query_result_venue;
+mod inline_query_result_contact;
+mod inline_query_result_game;
+mod inline_query_result_cached_photo;
+mod inline_query_result_cached_gif;
+mod inline_query_result_cached_mpeg4_gif;
+mod inline_query_result_cached_sticker;
+mod inline_query_result_cached_document;
+mod inline_query_result_cached_video;
+mod inline_query_result_cached_voice;
+mod inline_query_result_cached_audio;
+mod input_text_message_content;
+mod input_location_message_content;
+mod input_venue_message_content;
+mod input_contact_message_content;
+mod chosen_inline_result;
+mod labeled_price;
+mod invoice;
+mod shipping_address;
+mod order_info;
+mod shipping_option;
+mod successful_payment;
+mod shipping_query;
+mod pre_checkout_query;
+mod passport_data;
+mod passport_file;
+mod encrypted_passport_element;
+mod encrypted_credentials;
+mod passport_element_error_data_field;
+mod passport_element_error_front_side;
+mod passport_element_error_reverse_side;
+mod passport_element_error_selfie;
+mod passport_element_error_file;
+mod passport_element_error_files;
+mod passport_element_error_translation_file;
+mod passport_element_error_translation_files;
+mod passport_element_error_unspecified;
+mod game;
+mod game_high_score;
