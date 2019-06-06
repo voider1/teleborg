@@ -1,5 +1,5 @@
-use super::PollOption;
 use serde::Deserialize;
+use crate::types::{PollOption};
 
 /// This object contains information about a poll.
 #[derive(Clone, Deserialize, Debug)]
@@ -10,6 +10,7 @@ pub struct Poll {
     pub question: String,
     /// List of poll options
     pub options: Vec<PollOption>,
-    /// `true`, if the poll is closed
+    /// True, if the poll is closed
     pub is_closed: bool,
 }
+

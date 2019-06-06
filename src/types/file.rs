@@ -1,12 +1,13 @@
 use serde::Deserialize;
 
-/// This struct represents a Telegram [File](https://core.telegram.org/bots/api#file).
+/// This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile.
 #[derive(Clone, Deserialize, Debug)]
 pub struct File {
-    /// Unique identifier for this file.
+    /// Unique identifier for this file
     pub file_id: String,
-    /// The size of the file, if it's known.
+    /// Optional. File size, if known
     pub file_size: Option<i64>,
-    /// The path of the file.
+    /// Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
     pub file_path: Option<String>,
 }
+

@@ -1,32 +1,29 @@
 use super::Method;
-use crate::types::{Message, ReplyMarkup};
-use serde::Serialize;
+use crate::types::{ReplyMarkup, Message};use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method to point on the map. On success, the sent `Message` is returned.
+/// Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct EditMessageLiveLocation {
-    /// Required if inline_message_id is not specified.
-    ///	Unique identifier for the target chat or username of the target channel
-    ///	(in the format @channelusername)
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
+    /// Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: Option<i64>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     /// Required if inline_message_id is not specified. Identifier of the message to edit
+    pub message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub message_id: Option<i32>,
-    ///	Required if chat_id and message_id are not specified. Identifier of the inline message
-    #[builder(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub inline_message_id: Option<i64>,
-    /// Latitude of the location.
+    /// Required if chat_id and message_id are not specified. Identifier of the inline message
+    pub inline_message_id: Option<String>,
+    /// Latitude of new location
     pub latitude: f64,
-    /// Longitude of the location.
+    /// Longitude of new location
     pub longitude: f64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Interface options.
+    /// A JSON-serialized object for a new inline keyboard.
     pub reply_markup: Option<ReplyMarkup>,
 }
 

@@ -1,9 +1,9 @@
 use serde::Deserialize;
 
-/// The struct represents a shipping address.
+/// This object represents a shipping address.
 #[derive(Clone, Deserialize, Debug)]
 pub struct ShippingAddress {
-    /// ISO 3166-1 alpha-2 country code.
+    /// ISO 3166-1 alpha-2 country code
     pub country_code: String,
     /// State, if applicable
     pub state: String,
@@ -16,3 +16,4 @@ pub struct ShippingAddress {
     /// Address post code
     pub post_code: String,
 }
+

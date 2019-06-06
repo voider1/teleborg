@@ -1,21 +1,22 @@
-use super::PhotoSize;
 use serde::Deserialize;
+use crate::types::{PhotoSize};
 
-/// This struct represents a video file.
+/// This object represents a video file.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Video {
-    /// Unique identifier for this file.
+    /// Unique identifier for this file
     pub file_id: String,
-    /// Video width as defined by the sender.
+    /// Video width as defined by sender
     pub width: i64,
-    /// Video height as defined by the sender.
+    /// Video height as defined by sender
     pub height: i64,
-    /// Duration of the video in seconds as defined by the sender.
+    /// Duration of the video in seconds as defined by sender
     pub duration: i64,
-    /// Video thumbnail.
+    /// Optional. Video thumbnail
     pub thumb: Option<PhotoSize>,
-    /// MIME type of the file as defined by the sender.
+    /// Optional. Mime type of a file as defined by sender
     pub mime_type: Option<String>,
-    /// File size.
+    /// Optional. File size
     pub file_size: Option<i64>,
 }
+

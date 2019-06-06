@@ -1,21 +1,20 @@
 use super::Method;
-use crate::types::Message;
-use serde::Serialize;
+use crate::types::{Message};use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method to forward messages of any kind. On success, the sent `Message` is returned.
+/// Use this method to forward messages of any kind. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct ForwardMessage {
-    /// Unique identifier for the target chat.
+    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: i64,
-    /// Unique identifier for the chat where the original message was sent.
+    /// Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
     pub from_chat_id: i64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Sends the message silently. Users get a notification without sound.
+    /// Sends the message silently. Users will receive a notification with no sound.
     pub disable_notification: Option<bool>,
-    /// Message identifier in the chat specified in *from_chat_id*.
-    pub message_id: i32,
+    /// Message identifier in the chat specified in from_chat_id
+    pub message_id: i64,
 }
 
 impl_method!(ForwardMessage, Message, "forwardMessage");

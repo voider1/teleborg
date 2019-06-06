@@ -1,40 +1,35 @@
 use super::Method;
-use crate::types::{Message, ParseMode, ReplyMarkup};
-use serde::Serialize;
+use crate::types::{ParseMode, ReplyMarkup, Message};use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Change an existing message in the message history instead of sending a new one with a result of
-/// an action.
+/// Use this method to edit text and game messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct EditMessageText {
-    /// Required if `inline_message_id` is unspecified.
-    /// Unique identifier for the target chat, username or target channel.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
+    /// Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: Option<i64>,
-    /// Required if `inline_message_id` is unspecified.
-    /// Identifier of the sent message.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub message_id: Option<i32>,
-    /// Required if chat_id and message_id are not specified.
-    /// Identifier of the inline messsage.
+    /// Required if inline_message_id is not specified. Identifier of the message to edit
+    pub message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
+    /// Required if chat_id and message_id are not specified. Identifier of the inline message
     pub inline_message_id: Option<String>,
-    /// New text of the message.
+    /// New text of the message
     pub text: String,
-    /// Select the way your message should be parsed using the `ParseMode` struct.
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
+    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
     pub parse_mode: Option<ParseMode>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Sends the message silently. Users get a notification without sound.
-    pub disable_notification: Option<bool>,
+    /// Disables link previews for links in this message
+    pub disable_web_page_preview: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Interface options.
+    /// A JSON-serialized object for an inline keyboard.
     pub reply_markup: Option<ReplyMarkup>,
 }
 
