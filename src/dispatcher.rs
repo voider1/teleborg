@@ -5,13 +5,22 @@ use std::{
     sync::Arc,
 };
 
+/// Indicated wheter your command takes any arguments or not.
+#[derive(Debug)]
+pub enum HasArgs {
+    /// Command takes arguments.
+    Yes,
+    /// Command doesn't take arguments.
+    No,
+}
+
 /// A `Dispatcher` which will receive updates from the `Updater` and dispatches
 /// them to the registered handlers.
 ///
 /// You can add your command and message handlers to the `Dispatcher`.
 #[derive(Debug, Default)]
 pub struct Dispatcher {
-    command_handlers: HashMap<String, (Box<dyn Command>, bool)>,
+    command_handlers: HashMap<String, (Box<dyn Command>, HasArgs)>,
     message_handlers: Vec<Box<dyn Command>>,
 }
 
@@ -25,9 +34,14 @@ impl Dispatcher {
     }
 
     /// Add a function which implements the `Command` trait to the `Dispatcher.command_handlers`.
-    pub fn add_command_handler<C: Command>(&mut self, command_name: &str, command: C, args: bool) {
+    pub fn add_command_handler<C: Command>(
+        &mut self,
+        command_name: &str,
+        command: C,
+        has_args: HasArgs,
+    ) {
         self.command_handlers
-            .insert(command_name.to_string(), (Box::new(command), args));
+            .insert(command_name.to_string(), (Box::new(command), has_args));
     }
 
     /// Add a function which implements the `Command` trait to the `Dispatcher.message_handlers`.
@@ -58,11 +72,12 @@ impl Dispatcher {
                     let command = self.command_handlers.get_mut(name_command[0]);
 
                     if let Some(c) = command {
-                        if c.1 {
-                            let args = msg.clone().split_off(1);
-                            c.0.execute(bot, update, Some(args));
-                        } else {
-                            c.0.execute(bot, update, None);
+                        match c.1 {
+                            HasArgs::Yes => {
+                                let args = msg.clone().split_off(1);
+                                c.0.execute(bot, update, Some(args));
+                            }
+                            HasArgs::No => c.0.execute(bot, update, None),
                         }
                     }
                 }

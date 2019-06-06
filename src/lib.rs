@@ -13,8 +13,8 @@
 //!
 //! ``` no_run
 //! use std::{sync::Arc, env};
-//!
-//! use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater};
+//! use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater,
+//! HasArgs};
 //!
 //! fn main() {
 //!     // Get bot your token from the environment
@@ -22,7 +22,7 @@
 //!     // Creating a dispatcher which registers all the command and message handlers
 //!     let mut dispatcher = Dispatcher::new();
 //!     // Registering our command which we create below in the form as a function
-//!     dispatcher.add_command_handler("test", test, false);
+//!     dispatcher.add_command_handler("test", test, HasArgs::No);
 //!     // Create an Updater builder and configure it as you like, after that build it and start it.
 //!     // The Updater will start the Tokio runtime, this ensures you can spawn tasks inside of
 //!     // your command handlers.
@@ -42,7 +42,11 @@
 //! ```
 
 pub use self::{
-    bot::Bot, command::Command, dispatcher::Dispatcher, methods::Method, updater::Updater,
+    bot::Bot,
+    command::Command,
+    dispatcher::{Dispatcher, HasArgs},
+    methods::Method,
+    updater::Updater,
 };
 pub use futures::Future;
 use std::sync::Arc;
