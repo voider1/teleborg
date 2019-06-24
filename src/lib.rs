@@ -47,7 +47,7 @@
 //! Some methods require you to send a file to the server. The server expects you to send a file
 //! using multipart, a file_id on Telegram's server or a URL to the file. The biggest challenge was
 //! making sure you could send a file to the server using mulitpart and keeping it ergonomic at the
-//! same time. That's why these structs have a field called file, this field should contain the
+//! same time. That's why these structs have a field called `file`, this field should contain the
 //! path to the file. Checking every field if it should be able to be a file is therefore impractical.
 //! Teleborg will read the file and make a multipart request to the server, just
 //! like so: 
