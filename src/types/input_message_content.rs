@@ -1,8 +1,8 @@
 use crate::types::ParseMode;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 4 types.
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum InputMessageContent {
     /// Represents the content of a text message to be sent as the result of an inline query.
