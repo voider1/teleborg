@@ -1,8 +1,8 @@
 use crate::types::{InputMessageContent, ParseMode, ReplyMarkup};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// This object represents one result of an inline query. Telegram clients currently support results of the following 20 types.
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum InlineQueryResult {
     /// Represents a link to an article or web page.
