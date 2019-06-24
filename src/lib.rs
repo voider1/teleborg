@@ -11,7 +11,7 @@
 //!
 //! ## Getting started
 //!
-//! ```
+//! ``` no_run
 //! use std::{sync::Arc, env};
 //! use teleborg::{methods::SendMessage, spawn, types::Update, Bot, Dispatcher, Future, Updater,
 //! HasArgs};
@@ -52,7 +52,7 @@
 //! Teleborg will read the file and make a multipart request to the server, just
 //! like so: 
 //!
-//! ``` 
+//! ``` no_run
 //! use teleborg::{methods::SendPhoto, spawn, types::Update, Bot
 //!
 //! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
