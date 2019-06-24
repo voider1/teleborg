@@ -1,4 +1,3 @@
-use crate::types::{InputMessageContent, ParseMode, ReplyMarkup};
 use serde::{Deserialize, Serialize};
 
 /// This object represents one result of an inline query. Telegram clients currently support results of the following 20 types.
