@@ -43,6 +43,7 @@
 //!
 //! ## Sending files
 //!
+//!
 //! Since some methods require to be able to send `files`.
 //! We need to be able to either send an `file` or an `file_id` or `file_url`.
 //! To do this we have created a field for the method builder called 'file' which you can call by
