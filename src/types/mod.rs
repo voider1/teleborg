@@ -12,15 +12,7 @@ pub use self::{
     invoice::Invoice, keyboard_button::KeyboardButton, labeled_price::LabeledPrice,
     location::Location, login_url::LoginUrl, mask_position::MaskPosition, message::Message,
     message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
-    passport_data::PassportData, passport_element_error_data_field::PassportElementErrorDataField,
-    passport_element_error_file::PassportElementErrorFile,
-    passport_element_error_files::PassportElementErrorFiles,
-    passport_element_error_front_side::PassportElementErrorFrontSide,
-    passport_element_error_reverse_side::PassportElementErrorReverseSide,
-    passport_element_error_selfie::PassportElementErrorSelfie,
-    passport_element_error_translation_file::PassportElementErrorTranslationFile,
-    passport_element_error_translation_files::PassportElementErrorTranslationFiles,
-    passport_element_error_unspecified::PassportElementErrorUnspecified,
+    passport_data::PassportData, passport_element_error::PassportElementError,
     passport_file::PassportFile, photo_size::PhotoSize, poll::Poll, poll_option::PollOption,
     pre_checkout_query::PreCheckoutQuery, reply_keyboard_remove::ReplyKeyboardRemove,
     reply_markup::ReplyMarkup, response_parameters::ResponseParameters,
@@ -67,15 +59,7 @@ mod message_entity;
 mod order_info;
 mod parse_mode;
 mod passport_data;
-mod passport_element_error_data_field;
-mod passport_element_error_file;
-mod passport_element_error_files;
-mod passport_element_error_front_side;
-mod passport_element_error_reverse_side;
-mod passport_element_error_selfie;
-mod passport_element_error_translation_file;
-mod passport_element_error_translation_files;
-mod passport_element_error_unspecified;
+mod passport_element_error;
 mod passport_file;
 mod photo_size;
 mod poll;
