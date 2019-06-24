@@ -40,6 +40,27 @@
 //! }
 //!
 //! ```
+//!
+//! ## File sending
+//!
+//! Since some methods require to be able to send `files`.
+//! We need to be able to either send an `file` or an `file_id` or `file_url`.
+//! To do this we have created a field for the method builder called 'file' which you can call by
+//! using `.file()` with the file path as parameter.
+//!
+//! ``` no_run
+//! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
+//!     let chat_id = update.message.unwrap().chat.id;
+//!
+//!     let msg = SendPhoto::builder().chat_id(chat_id).file("photos/crab.png");
+//!     // example url/file_id sending
+//!     // let msg = SendPhoto::builder().chat_id(chat_id).photo("https://example.com/photo.png");
+//!     
+//!     spawn(bot.call(msg).then(|_| Ok(())));
+//!
+//! }
+//! ```
+//!
 
 pub use self::{
     bot::Bot,
