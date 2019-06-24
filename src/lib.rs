@@ -57,7 +57,6 @@
 //!     // let msg = SendPhoto::builder().chat_id(chat_id).photo("https://example.com/photo.png");
 //!     
 //!     spawn(bot.call(msg).then(|_| Ok(())));
-//!
 //! }
 //! ```
 //!
