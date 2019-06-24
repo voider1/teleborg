@@ -41,7 +41,7 @@
 //!
 //! ```
 //!
-//! ## File sending
+//! ## Sending files
 //!
 //! Since some methods require to be able to send `files`.
 //! We need to be able to either send an `file` or an `file_id` or `file_url`.
