@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{Location, User};
+use crate::types::{User, Location};
 
 /// This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 #[derive(Clone, Deserialize, Debug)]

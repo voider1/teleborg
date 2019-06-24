@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{Message};use serde::Serialize;
+use crate::types::{Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to forward messages of any kind. On success, the sent Message is returned.

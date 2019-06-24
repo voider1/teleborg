@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{File};use serde::Serialize;
+use crate::types::{File};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.

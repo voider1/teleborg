@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{UserProfilePhotos};use serde::Serialize;
+use crate::types::{UserProfilePhotos};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.

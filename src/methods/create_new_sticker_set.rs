@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{MaskPosition};use serde::Serialize;
+use crate::types::{MaskPosition};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.

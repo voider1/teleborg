@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{Update};use serde::Serialize;
+use crate::types::{Update};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.

@@ -1,4 +1,5 @@
 use super::Method;
+use crate::types::{PassportElementError};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -8,7 +9,7 @@ pub struct SetPassportDataErrors {
     /// User identifier
     pub user_id: i64,
     /// A JSON-serialized array describing the errors
-    pub errors: Vec<1>,
+    pub errors: Vec<PassportElementError>,
 }
 
 impl_method!(SetPassportDataErrors, bool, "setPassportDataErrors");

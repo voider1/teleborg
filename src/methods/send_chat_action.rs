@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ChatAction};use serde::Serialize;
+use crate::types::{ChatAction};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.

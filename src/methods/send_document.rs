@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ParseMode, ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ParseMode, ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.

@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{GameHighScore};use serde::Serialize;
+use crate::types::{GameHighScore};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.

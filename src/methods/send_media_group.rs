@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{Message};use serde::Serialize;
+use crate::types::{Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.

@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send phone contacts. On success, the sent Message is returned.

@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{ShippingQuery, InlineQuery, ChosenInlineResult, CallbackQuery, PreCheckoutQuery, Poll, Message};
+use crate::types::{PreCheckoutQuery, ChosenInlineResult, InlineQuery, CallbackQuery, Message, Poll, ShippingQuery};
 
 /// This object represents an incoming update.At most one of the optional parameters can be present in any given update.
 #[derive(Clone, Deserialize, Debug)]

@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{MaskPosition};use serde::Serialize;
+use crate::types::{MaskPosition};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to add a new sticker to a set created by the bot. Returns True on success.

@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ParseMode, ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ParseMode, ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send text messages. On success, the sent Message is returned.

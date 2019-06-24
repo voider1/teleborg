@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{Location, User};
+use crate::types::{User, Location};
 
 /// Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 #[derive(Clone, Deserialize, Debug)]

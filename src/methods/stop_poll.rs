@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ReplyMarkup, Poll};use serde::Serialize;
+use crate::types::{ReplyMarkup, Poll};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.

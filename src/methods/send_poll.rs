@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned.

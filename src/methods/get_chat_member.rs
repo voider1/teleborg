@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ChatMember};use serde::Serialize;
+use crate::types::{ChatMember};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to get information about a member of a chat. Returns a ChatMember object on success.

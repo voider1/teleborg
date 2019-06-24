@@ -1,4 +1,5 @@
 use super::Method;
+use crate::types::{InlineQueryResult};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -8,7 +9,7 @@ pub struct AnswerInlineQuery {
     /// Unique identifier for the answered query
     pub inline_query_id: String,
     /// A JSON-serialized array of results for the inline query
-    pub results: Vec<1>,
+    pub results: Vec<InlineQueryResult>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.

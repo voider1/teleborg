@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{VideoNote, Location, PassportData, Sticker, Document, SuccessfulPayment, Audio, Video, Invoice, Game, Chat, Animation, ReplyMarkup, Venue, Poll, MessageEntity, User, PhotoSize, Voice, Contact};
+use crate::types::{Sticker, VideoNote, SuccessfulPayment, Voice, ReplyMarkup, MessageEntity, Animation, Contact, Chat, Audio, Video, Venue, Location, Poll, Document, Game, Invoice, User, PassportData, PhotoSize};
 
 /// This object represents a message.
 #[derive(Clone, Deserialize, Debug)]

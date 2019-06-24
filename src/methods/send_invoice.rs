@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{LabeledPrice, ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{LabeledPrice, ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to send invoices. On success, the sent Message is returned.

@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{Message, ChatPhoto};
+use crate::types::{ChatPhoto, Message};
 
 /// This object represents a chat.
 #[derive(Clone, Deserialize, Debug)]

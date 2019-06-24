@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::types::{ShippingAddress, User};
+use crate::types::{User, ShippingAddress};
 
 /// This object contains information about an incoming shipping query.
 #[derive(Clone, Deserialize, Debug)]

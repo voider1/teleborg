@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ParseMode, ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ParseMode, ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// For sending voice messages, use the sendVoice method instead.

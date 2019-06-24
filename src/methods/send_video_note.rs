@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{ReplyMarkup, Message};use serde::Serialize;
+use crate::types::{ReplyMarkup, Message};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.

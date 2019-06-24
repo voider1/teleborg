@@ -1,5 +1,6 @@
 use super::Method;
-use crate::types::{StickerSet};use serde::Serialize;
+use crate::types::{StickerSet};
+use serde::Serialize;
 use typed_builder::TypedBuilder;
 
 /// Use this method to get a sticker set. On success, a StickerSet object is returned.
