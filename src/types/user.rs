@@ -16,4 +16,3 @@ pub struct User {
     /// Optional. IETF language tag of the user's language
     pub language_code: Option<String>,
 }
-

@@ -1,5 +1,5 @@
+use crate::types::User;
 use serde::Deserialize;
-use crate::types::{User};
 
 /// This object represents one row of the high scores table for a game.
 #[derive(Clone, Deserialize, Debug)]
@@ -11,4 +11,3 @@ pub struct GameHighScore {
     /// Score
     pub score: i64,
 }
-

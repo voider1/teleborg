@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::types::{MaskPosition, PhotoSize};
+use serde::Deserialize;
 
 /// This object represents a sticker.
 #[derive(Clone, Deserialize, Debug)]
@@ -21,4 +21,3 @@ pub struct Sticker {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
-

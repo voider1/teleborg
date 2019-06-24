@@ -1,5 +1,7 @@
+use crate::types::{
+    CallbackQuery, ChosenInlineResult, InlineQuery, Message, Poll, PreCheckoutQuery, ShippingQuery,
+};
 use serde::Deserialize;
-use crate::types::{PreCheckoutQuery, ChosenInlineResult, InlineQuery, CallbackQuery, Message, Poll, ShippingQuery};
 
 /// This object represents an incoming update.At most one of the optional parameters can be present in any given update.
 #[derive(Clone, Deserialize, Debug)]
@@ -27,4 +29,3 @@ pub struct Update {
     /// Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
     pub poll: Option<Poll>,
 }
-

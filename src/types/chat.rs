@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::types::{ChatPhoto, Message};
+use serde::Deserialize;
 
 /// This object represents a chat.
 #[derive(Clone, Deserialize, Debug)]
@@ -32,4 +32,3 @@ pub struct Chat {
     /// Optional. True, if the bot can change the group sticker set. Returned only in getChat.
     pub can_set_sticker_set: Option<bool>,
 }
-

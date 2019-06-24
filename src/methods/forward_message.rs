@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{Message};
+use crate::types::Message;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

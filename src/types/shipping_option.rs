@@ -1,5 +1,5 @@
+use crate::types::LabeledPrice;
 use serde::{Deserialize, Serialize};
-use crate::types::{LabeledPrice};
 
 /// This object represents one shipping option.
 #[derive(Clone, Deserialize, Serialize, Debug)]
@@ -11,4 +11,3 @@ pub struct ShippingOption {
     /// List of price portions
     pub prices: Vec<LabeledPrice>,
 }
-

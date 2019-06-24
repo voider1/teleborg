@@ -1,5 +1,5 @@
+use crate::types::OrderInfo;
 use serde::Deserialize;
-use crate::types::{OrderInfo};
 
 /// This object contains basic information about a successful payment.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,4 +19,3 @@ pub struct SuccessfulPayment {
     /// Provider payment identifier
     pub provider_payment_charge_id: String,
 }
-

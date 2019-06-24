@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{LabeledPrice, ReplyMarkup, Message};
+use crate::types::{LabeledPrice, Message, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

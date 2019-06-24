@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{ChatMember};
+use crate::types::ChatMember;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -10,4 +10,8 @@ pub struct GetChatAdministrators {
     pub chat_id: i64,
 }
 
-impl_method!(GetChatAdministrators, Vec<ChatMember>, "getChatAdministrators");
+impl_method!(
+    GetChatAdministrators,
+    Vec<ChatMember>,
+    "getChatAdministrators"
+);

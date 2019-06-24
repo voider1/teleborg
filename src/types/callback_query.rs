@@ -1,5 +1,5 @@
+use crate::types::{Message, User};
 use serde::Deserialize;
-use crate::types::{User, Message};
 
 /// This object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,4 +19,3 @@ pub struct CallbackQuery {
     /// Optional. Short name of a Game to be returned, serves as the unique identifier for the game
     pub game_short_name: Option<String>,
 }
-

@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// This struct represents one button of the `ReplyKeyboard`.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]

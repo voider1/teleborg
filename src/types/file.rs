@@ -10,4 +10,3 @@ pub struct File {
     /// Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
     pub file_path: Option<String>,
 }
-

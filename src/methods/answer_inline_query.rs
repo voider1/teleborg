@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{InlineQueryResult};
+use crate::types::InlineQueryResult;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

@@ -1,5 +1,5 @@
+use crate::types::PhotoSize;
 use serde::Deserialize;
-use crate::types::{PhotoSize};
 
 /// This object represents a general file (as opposed to photos, voice messages and audio files).
 #[derive(Clone, Deserialize, Debug)]
@@ -15,4 +15,3 @@ pub struct Document {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
-

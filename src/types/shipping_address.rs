@@ -16,4 +16,3 @@ pub struct ShippingAddress {
     /// Address post code
     pub post_code: String,
 }
-

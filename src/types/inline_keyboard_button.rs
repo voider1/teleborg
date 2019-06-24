@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 
 /// Represents one button of an `InlineKeyboardMarkup`, you must use exactly one of the optional fields.

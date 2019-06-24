@@ -1,5 +1,5 @@
+use crate::types::PhotoSize;
 use serde::Deserialize;
-use crate::types::{PhotoSize};
 
 /// This object represents a video file.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,4 +19,3 @@ pub struct Video {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
-

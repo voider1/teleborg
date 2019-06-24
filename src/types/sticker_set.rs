@@ -1,5 +1,5 @@
+use crate::types::Sticker;
 use serde::Deserialize;
-use crate::types::{Sticker};
 
 /// This object represents a sticker set.
 #[derive(Clone, Deserialize, Debug)]
@@ -13,4 +13,3 @@ pub struct StickerSet {
     /// List of all set stickers
     pub stickers: Vec<Sticker>,
 }
-

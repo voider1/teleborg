@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{StickerSet};
+use crate::types::StickerSet;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

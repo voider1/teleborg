@@ -1,5 +1,5 @@
+use crate::types::PhotoSize;
 use serde::Deserialize;
-use crate::types::{PhotoSize};
 
 /// This object represents an audio file to be treated as music by the Telegram clients.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,4 +19,3 @@ pub struct Audio {
     /// Optional. Thumbnail of the album cover to which the music file belongs
     pub thumb: Option<PhotoSize>,
 }
-

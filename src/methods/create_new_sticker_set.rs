@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{MaskPosition};
+use crate::types::MaskPosition;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -31,4 +31,9 @@ pub struct CreateNewStickerSet {
     pub mask_position: Option<MaskPosition>,
 }
 
-impl_method_multipart!(CreateNewStickerSet, bool, "createNewStickerSet", "png_sticker");
+impl_method_multipart!(
+    CreateNewStickerSet,
+    bool,
+    "createNewStickerSet",
+    "png_sticker"
+);

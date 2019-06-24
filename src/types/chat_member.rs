@@ -1,5 +1,5 @@
+use crate::types::User;
 use serde::Deserialize;
-use crate::types::{User};
 
 /// This object contains information about one member of a chat.
 #[derive(Clone, Deserialize, Debug)]
@@ -39,4 +39,3 @@ pub struct ChatMember {
     /// Optional. Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages
     pub can_add_web_page_previews: Option<bool>,
 }
-

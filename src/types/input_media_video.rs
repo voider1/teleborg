@@ -1,5 +1,5 @@
+use crate::types::ParseMode;
 use serde::Deserialize;
-use crate::types::{ParseMode};
 
 /// Represents a video to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -27,4 +27,3 @@ pub struct InputMediaVideo {
     /// Optional. Pass True, if the uploaded video is suitable for streaming
     pub supports_streaming: Option<bool>,
 }
-
