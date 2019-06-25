@@ -72,6 +72,39 @@ macro_rules! impl_method_multipart {
     };
 }
 
+macro_rules! impl_method_multipart_new {
+    ($struct:ident, $response:ident, $field:ident) => {
+        use crate::{error::Result, methods::read_file};
+        use reqwest::r#async::{
+            multipart::{Form, Mime, Part},
+            RequestBuilder,
+        };
+        use std::path::Path;
+
+        impl Method for $struct {
+            type Response = $response;
+            const PATH: &'static str = "test";
+
+            fn build(mut self, builder: RequestBuilder) -> Result<RequestBuilder> {
+                let buffer = read_file(&self.$field)?;
+
+                let path = Path::new(&self.$field);
+                let name = path.file_name().unwrap().to_str().unwrap();
+
+                let part = Part::bytes(buffer)
+                    .file_name(String::from(name))
+                let form = Form::new().part(format!("{}", &name), part);
+
+                self.$field = format!("attach://{}", &name);
+
+                let result = builder.query(&self).multipart(form);
+                println!("{:?}", result);
+                Ok(result)
+            }
+        }
+    };
+}
+
 macro_rules! impl_method_multipart_thumb {
     ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
         use crate::{error::Result, methods::read_file};
