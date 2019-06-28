@@ -80,6 +80,7 @@ macro_rules! impl_method_multipart_new {
             RequestBuilder,
         };
         use std::path::Path;
+        use uuid::Uuid;
 
         impl Method for $struct {
             type Response = $response;
@@ -91,10 +92,11 @@ macro_rules! impl_method_multipart_new {
                 let path = Path::new(&self.$field);
                 let name = path.file_name().unwrap().to_str().unwrap();
 
+                let attach_name = Uuid::new_v4();
                 let part = Part::bytes(buffer).file_name(String::from(name));
-                let form = Form::new().part(format!("{}", name.replace(".", "")), part);
+                let form = Form::new().part(format!("{}", attach_name), part);
 
-                self.$field = format!("attach://{}", name.replace(".", ""));
+                self.$field = format!("attach://{}", attach_name);
 
                 let result = builder.query(&self).multipart(form);
                 Ok(result)
