@@ -10,10 +10,11 @@ pub use self::{
     input_media_document::InputMediaDocument, input_media_photo::InputMediaPhoto,
     input_media_video::InputMediaVideo, input_message_content::InputMessageContent,
     invoice::Invoice, keyboard_button::KeyboardButton, labeled_price::LabeledPrice,
-    location::Location, login_url::LoginUrl, mask_position::MaskPosition, media_type::MediaType,
-    message::Message, message_entity::MessageEntity, order_info::OrderInfo, parse_mode::ParseMode,
-    passport_data::PassportData, passport_element_error::PassportElementError,
-    passport_file::PassportFile, photo_size::PhotoSize, poll::Poll, poll_option::PollOption,
+    location::Location, login_url::LoginUrl, mask_position::MaskPosition, media_group::MediaGroup,
+    media_type::MediaType, message::Message, message_entity::MessageEntity, order_info::OrderInfo,
+    parse_mode::ParseMode, passport_data::PassportData,
+    passport_element_error::PassportElementError, passport_file::PassportFile,
+    photo_size::PhotoSize, poll::Poll, poll_option::PollOption,
     pre_checkout_query::PreCheckoutQuery, reply_keyboard_remove::ReplyKeyboardRemove,
     reply_markup::ReplyMarkup, response_parameters::ResponseParameters,
     shipping_address::ShippingAddress, shipping_option::ShippingOption,
@@ -54,6 +55,7 @@ mod labeled_price;
 mod location;
 mod login_url;
 mod mask_position;
+mod media_group;
 mod media_type;
 mod message;
 mod message_entity;
