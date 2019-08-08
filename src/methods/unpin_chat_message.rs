@@ -9,4 +9,4 @@ pub struct UnpinChatMessage {
     pub chat_id: i64,
 }
 
-impl_method!(UnpinChatMessage, bool, "unpinChatMessage");
+impl_method!(UnpinChatMessage, bool);

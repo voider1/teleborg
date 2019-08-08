@@ -31,9 +31,4 @@ pub struct CreateNewStickerSet {
     pub mask_position: Option<MaskPosition>,
 }
 
-impl_method_multipart!(
-    CreateNewStickerSet,
-    bool,
-    "createNewStickerSet",
-    "png_sticker"
-);
+impl_method!(CreateNewStickerSet, bool);

@@ -22,4 +22,4 @@ pub struct GetGameHighScores {
     pub inline_message_id: Option<String>,
 }
 
-impl_method!(GetGameHighScores, Vec<GameHighScore>, "getGameHighScores");
+impl_method!(GetGameHighScores, Vec<GameHighScore>);

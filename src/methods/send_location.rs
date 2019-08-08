@@ -30,4 +30,4 @@ pub struct SendLocation {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendLocation, Message, "sendLocation");
+impl_method!(SendLocation, Message);

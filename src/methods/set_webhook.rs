@@ -9,7 +9,7 @@ pub struct SetWebhook {
     pub url: String,
     #[builder(default)]
     /// certificate file to send with multipart
-    pub file: Option<String>,
+    pub certificate: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.
@@ -20,4 +20,4 @@ pub struct SetWebhook {
     pub allowed_updates: Option<Vec<String>>,
 }
 
-impl_method_multipart!(SetWebhook, bool, "setWebhook", "certificate");
+impl_method!(SetWebhook, bool, certificate);

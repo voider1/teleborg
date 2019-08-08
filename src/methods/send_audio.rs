@@ -10,11 +10,7 @@ pub struct SendAudio {
     pub chat_id: i64,
     #[builder(default)]
     /// audio file to send with multipart
-    pub file: Option<String>,
-    #[builder(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    /// Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
-    pub audio: Option<String>,
+    pub audio: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Audio caption, 0-1024 characters
@@ -39,9 +35,9 @@ pub struct SendAudio {
     /// thumb file to send with multipart
     pub thumb_file: Option<String>,
     #[builder(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing_if = "String::is_empty")]
     /// Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
-    pub thumb: Option<String>,
+    pub thumb: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Sends the message silently. Users will receive a notification with no sound.
@@ -56,4 +52,4 @@ pub struct SendAudio {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method_multipart_thumb!(SendAudio, Message, "sendAudio", "audio");
+impl_method!(SendAudio, Message, audio, thumb);

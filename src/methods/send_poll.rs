@@ -26,4 +26,4 @@ pub struct SendPoll {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendPoll, Message, "sendPoll");
+impl_method!(SendPoll, Message);

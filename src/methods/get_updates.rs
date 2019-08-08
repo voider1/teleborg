@@ -24,4 +24,4 @@ pub struct GetUpdates {
     pub allowed_updates: Option<Vec<String>>,
 }
 
-impl_method!(GetUpdates, Vec<Update>, "getUpdates");
+impl_method!(GetUpdates, Vec<Update>);

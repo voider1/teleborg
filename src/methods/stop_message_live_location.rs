@@ -24,4 +24,4 @@ pub struct StopMessageLiveLocation {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(StopMessageLiveLocation, Message, "stopMessageLiveLocation");
+impl_method!(StopMessageLiveLocation, Message);

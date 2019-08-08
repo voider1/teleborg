@@ -24,4 +24,4 @@ pub struct SendGame {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendGame, Message, "sendGame");
+impl_method!(SendGame, Message);

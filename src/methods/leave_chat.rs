@@ -9,4 +9,4 @@ pub struct LeaveChat {
     pub chat_id: i64,
 }
 
-impl_method!(LeaveChat, bool, "leaveChat");
+impl_method!(LeaveChat, bool);

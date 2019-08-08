@@ -84,4 +84,4 @@ pub struct SendInvoice {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendInvoice, Message, "sendInvoice");
+impl_method!(SendInvoice, Message);

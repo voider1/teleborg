@@ -15,4 +15,4 @@ pub struct KickChatMember {
     pub until_date: Option<i64>,
 }
 
-impl_method!(KickChatMember, bool, "kickChatMember");
+impl_method!(KickChatMember, bool);

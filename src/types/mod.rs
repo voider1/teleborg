@@ -1,8 +1,8 @@
 pub use self::{
     animation::Animation, audio::Audio, callback_query::CallbackQuery, chat::Chat,
-    chat_action::ChatAction, chat_member::ChatMember, chat_photo::ChatPhoto,
-    chosen_inline_result::ChosenInlineResult, contact::Contact, document::Document,
-    encrypted_credentials::EncryptedCredentials,
+    chat_action::ChatAction, chat_member::ChatMember, chat_member_status::ChatMemberStatus,
+    chat_photo::ChatPhoto, chosen_inline_result::ChosenInlineResult, contact::Contact,
+    document::Document, encrypted_credentials::EncryptedCredentials,
     encrypted_passport_element::EncryptedPassportElement, file::File, force_reply::ForceReply,
     game::Game, game_high_score::GameHighScore, inline_keyboard_button::InlineKeyboardButton,
     inline_query::InlineQuery, inline_query_result::InlineQueryResult,
@@ -29,6 +29,7 @@ mod callback_query;
 mod chat;
 mod chat_action;
 mod chat_member;
+mod chat_member_status;
 mod chat_photo;
 mod chosen_inline_result;
 mod contact;

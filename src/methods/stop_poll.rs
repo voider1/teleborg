@@ -16,4 +16,4 @@ pub struct StopPoll {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(StopPoll, Poll, "stopPoll");
+impl_method!(StopPoll, Poll);

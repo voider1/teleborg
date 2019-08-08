@@ -15,4 +15,4 @@ pub struct PinChatMessage {
     pub disable_notification: Option<bool>,
 }
 
-impl_method!(PinChatMessage, bool, "pinChatMessage");
+impl_method!(PinChatMessage, bool);

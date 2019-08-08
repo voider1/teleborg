@@ -13,4 +13,4 @@ pub struct SetChatDescription {
     pub description: Option<String>,
 }
 
-impl_method!(SetChatDescription, bool, "setChatDescription");
+impl_method!(SetChatDescription, bool);

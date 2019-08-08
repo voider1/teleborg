@@ -20,4 +20,4 @@ pub struct AnswerShippingQuery {
     pub error_message: Option<String>,
 }
 
-impl_method!(AnswerShippingQuery, bool, "answerShippingQuery");
+impl_method!(AnswerShippingQuery, bool);

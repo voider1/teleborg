@@ -9,4 +9,4 @@ pub struct DeleteChatPhoto {
     pub chat_id: i64,
 }
 
-impl_method!(DeleteChatPhoto, bool, "deleteChatPhoto");
+impl_method!(DeleteChatPhoto, bool);

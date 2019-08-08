@@ -10,7 +10,7 @@ pub struct UploadStickerFile {
     pub user_id: i64,
     #[builder(default)]
     /// png_sticker file to send with multipart
-    pub file: Option<String>,
+    pub png_sticker: String,
 }
 
-impl_method_multipart!(UploadStickerFile, File, "uploadStickerFile", "png_sticker");
+impl_method!(UploadStickerFile, File, png_sticker);

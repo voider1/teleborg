@@ -32,4 +32,4 @@ pub struct AnswerInlineQuery {
     pub switch_pm_parameter: Option<String>,
 }
 
-impl_method!(AnswerInlineQuery, bool, "answerInlineQuery");
+impl_method!(AnswerInlineQuery, bool);

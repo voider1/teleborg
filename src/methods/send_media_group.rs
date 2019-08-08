@@ -20,4 +20,4 @@ pub struct SendMediaGroup {
     pub reply_to_message_id: Option<i64>,
 }
 
-impl_method!(SendMediaGroup, Vec<Message>, "sendMediaGroup");
+impl_method!(SendMediaGroup, Vec<Message>);

@@ -11,4 +11,4 @@ pub struct SetStickerPositionInSet {
     pub position: i64,
 }
 
-impl_method!(SetStickerPositionInSet, bool, "setStickerPositionInSet");
+impl_method!(SetStickerPositionInSet, bool);

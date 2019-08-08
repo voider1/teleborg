@@ -11,4 +11,4 @@ pub struct DeleteMessage {
     pub message_id: i64,
 }
 
-impl_method!(DeleteMessage, bool, "deleteMessage");
+impl_method!(DeleteMessage, bool);

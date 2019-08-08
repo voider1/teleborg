@@ -9,4 +9,4 @@ pub struct ExportChatInviteLink {
     pub chat_id: i64,
 }
 
-impl_method!(ExportChatInviteLink, String, "exportChatInviteLink");
+impl_method!(ExportChatInviteLink, String);

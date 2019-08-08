@@ -10,8 +10,4 @@ pub struct GetChatAdministrators {
     pub chat_id: i64,
 }
 
-impl_method!(
-    GetChatAdministrators,
-    Vec<ChatMember>,
-    "getChatAdministrators"
-);
+impl_method!(GetChatAdministrators, Vec<ChatMember>);

@@ -28,4 +28,4 @@ pub struct EditMessageLiveLocation {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(EditMessageLiveLocation, Message, "editMessageLiveLocation");
+impl_method!(EditMessageLiveLocation, Message);

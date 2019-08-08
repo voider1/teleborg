@@ -10,4 +10,4 @@ pub struct GetChat {
     pub chat_id: i64,
 }
 
-impl_method!(GetChat, Chat, "getChat");
+impl_method!(GetChat, Chat);

@@ -18,8 +18,4 @@ pub struct GetUserProfilePhotos {
     pub limit: Option<u8>,
 }
 
-impl_method!(
-    GetUserProfilePhotos,
-    UserProfilePhotos,
-    "getUserProfilePhotos"
-);
+impl_method!(GetUserProfilePhotos, UserProfilePhotos);

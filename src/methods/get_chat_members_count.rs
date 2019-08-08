@@ -9,4 +9,4 @@ pub struct GetChatMembersCount {
     pub chat_id: i64,
 }
 
-impl_method!(GetChatMembersCount, i64, "getChatMembersCount");
+impl_method!(GetChatMembersCount, i64);

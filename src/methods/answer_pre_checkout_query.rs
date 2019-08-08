@@ -15,4 +15,4 @@ pub struct AnswerPreCheckoutQuery {
     pub error_message: Option<String>,
 }
 
-impl_method!(AnswerPreCheckoutQuery, bool, "answerPreCheckoutQuery");
+impl_method!(AnswerPreCheckoutQuery, bool);

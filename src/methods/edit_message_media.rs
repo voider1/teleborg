@@ -26,4 +26,4 @@ pub struct EditMessageMedia {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(EditMessageMedia, Message, "editMessageMedia");
+impl_method!(EditMessageMedia, Message);

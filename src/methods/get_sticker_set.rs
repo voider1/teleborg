@@ -10,4 +10,4 @@ pub struct GetStickerSet {
     pub name: String,
 }
 
-impl_method!(GetStickerSet, StickerSet, "getStickerSet");
+impl_method!(GetStickerSet, StickerSet);

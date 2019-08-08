@@ -12,4 +12,4 @@ pub struct SendChatAction {
     pub action: ChatAction,
 }
 
-impl_method!(SendChatAction, bool, "sendChatAction");
+impl_method!(SendChatAction, bool);

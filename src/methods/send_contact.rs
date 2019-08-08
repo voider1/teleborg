@@ -34,4 +34,4 @@ pub struct SendContact {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendContact, Message, "sendContact");
+impl_method!(SendContact, Message);

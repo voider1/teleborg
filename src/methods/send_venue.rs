@@ -38,4 +38,4 @@ pub struct SendVenue {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendVenue, Message, "sendVenue");
+impl_method!(SendVenue, Message);

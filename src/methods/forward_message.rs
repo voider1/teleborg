@@ -18,4 +18,4 @@ pub struct ForwardMessage {
     pub message_id: i64,
 }
 
-impl_method!(ForwardMessage, Message, "forwardMessage");
+impl_method!(ForwardMessage, Message);

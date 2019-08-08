@@ -11,4 +11,4 @@ pub struct SetChatTitle {
     pub title: String,
 }
 
-impl_method!(SetChatTitle, bool, "setChatTitle");
+impl_method!(SetChatTitle, bool);

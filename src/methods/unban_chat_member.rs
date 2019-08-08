@@ -11,4 +11,4 @@ pub struct UnbanChatMember {
     pub user_id: i64,
 }
 
-impl_method!(UnbanChatMember, bool, "unbanChatMember");
+impl_method!(UnbanChatMember, bool);

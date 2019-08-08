@@ -9,7 +9,7 @@ pub struct SetChatPhoto {
     pub chat_id: i64,
     #[builder(default)]
     /// photo file to send with multipart
-    pub file: Option<String>,
+    pub photo: String,
 }
 
-impl_method_multipart!(SetChatPhoto, bool, "setChatPhoto", "photo");
+impl_method!(SetChatPhoto, bool, photo);

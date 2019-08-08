@@ -25,4 +25,4 @@ pub struct AnswerCallbackQuery {
     pub cache_time: Option<i64>,
 }
 
-impl_method!(AnswerCallbackQuery, bool, "answerCallbackQuery");
+impl_method!(AnswerCallbackQuery, bool);

@@ -1,4 +1,4 @@
-use crate::types::User;
+use crate::types::{ChatMemberStatus, User};
 use serde::Deserialize;
 
 /// This object contains information about one member of a chat.
@@ -7,7 +7,7 @@ pub struct ChatMember {
     /// Information about the user
     pub user: User,
     /// The member's status in the chat. Can be “creator”, “administrator”, “member”, “restricted”, “left” or “kicked”
-    pub status: String,
+    pub status: ChatMemberStatus,
     /// Optional. Restricted and kicked only. Date when restrictions will be lifted for this user, unix time
     pub until_date: Option<i64>,
     /// Optional. Administrators only. True, if the bot is allowed to edit administrator privileges of that user

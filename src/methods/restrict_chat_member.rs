@@ -31,4 +31,4 @@ pub struct RestrictChatMember {
     pub can_add_web_page_previews: Option<bool>,
 }
 
-impl_method!(RestrictChatMember, bool, "restrictChatMember");
+impl_method!(RestrictChatMember, bool);

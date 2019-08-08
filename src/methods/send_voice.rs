@@ -9,12 +9,8 @@ pub struct SendVoice {
     /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: i64,
     #[builder(default)]
-    /// voice file to send with multipart
-    pub file: Option<String>,
-    #[builder(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     /// Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
-    pub voice: Option<String>,
+    pub voice: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Voice message caption, 0-1024 characters
@@ -41,4 +37,4 @@ pub struct SendVoice {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method_multipart!(SendVoice, Message, "sendVoice", "voice");
+impl_method!(SendVoice, Message, voice);

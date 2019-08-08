@@ -32,4 +32,4 @@ pub struct SetGameScore {
     pub inline_message_id: Option<String>,
 }
 
-impl_method!(SetGameScore, Message, "setGameScore");
+impl_method!(SetGameScore, Message);

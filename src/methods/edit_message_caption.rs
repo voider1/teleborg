@@ -32,4 +32,4 @@ pub struct EditMessageCaption {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(EditMessageCaption, Message, "editMessageCaption");
+impl_method!(EditMessageCaption, Message);

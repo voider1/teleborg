@@ -43,4 +43,4 @@ pub struct PromoteChatMember {
     pub can_promote_members: Option<bool>,
 }
 
-impl_method!(PromoteChatMember, bool, "promoteChatMember");
+impl_method!(PromoteChatMember, bool);

@@ -32,4 +32,4 @@ pub struct SendMessage {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendMessage, Message, "sendMessage");
+impl_method!(SendMessage, Message);
