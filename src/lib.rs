@@ -50,15 +50,17 @@
 //! same time. That's why these structs have a field called `file`, this field should contain the
 //! path to the file. Checking every field if it should be able to be a file is therefore impractical.
 //! Teleborg will read the file and make a multipart request to the server, just
-//! like so: 
+//! like so:
 //!
 //! ``` no_run
-//! use teleborg::{methods::SendPhoto, spawn, types::Update, Bot
+//! use std::{sync::Arc};
+//! use teleborg::{methods::SendPhoto, spawn, types::Update, Bot, Future};
 //!
 //! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
 //!     let chat_id = update.message.unwrap().chat.id;
 //!
-//!     let msg = SendPhoto::builder().chat_id(chat_id).file("photos/crab.png");
+//!     let msg =
+//!     SendPhoto::builder().chat_id(chat_id).file(Some("photos/crab.png".to_string())).build();
 //!     // example url/file_id sending
 //!     // let msg = SendPhoto::builder().chat_id(chat_id).photo("https://example.com/photo.png");
 //!     
