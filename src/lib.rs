@@ -1,7 +1,7 @@
 #![deny(warnings)]
 #![deny(missing_docs)]
 #![deny(missing_debug_implementations)]
-
+#![allow(clippy::needless_doctest_main)]
 //! # Teleborg
 //!
 //! Teleborg is a fast, reliable and easy to use wrapper for the [Telegram bot
