@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use reqwest::{r#async::Client as AsyncClient, Client};
-    use teleborg::types::ParseMode;
+    use teleborg::types::{ChatAction, ParseMode};
     use teleborg::{methods::*, spawn, types::Update, Bot, Dispatcher, Future, Updater};
     use tokio::prelude::*;
 
@@ -201,7 +201,6 @@ mod tests {
         let bot = Bot::new(&token).unwrap();
 
         tokio::run(futures::lazy(move || {
-            let text = String::from("Test SendMessage");
             let msg = SendLocation::builder()
                 .chat_id(chat_id)
                 .latitude(51.980448)
@@ -211,6 +210,210 @@ mod tests {
             spawn(bot.call(msg).then(|result| {
                 assert!(result.is_ok());
                 Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_send_live_location() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendLocation::builder()
+                .chat_id(chat_id)
+                .latitude(51.980448)
+                .longitude(4.410606)
+                .live_period(60)
+                .build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_edit_live_location() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+        let bot2 = bot.clone();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendLocation::builder()
+                .chat_id(chat_id)
+                .latitude(51.980448)
+                .longitude(4.410606)
+                .live_period(60)
+                .build();
+
+            spawn(bot.call(msg).then(move |result| {
+                assert!(result.is_ok());
+
+                let msg = EditMessageLiveLocation::builder()
+                    .chat_id(chat_id)
+                    .message_id(result.unwrap().message_id)
+                    .latitude(50.980448)
+                    .longitude(4.410606)
+                    .build();
+                spawn(bot2.call(msg).then(move |result| {
+                    assert!(result.is_ok());
+                    Ok(())
+                }))
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_stop_live_location() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+        let bot2 = bot.clone();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendLocation::builder()
+                .chat_id(chat_id)
+                .latitude(51.980448)
+                .longitude(4.410606)
+                .live_period(60)
+                .build();
+
+            spawn(bot.call(msg).then(move |result| {
+                assert!(result.is_ok());
+
+                let msg = StopMessageLiveLocation::builder()
+                    .chat_id(chat_id)
+                    .message_id(result.unwrap().message_id)
+                    .build();
+                spawn(bot2.call(msg).then(move |result| {
+                    assert!(result.is_ok());
+                    Ok(())
+                }))
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_send_venue() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendVenue::builder()
+                .chat_id(chat_id)
+                .latitude(51.962881)
+                .longitude(4.393794)
+                .address("Rotterdamseweg 480")
+                .title("Aan de Zweth")
+                .build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_send_contact() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendContact::builder()
+                .chat_id(chat_id)
+                .phone_number("0612345678")
+                .first_name("Deniz")
+                .build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_send_poll() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendPoll::builder()
+                .chat_id(chat_id)
+                .question("Is this a useful test?".to_string())
+                .options(vec![
+                    "Yes".to_string(),
+                    "Yes".to_string(),
+                    "Maybe".to_string(),
+                ])
+                .build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_send_chat_action() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendChatAction::builder()
+                .chat_id(chat_id)
+                .action(ChatAction::Typing)
+                .build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_get_user_profile_photos() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token).unwrap();
+
+        tokio::run(futures::lazy(move || {
+            let msg = GetUserProfilePhotos::builder().user_id(chat_id).build();
+
+            spawn(bot.call(msg).then(|result| {
+                assert!(result.is_ok());
+                println!("Profile Photo Count: {:?}", result.unwrap().photos.len());
+                Ok(())
+            }))
+        }));
+    }
+
+    #[test]
+    fn test_get_file() {
+        let (token, chat_id) = setup();
+        let bot = Bot::new(&token.clone()).unwrap();
+        let bot2 = bot.clone();
+
+        tokio::run(futures::lazy(move || {
+            let msg = SendPhoto::builder()
+                .chat_id(chat_id)
+                .file("test_media/photos/crab.png".to_string())
+                .caption("Test SendPhoto".to_string())
+                .build();
+
+            spawn(bot.call(msg).then(move |result| {
+                assert!(result.is_ok());
+                let file_id = &result.unwrap().photo.unwrap()[0].file_id;
+                let msg = GetFile::builder().file_id(file_id.to_owned()).build();
+
+                spawn(bot2.call(msg).then(move |result| {
+                    assert!(result.is_ok());
+                    println!("{:?}", result.unwrap());
+                    Ok(())
+                }))
             }))
         }));
     }
