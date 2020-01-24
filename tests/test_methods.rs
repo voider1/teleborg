@@ -1,11 +1,9 @@
 #[cfg(test)]
 mod tests {
-    use reqwest::{r#async::Client as AsyncClient, Client};
-    use teleborg::types::{ChatAction, ParseMode};
-    use teleborg::{methods::*, spawn, types::Update, Bot, Dispatcher, Future, Updater};
-    use tokio::prelude::*;
+    use teleborg::types::ChatAction;
+    use teleborg::{methods::*, spawn, Bot, Future};
 
-    use std::{env, sync::Arc};
+    use std::env;
 
     fn setup() -> (String, i64) {
         let token = env::var("TELEBORG_TEST_TOKEN")
