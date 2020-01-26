@@ -1,8 +1,7 @@
 use crate::types::LabeledPrice;
-/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::{Deserialize, Serialize};
 
-/// This code is generated using teleborg-api-validator
 /// This object represents one shipping option.
 #[derive(Clone, Deserialize, Serialize, Debug)]
 pub struct ShippingOption {

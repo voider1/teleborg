@@ -1,5 +1,5 @@
 use crate::types::User;
-/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
 /// This object represents an answer of a user in a non-anonymous poll.

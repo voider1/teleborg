@@ -1,5 +1,5 @@
 use crate::types::{OrderInfo, User};
-/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
 /// This object contains information about an incoming pre-checkout query.

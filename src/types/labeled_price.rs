@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-/// This code is generated using teleborg-api-validator
 /// This object represents a portion of the price for goods or services.
 #[derive(Clone, Deserialize, Serialize, Debug)]
 pub struct LabeledPrice {

@@ -2,7 +2,7 @@ use crate::types::{
     CallbackQuery, ChosenInlineResult, InlineQuery, Message, Poll, PollAnswer, PreCheckoutQuery,
     ShippingQuery,
 };
-/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
 /// This object represents an incoming update.At most one of the optional parameters can be present in any given update.

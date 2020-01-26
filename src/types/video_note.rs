@@ -1,5 +1,5 @@
 use crate::types::PhotoSize;
-/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
 /// This object represents a video message (available in Telegram apps as of v.4.0).

@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-/// This code is generated using teleborg-api-validator
 /// This object describes the position on faces where a mask should be placed by default.
 #[derive(Clone, Deserialize, Serialize, Debug)]
 pub struct MaskPosition {
