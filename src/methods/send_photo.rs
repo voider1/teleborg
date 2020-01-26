@@ -1,3 +1,4 @@
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
 use crate::types::{Message, ParseMode, ReplyMarkup};
 use serde::Serialize;
@@ -6,37 +7,34 @@ use typed_builder::TypedBuilder;
 /// Use this method to send photos. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendPhoto {
-    /// Unique identifier for the target chat.
+    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: i64,
-    /// Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended),
-    /// pass an HTTP URL as a String for Telegram to get a photo from the Internet,
-    /// or upload a new photo using multipart/form-data.
     #[builder(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub photo: Option<String>,
-    /// path of the photo file that should be used.
-    #[builder(default)]
-    #[serde(skip_serializing)]
+    /// photo file to send with multipart
     pub file: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Caption text for the photo.
+    /// Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »
+    pub photo: Option<String>,
+    #[builder(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    /// Photo caption (may also be used when resending photos by file_id), 0-1024 characters
     pub caption: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Select the way your message should be parsed using the `ParseMode` struct.
+    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     pub parse_mode: Option<ParseMode>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Sends the message silently. Users get a notification without sound.
+    /// Sends the message silently. Users will receive a notification with no sound.
     pub disable_notification: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// If the message is a reply, ID of the original message.
-    pub reply_to_message_id: Option<i32>,
+    /// If the message is a reply, ID of the original message
+    pub reply_to_message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Interface options.
+    /// Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     pub reply_markup: Option<ReplyMarkup>,
 }
 

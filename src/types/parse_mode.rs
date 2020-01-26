@@ -7,6 +7,4 @@ pub enum ParseMode {
     Markdown,
     /// Parse the text in a request as HTML.
     Html,
-    /// Parse the text in a request as text (default).
-    Text,
 }

@@ -1,15 +1,16 @@
-use super::ShippingAddress;
+use crate::types::ShippingAddress;
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
-/// This struct represents information about an order.
+/// This object represents information about an order.
 #[derive(Clone, Deserialize, Debug)]
 pub struct OrderInfo {
-    /// User name.
+    /// Optional. User name
     pub name: Option<String>,
-    /// User's phone number.
+    /// Optional. User's phone number
     pub phone_number: Option<String>,
-    /// User's email.
+    /// Optional. User email
     pub email: Option<String>,
-    /// User's shipping address.
-    pub shipping_address: ShippingAddress,
+    /// Optional. User shipping address
+    pub shipping_address: Option<ShippingAddress>,
 }

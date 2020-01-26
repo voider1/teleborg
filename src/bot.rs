@@ -16,7 +16,7 @@ const BASE_URL: &str = "https://api.telegram.org/bot";
 ///
 /// The `Bot` will be given access to in a `Command` with which you can do all
 /// the API interactions in your `Command`s.
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Bot {
     /// The bot's URL to which it will be making requests.
     pub bot_url: String,

@@ -1,15 +1,15 @@
-use super::{Location, User};
+use crate::types::{Location, User};
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use serde::Deserialize;
 
-/// This object represents an incoming inline query.
-/// When the user sends an empty query, your bot could return some default or trending results.
+/// This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 #[derive(Clone, Deserialize, Debug)]
 pub struct InlineQuery {
     /// Unique identifier for this query
     pub id: String,
     /// Sender
     pub from: User,
-    /// Sender location, only for bots that request user location
+    /// Optional. Sender location, only for bots that request user location
     pub location: Option<Location>,
     /// Text of the query (up to 512 characters)
     pub query: String,
