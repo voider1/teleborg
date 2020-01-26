@@ -2,6 +2,7 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to delete a sticker from a set created by the bot. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct DeleteStickerFromSet {

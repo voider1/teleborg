@@ -1,9 +1,10 @@
 use super::Method;
-use crate::types::{Message, ReplyMarkup};
+use crate::types::{ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method to send .webp stickers. On success, the sent Message is returned.
+/// This code is generated using teleborg-api-validator
+/// Use this method to send static .WEBP or animated .TGS stickers. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendSticker {
     /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)

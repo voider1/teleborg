@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::MaskPosition;
+use crate::types::{MaskPosition};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct CreateNewStickerSet {
@@ -31,9 +32,4 @@ pub struct CreateNewStickerSet {
     pub mask_position: Option<MaskPosition>,
 }
 
-impl_method_multipart!(
-    CreateNewStickerSet,
-    bool,
-    "createNewStickerSet",
-    "png_sticker"
-);
+impl_method_multipart!(CreateNewStickerSet, bool, "createNewStickerSet", "png_sticker");

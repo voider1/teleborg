@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::UserProfilePhotos;
+use crate::types::{UserProfilePhotos};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetUserProfilePhotos {
@@ -18,8 +19,4 @@ pub struct GetUserProfilePhotos {
     pub limit: Option<u8>,
 }
 
-impl_method!(
-    GetUserProfilePhotos,
-    UserProfilePhotos,
-    "getUserProfilePhotos"
-);
+impl_method!(GetUserProfilePhotos, UserProfilePhotos, "getUserProfilePhotos");

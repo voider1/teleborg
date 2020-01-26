@@ -2,6 +2,7 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SetStickerPositionInSet {

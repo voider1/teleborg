@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::GameHighScore;
+use crate::types::{GameHighScore};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetGameHighScores {

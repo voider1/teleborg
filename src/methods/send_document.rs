@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{Message, ParseMode, ReplyMarkup};
+use crate::types::{ParseMode, ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendDocument {

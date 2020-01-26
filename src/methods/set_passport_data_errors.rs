@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::PassportElementError;
+use crate::types::{PassportElementError};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SetPassportDataErrors {

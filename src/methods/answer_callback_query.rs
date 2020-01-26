@@ -2,6 +2,7 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct AnswerCallbackQuery {

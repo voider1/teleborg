@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{LabeledPrice, Message, ReplyMarkup};
+use crate::types::{LabeledPrice, ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to send invoices. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendInvoice {

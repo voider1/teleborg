@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{Message, ReplyMarkup};
+use crate::types::{ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct EditMessageReplyMarkup {

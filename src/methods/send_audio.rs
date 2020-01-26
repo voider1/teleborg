@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{Message, ParseMode, ReplyMarkup};
+use crate::types::{ParseMode, ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// For sending voice messages, use the sendVoice method instead.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendAudio {

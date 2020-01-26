@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::ChatAction;
+use crate::types::{ChatAction};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendChatAction {

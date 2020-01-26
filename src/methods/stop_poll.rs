@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{Poll, ReplyMarkup};
+use crate::types::{ReplyMarkup, Poll};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct StopPoll {

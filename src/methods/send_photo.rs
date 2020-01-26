@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::{Message, ParseMode, ReplyMarkup};
+use crate::types::{ParseMode, ReplyMarkup, Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to send photos. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendPhoto {

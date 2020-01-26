@@ -1,8 +1,9 @@
 use super::Method;
-use crate::types::Update;
+use crate::types::{Update};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
+/// This code is generated using teleborg-api-validator
 /// Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetUpdates {
