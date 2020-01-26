@@ -10,3 +10,4 @@ pub struct EncryptedCredentials {
     /// Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
     pub secret: String,
 }
+

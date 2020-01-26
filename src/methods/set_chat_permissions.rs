@@ -1,6 +1,6 @@
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
-use crate::types::ChatPermissions;
+use crate::types::{ChatPermissions};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -13,4 +13,4 @@ pub struct SetChatPermissions {
     pub permissions: ChatPermissions,
 }
 
-impl_method!(SetChatPermissions, bool, "setChatPermissions");
+impl_method!(SetChatPermissions, <replace>, "setChatPermissions");

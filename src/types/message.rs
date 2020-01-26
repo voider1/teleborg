@@ -1,10 +1,5 @@
-use crate::types::{
-    Animation, Audio, Chat, Contact, Document, Game, Invoice, Location, MessageEntity,
-    PassportData, PhotoSize, Poll, ReplyMarkup, Sticker, SuccessfulPayment, User, Venue, Video,
-    VideoNote, Voice,
-};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{Video, Voice, PassportData, User, Chat, Venue, Sticker, Document, Audio, ReplyMarkup, Location, Invoice, SuccessfulPayment, Poll, MessageEntity, Contact, VideoNote, Game, PhotoSize, Animation};
 
 /// This object represents a message.
 #[derive(Clone, Deserialize, Debug)]
@@ -104,3 +99,4 @@ pub struct Message {
     /// Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
     pub reply_markup: Option<ReplyMarkup>,
 }
+

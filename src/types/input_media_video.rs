@@ -1,6 +1,5 @@
-use crate::types::ParseMode;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{ParseMode};
 
 /// Represents a video to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -28,3 +27,4 @@ pub struct InputMediaVideo {
     /// Optional. Pass True, if the uploaded video is suitable for streaming
     pub supports_streaming: Option<bool>,
 }
+

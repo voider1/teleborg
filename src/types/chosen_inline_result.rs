@@ -1,6 +1,5 @@
-use crate::types::{Location, User};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{User, Location};
 
 /// Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 #[derive(Clone, Deserialize, Debug)]
@@ -16,3 +15,4 @@ pub struct ChosenInlineResult {
     /// The query that was used to obtain the result
     pub query: String,
 }
+

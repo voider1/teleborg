@@ -13,8 +13,4 @@ pub struct SetChatAdministratorCustomTitle {
     pub custom_title: String,
 }
 
-impl_method!(
-    SetChatAdministratorCustomTitle,
-    bool,
-    "setChatAdministratorCustomTitle"
-);
+impl_method!(SetChatAdministratorCustomTitle, <replace>, "setChatAdministratorCustomTitle");

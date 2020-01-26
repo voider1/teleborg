@@ -18,11 +18,17 @@ pub use self::{
     send_invoice::SendInvoice, send_location::SendLocation, send_message::SendMessage,
     send_photo::SendPhoto, send_poll::SendPoll, send_sticker::SendSticker, send_venue::SendVenue,
     send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
+<<<<<<< HEAD
     set_chat_administrator_custom_title::SetChatAdministratorCustomTitle,
     set_chat_description::SetChatDescription, set_chat_permissions::SetChatPermissions,
     set_chat_photo::SetChatPhoto, set_chat_sticker_set::SetChatStickerSet,
     set_chat_title::SetChatTitle, set_game_score::SetGameScore,
     set_passport_data_errors::SetPassportDataErrors,
+=======
+    set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
+    set_chat_sticker_set::SetChatStickerSet, set_chat_title::SetChatTitle,
+    set_game_score::SetGameScore, set_passport_data_errors::SetPassportDataErrors,
+>>>>>>> 6c3618d2bbc0e69544e1b98e4b7a197cc6344c01
     set_sticker_position_in_set::SetStickerPositionInSet, set_webhook::SetWebhook,
     stop_message_live_location::StopMessageLiveLocation, stop_poll::StopPoll,
     unban_chat_member::UnbanChatMember, unpin_chat_message::UnpinChatMessage,
@@ -34,82 +40,42 @@ use serde::{de::DeserializeOwned, Serialize};
 use std::{fs::File, io::Read};
 
 macro_rules! impl_method {
-    ($struct:ident, $response:ty, $path:expr) => {
+    ($struct:ident, $response:ty) => {
         impl Method for $struct {
             type Response = $response;
-            const PATH: &'static str = $path;
+            const PATH: &'static str = stringify!($struct);
         }
     };
-}
-
-macro_rules! impl_method_multipart {
-    ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
+    ($struct:ident, $response:ident, $( $field:ident ),+ ) => {
         use crate::{error::Result, methods::read_file};
         use reqwest::r#async::{
             multipart::{Form, Part},
             RequestBuilder,
         };
         use std::path::Path;
+        use uuid::Uuid;
 
         impl Method for $struct {
             type Response = $response;
-            const PATH: &'static str = $path;
+            const PATH: &'static str = stringify!($struct);
 
             fn build(mut self, builder: RequestBuilder) -> Result<RequestBuilder> {
-                if self.file.is_none() {
-                    return Ok(builder.json(&self));
-                }
-
-                let file_path = self.file.take().unwrap();
-                let buffer = read_file(&file_path)?;
-
-                let path = Path::new(&file_path);
-                let name = path.file_name().unwrap().to_str().unwrap();
-                let part = Part::bytes(buffer).file_name(String::from(name));
-                let form = Form::new().part($filefield, part);
-
-                Ok(builder.query(&self).multipart(form))
-            }
-        }
-    };
-}
-
-macro_rules! impl_method_multipart_thumb {
-    ($struct:ident, $response:ident, $path:expr, $filefield:expr) => {
-        use crate::{error::Result, methods::read_file};
-        use reqwest::r#async::{
-            multipart::{Form, Part},
-            RequestBuilder,
-        };
-        use std::path::Path;
-
-        impl Method for $struct {
-            type Response = $response;
-            const PATH: &'static str = $path;
-
-            fn build(mut self, builder: RequestBuilder) -> Result<RequestBuilder> {
-                if self.file.is_none() && self.thumb_file.is_none() {
-                    return Ok(builder.json(&self));
-                }
                 let mut form = Form::new();
 
-                if let Some(file_path) = self.file.take() {
-                    let buffer = read_file(&file_path)?;
-                    let name = Path::new(&file_path).file_name().unwrap().to_str().unwrap();
-                    let part = Part::bytes(buffer).file_name(String::from(name));
-                    form = form.part($filefield, part);
-                }
+                $(
+                    if !self.$field.is_empty() {
+                        let buffer = read_file(&self.$field)?;
 
-                if let Some(thumb_file_path) = self.thumb_file.take() {
-                    let thumb_buffer = read_file(&thumb_file_path)?;
-                    let thumb_name = Path::new(&thumb_file_path)
-                        .file_name()
-                        .unwrap()
-                        .to_str()
-                        .unwrap();
-                    let thumb_part = Part::bytes(thumb_buffer).file_name(String::from(thumb_name));
-                    form = form.part("thumb", thumb_part);
-                }
+                        let path = Path::new(&self.$field);
+                        let name = path.file_name().unwrap().to_str().unwrap();
+
+                        let attach_name = Uuid::new_v4();
+                        let part = Part::bytes(buffer).file_name(String::from(name));
+                        form = form.part(format!("{}", attach_name), part);
+
+                        self.$field = format!("attach://{}", attach_name);
+                    }
+                )+
 
                 Ok(builder.query(&self).multipart(form))
             }

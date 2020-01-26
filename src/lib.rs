@@ -53,17 +53,16 @@
 //! like so:
 //!
 //! ``` no_run
-//! use std::{sync::Arc};
+//! use std::{sync::Arc, env};
 //! use teleborg::{methods::SendPhoto, spawn, types::Update, Bot, Future};
 //!
 //! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
 //!     let chat_id = update.message.unwrap().chat.id;
 //!
-//!     let msg =
-//!     SendPhoto::builder().chat_id(chat_id).file(Some("photos/crab.png".to_string())).build();
+//!     let msg = SendPhoto::builder().chat_id(chat_id).photo("photos/crab.png").build();
 //!     // example url/file_id sending
 //!     // let msg = SendPhoto::builder().chat_id(chat_id).photo("https://example.com/photo.png");
-//!     
+//!
 //!     spawn(bot.call(msg).then(|_| Ok(())));
 //! }
 //! ```

@@ -1,6 +1,6 @@
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
-use crate::types::ChatMember;
+use crate::types::{ChatMember};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -11,8 +11,4 @@ pub struct GetChatAdministrators {
     pub chat_id: i64,
 }
 
-impl_method!(
-    GetChatAdministrators,
-    Vec<ChatMember>,
-    "getChatAdministrators"
-);
+impl_method!(GetChatAdministrators, Vec<ChatMember>, "getChatAdministrators");

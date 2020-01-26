@@ -1,6 +1,5 @@
-use crate::types::{OrderInfo, User};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{User, OrderInfo};
 
 /// This object contains information about an incoming pre-checkout query.
 #[derive(Clone, Deserialize, Debug)]
@@ -20,3 +19,4 @@ pub struct PreCheckoutQuery {
     /// Optional. Order info provided by the user
     pub order_info: Option<OrderInfo>,
 }
+

@@ -1,6 +1,5 @@
-use crate::types::LabeledPrice;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};use crate::types::{LabeledPrice};
 
 /// This object represents one shipping option.
 #[derive(Clone, Deserialize, Serialize, Debug)]
@@ -12,3 +11,4 @@ pub struct ShippingOption {
     /// List of price portions
     pub prices: Vec<LabeledPrice>,
 }
+

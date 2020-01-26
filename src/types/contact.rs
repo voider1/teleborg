@@ -14,3 +14,4 @@ pub struct Contact {
     /// Optional. Additional data about the contact in the form of a vCard
     pub vcard: Option<String>,
 }
+

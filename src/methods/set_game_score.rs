@@ -1,6 +1,6 @@
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
-use crate::types::Message;
+use crate::types::{Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

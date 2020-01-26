@@ -1,6 +1,5 @@
-use crate::types::ParseMode;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{ParseMode};
 
 /// Represents an audio file to be treated as music to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -26,3 +25,4 @@ pub struct InputMediaAudio {
     /// Optional. Title of the audio
     pub title: Option<String>,
 }
+

@@ -1,6 +1,6 @@
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
-use crate::types::UserProfilePhotos;
+use crate::types::{UserProfilePhotos};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -19,8 +19,4 @@ pub struct GetUserProfilePhotos {
     pub limit: Option<u8>,
 }
 
-impl_method!(
-    GetUserProfilePhotos,
-    UserProfilePhotos,
-    "getUserProfilePhotos"
-);
+impl_method!(GetUserProfilePhotos, UserProfilePhotos, "getUserProfilePhotos");

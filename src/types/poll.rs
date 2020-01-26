@@ -1,6 +1,5 @@
-use crate::types::PollOption;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{PollOption};
 
 /// This object contains information about a poll.
 #[derive(Clone, Deserialize, Debug)]
@@ -25,3 +24,4 @@ pub struct Poll {
     /// Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
     pub correct_option_id: Option<i64>,
 }
+

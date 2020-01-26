@@ -1,6 +1,5 @@
-use crate::types::User;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{User};
 
 /// This object contains information about one member of a chat.
 #[derive(Clone, Deserialize, Debug)]
@@ -44,3 +43,4 @@ pub struct ChatMember {
     /// Optional. Restricted only. True, if the user is allowed to add web page previews to their messages
     pub can_add_web_page_previews: Option<bool>,
 }
+

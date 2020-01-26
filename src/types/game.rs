@@ -1,6 +1,5 @@
-use crate::types::{Animation, MessageEntity, PhotoSize};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{Animation, PhotoSize, MessageEntity};
 
 /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
 #[derive(Clone, Deserialize, Debug)]
@@ -18,3 +17,4 @@ pub struct Game {
     /// Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
     pub animation: Option<Animation>,
 }
+

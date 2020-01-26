@@ -1,6 +1,5 @@
-use crate::types::{ChatPermissions, ChatPhoto, Message};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{ChatPermissions, Message, ChatPhoto};
 
 /// This object represents a chat.
 #[derive(Clone, Deserialize, Debug)]
@@ -35,3 +34,4 @@ pub struct Chat {
     /// Optional. True, if the bot can change the group sticker set. Returned only in getChat.
     pub can_set_sticker_set: Option<bool>,
 }
+

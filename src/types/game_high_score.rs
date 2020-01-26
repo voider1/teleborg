@@ -1,6 +1,5 @@
-use crate::types::User;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{User};
 
 /// This object represents one row of the high scores table for a game.
 #[derive(Clone, Deserialize, Debug)]
@@ -12,3 +11,4 @@ pub struct GameHighScore {
     /// Score
     pub score: i64,
 }
+

@@ -20,3 +20,4 @@ pub struct ChatPermissions {
     /// Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
     pub can_pin_messages: Option<bool>,
 }
+

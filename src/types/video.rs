@@ -1,6 +1,5 @@
-use crate::types::PhotoSize;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{PhotoSize};
 
 /// This object represents a video file.
 #[derive(Clone, Deserialize, Debug)]
@@ -22,3 +21,4 @@ pub struct Video {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
+

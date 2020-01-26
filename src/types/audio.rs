@@ -1,6 +1,5 @@
-use crate::types::PhotoSize;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{PhotoSize};
 
 /// This object represents an audio file to be treated as music by the Telegram clients.
 #[derive(Clone, Deserialize, Debug)]
@@ -22,3 +21,4 @@ pub struct Audio {
     /// Optional. Thumbnail of the album cover to which the music file belongs
     pub thumb: Option<PhotoSize>,
 }
+

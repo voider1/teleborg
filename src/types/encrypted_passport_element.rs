@@ -1,6 +1,5 @@
-use crate::types::PassportFile;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{PassportFile};
 
 /// Contains information about documents or other Telegram Passport elements shared with the bot by the user.
 #[derive(Clone, Deserialize, Debug)]
@@ -27,3 +26,4 @@ pub struct EncryptedPassportElement {
     /// Base64-encoded element hash for using in PassportElementErrorUnspecified
     pub hash: String,
 }
+

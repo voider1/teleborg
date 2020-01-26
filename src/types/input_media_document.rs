@@ -1,6 +1,5 @@
-use crate::types::ParseMode;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{ParseMode};
 
 /// Represents a general file to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -20,3 +19,4 @@ pub struct InputMediaDocument {
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     pub parse_mode: Option<ParseMode>,
 }
+

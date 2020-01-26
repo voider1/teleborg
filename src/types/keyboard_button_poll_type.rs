@@ -7,3 +7,4 @@ pub struct KeyboardButtonPollType {
     #[serde(rename = "type")]
     pub kind: Option<String>,
 }
+

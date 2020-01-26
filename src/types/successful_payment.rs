@@ -1,6 +1,5 @@
-use crate::types::OrderInfo;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{OrderInfo};
 
 /// This object contains basic information about a successful payment.
 #[derive(Clone, Deserialize, Debug)]
@@ -20,3 +19,4 @@ pub struct SuccessfulPayment {
     /// Provider payment identifier
     pub provider_payment_charge_id: String,
 }
+

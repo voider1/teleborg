@@ -1,6 +1,5 @@
-use crate::types::Sticker;
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{Sticker};
 
 /// This object represents a sticker set.
 #[derive(Clone, Deserialize, Debug)]
@@ -16,3 +15,4 @@ pub struct StickerSet {
     /// List of all set stickers
     pub stickers: Vec<Sticker>,
 }
+

@@ -1,6 +1,5 @@
-use crate::types::{EncryptedCredentials, EncryptedPassportElement};
 /// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
-use serde::Deserialize;
+use serde::Deserialize;use crate::types::{EncryptedCredentials, EncryptedPassportElement};
 
 /// Contains information about Telegram Passport data shared with the bot by the user.
 #[derive(Clone, Deserialize, Debug)]
@@ -10,3 +9,4 @@ pub struct PassportData {
     /// Encrypted credentials required to decrypt the data
     pub credentials: EncryptedCredentials,
 }
+
