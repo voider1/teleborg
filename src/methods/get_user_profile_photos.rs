@@ -11,12 +11,12 @@ pub struct GetUserProfilePhotos {
     pub user_id: i64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Sequential number of the first photo to be returned. By default, all photos are returned.
+    /// Sequential number of the first photo to be returned. By default, all photos are
     pub offset: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+    /// Limits the number of photos to be retrieved. Values between 1—100 are accepted.
     pub limit: Option<u8>,
 }
 
-impl_method!(GetUserProfilePhotos, UserProfilePhotos, "getUserProfilePhotos");
+impl_method!(GetUserProfilePhotos, UserProfilePhotos);

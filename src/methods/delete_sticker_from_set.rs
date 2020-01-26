@@ -9,4 +9,4 @@ pub struct DeleteStickerFromSet {
     pub sticker: String,
 }
 
-impl_method!(DeleteStickerFromSet, bool, "deleteStickerFromSet");
+impl_method!(DeleteStickerFromSet, bool);

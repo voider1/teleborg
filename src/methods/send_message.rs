@@ -7,13 +7,13 @@ use typed_builder::TypedBuilder;
 /// Use this method to send text messages. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendMessage {
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    /// Unique identifier for the target chat or username of the target channel (in the
     pub chat_id: i64,
     /// Text of the message to be sent
     pub text: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-
     pub parse_mode: Option<ParseMode>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,8 +29,8 @@ pub struct SendMessage {
     pub reply_to_message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+    /// Additional interface options. A JSON-serialized object for an inline keyboard,
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendMessage, Message, "sendMessage");
+impl_method!(SendMessage, Message);

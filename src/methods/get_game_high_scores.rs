@@ -11,7 +11,7 @@ pub struct GetGameHighScores {
     pub user_id: i64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if inline_message_id is not specified. Unique identifier for the target chat
+    /// Required if inline_message_id is not specified. Unique identifier for the target
     pub chat_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -19,8 +19,8 @@ pub struct GetGameHighScores {
     pub message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if chat_id and message_id are not specified. Identifier of the inline message
+    /// Required if chat_id and message_id are not specified. Identifier of the inline
     pub inline_message_id: Option<String>,
 }
 
-impl_method!(GetGameHighScores, Vec<GameHighScore>, "getGameHighScores");
+impl_method!(GetGameHighScores, Vec<GameHighScore>);

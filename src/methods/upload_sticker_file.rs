@@ -9,9 +9,8 @@ use typed_builder::TypedBuilder;
 pub struct UploadStickerFile {
     /// User identifier of sticker file owner
     pub user_id: i64,
-    #[builder(default)]
-    /// png_sticker file to send with multipart
-    pub file: Option<String>,
+    /// Png image with the sticker, must be up to 512 kilobytes in size, dimensions must
+    pub png_sticker: String,
 }
 
-impl_method_multipart!(UploadStickerFile, File, "uploadStickerFile", "png_sticker");
+impl_method!(UploadStickerFile, File, png_sticker);

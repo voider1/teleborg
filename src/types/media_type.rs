@@ -1,5 +1,6 @@
 //use std::path::Path;
 
+#[allow(dead_code)]
 /// type that must be past with file sending methods
 #[derive(Debug)]
 pub enum MediaType {

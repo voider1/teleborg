@@ -5,8 +5,8 @@ use typed_builder::TypedBuilder;
 /// Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct LeaveChat {
-    /// Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+    /// Unique identifier for the target chat or username of the target supergroup or
     pub chat_id: i64,
 }
 
-impl_method!(LeaveChat, bool, "leaveChat");
+impl_method!(LeaveChat, bool);

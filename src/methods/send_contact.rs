@@ -7,7 +7,7 @@ use typed_builder::TypedBuilder;
 /// Use this method to send phone contacts. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendContact {
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    /// Unique identifier for the target chat or username of the target channel (in the
     pub chat_id: i64,
     /// Contact's phone number
     pub phone_number: String,
@@ -31,8 +31,8 @@ pub struct SendContact {
     pub reply_to_message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user.
+    /// Additional interface options. A JSON-serialized object for an inline keyboard,
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendContact, Message, "sendContact");
+impl_method!(SendContact, Message);

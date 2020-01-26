@@ -13,4 +13,4 @@ pub struct SetPassportDataErrors {
     pub errors: Vec<PassportElementError>,
 }
 
-impl_method!(SetPassportDataErrors, bool, "setPassportDataErrors");
+impl_method!(SetPassportDataErrors, bool);

@@ -7,7 +7,7 @@ use typed_builder::TypedBuilder;
 /// Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct StopPoll {
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    /// Unique identifier for the target chat or username of the target channel (in the
     pub chat_id: i64,
     /// Identifier of the original message with the poll
     pub message_id: i64,
@@ -17,4 +17,4 @@ pub struct StopPoll {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(StopPoll, Poll, "stopPoll");
+impl_method!(StopPoll, Poll);

@@ -9,15 +9,15 @@ use typed_builder::TypedBuilder;
 pub struct EditMessageCaption {
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    /// Required if inline_message_id is not specified. Unique identifier for the target
     pub chat_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if inline_message_id is not specified. Identifier of the message to edit
+    /// Required if inline_message_id is not specified. Identifier of the message to
     pub message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if chat_id and message_id are not specified. Identifier of the inline message
+    /// Required if chat_id and message_id are not specified. Identifier of the inline
     pub inline_message_id: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -25,7 +25,7 @@ pub struct EditMessageCaption {
     pub caption: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    /// Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-
     pub parse_mode: Option<ParseMode>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,4 +33,4 @@ pub struct EditMessageCaption {
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(EditMessageCaption, Message, "editMessageCaption");
+impl_method!(EditMessageCaption, Message);

@@ -9,7 +9,7 @@ use typed_builder::TypedBuilder;
 pub struct SendGame {
     /// Unique identifier for the target chat
     pub chat_id: i64,
-    /// Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
+    /// Short name of the game, serves as the unique identifier for the game. Set up
     pub game_short_name: String,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -21,8 +21,8 @@ pub struct SendGame {
     pub reply_to_message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.
+    /// A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendGame, Message, "sendGame");
+impl_method!(SendGame, Message);

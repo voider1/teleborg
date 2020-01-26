@@ -18,17 +18,11 @@ pub use self::{
     send_invoice::SendInvoice, send_location::SendLocation, send_message::SendMessage,
     send_photo::SendPhoto, send_poll::SendPoll, send_sticker::SendSticker, send_venue::SendVenue,
     send_video::SendVideo, send_video_note::SendVideoNote, send_voice::SendVoice,
-<<<<<<< HEAD
     set_chat_administrator_custom_title::SetChatAdministratorCustomTitle,
     set_chat_description::SetChatDescription, set_chat_permissions::SetChatPermissions,
     set_chat_photo::SetChatPhoto, set_chat_sticker_set::SetChatStickerSet,
     set_chat_title::SetChatTitle, set_game_score::SetGameScore,
     set_passport_data_errors::SetPassportDataErrors,
-=======
-    set_chat_description::SetChatDescription, set_chat_photo::SetChatPhoto,
-    set_chat_sticker_set::SetChatStickerSet, set_chat_title::SetChatTitle,
-    set_game_score::SetGameScore, set_passport_data_errors::SetPassportDataErrors,
->>>>>>> 6c3618d2bbc0e69544e1b98e4b7a197cc6344c01
     set_sticker_position_in_set::SetStickerPositionInSet, set_webhook::SetWebhook,
     stop_message_live_location::StopMessageLiveLocation, stop_poll::StopPoll,
     unban_chat_member::UnbanChatMember, unpin_chat_message::UnpinChatMessage,

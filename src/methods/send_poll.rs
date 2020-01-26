@@ -7,7 +7,7 @@ use typed_builder::TypedBuilder;
 /// Use this method to send a native poll. On success, the sent Message is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendPoll {
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    /// Unique identifier for the target chat or username of the target channel (in the
     pub chat_id: i64,
     /// Poll question, 1-255 characters
     pub question: String,
@@ -24,7 +24,7 @@ pub struct SendPoll {
     pub kind: Option<String>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
+    /// True, if the poll allows multiple answers, ignored for polls in quiz mode,
     pub allows_multiple_answers: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -44,8 +44,8 @@ pub struct SendPoll {
     pub reply_to_message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+    /// Additional interface options. A JSON-serialized object for an inline keyboard,
     pub reply_markup: Option<ReplyMarkup>,
 }
 
-impl_method!(SendPoll, Message, "sendPoll");
+impl_method!(SendPoll, Message);

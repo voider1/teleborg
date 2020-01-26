@@ -11,4 +11,4 @@ pub struct GetFile {
     pub file_id: String,
 }
 
-impl_method!(GetFile, File, "getFile");
+impl_method!(GetFile, File);

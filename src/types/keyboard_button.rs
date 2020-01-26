@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 use crate::types::KeyboardButtonPollType;
-=======
->>>>>>> 6c3618d2bbc0e69544e1b98e4b7a197cc6344c01
 use serde::{Deserialize, Serialize};
 
 /// This struct represents one button of the `ReplyKeyboard`.

@@ -13,15 +13,15 @@ pub struct SetGameScore {
     pub score: i64,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters
+    /// Pass True, if the high score is allowed to decrease. This can be useful when
     pub force: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Pass True, if the game message should not be automatically edited to include the current scoreboard
+    /// Pass True, if the game message should not be automatically edited to include the
     pub disable_edit_message: Option<bool>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if inline_message_id is not specified. Unique identifier for the target chat
+    /// Required if inline_message_id is not specified. Unique identifier for the target
     pub chat_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,8 +29,8 @@ pub struct SetGameScore {
     pub message_id: Option<i64>,
     #[builder(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    /// Required if chat_id and message_id are not specified. Identifier of the inline message
+    /// Required if chat_id and message_id are not specified. Identifier of the inline
     pub inline_message_id: Option<String>,
 }
 
-impl_method!(SetGameScore, Message, "setGameScore");
+impl_method!(SetGameScore, Message);
