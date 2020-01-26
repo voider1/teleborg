@@ -1,16 +1,15 @@
+/// This code is generated using teleborg-api-generator (https://gitlab.com/b.wisman155/teleborg-api-generator)
 use super::Method;
 use crate::types::ChatAction;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// Use this method when you need to tell the user that something is happening on the bot's side.
-/// That status is set for 5 seconds or less (when a message from your bot arrives, Telegram
-/// clients clear its typing status). Returns `true` on success.
+/// We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendChatAction {
-    /// Unique identifier for the target chat.
+    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     pub chat_id: i64,
-    /// Type of action to broadcast. Use the `ChatAction` enum to specify this.
+    /// Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
     pub action: ChatAction,
 }
 

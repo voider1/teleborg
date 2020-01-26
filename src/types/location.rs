@@ -1,10 +1,10 @@
 use serde::Deserialize;
 
-/// This struct represents a point on the map.
+/// This object represents a point on the map.
 #[derive(Clone, Deserialize, Debug)]
 pub struct Location {
-    /// Longitude as defined by the sender.
+    /// Longitude as defined by sender
     pub longitude: f64,
-    /// Latitude as defined by the sender.
+    /// Latitude as defined by sender
     pub latitude: f64,
 }

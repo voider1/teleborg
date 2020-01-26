@@ -1,7 +1,7 @@
 #![deny(warnings)]
 #![deny(missing_docs)]
 #![deny(missing_debug_implementations)]
-
+#![allow(clippy::needless_doctest_main)]
 //! # Teleborg
 //!
 //! Teleborg is a fast, reliable and easy to use wrapper for the [Telegram bot
@@ -40,6 +40,34 @@
 //! }
 //!
 //! ```
+//!
+//! ## Sending files
+//!
+//!
+//! Some methods require you to send a file to the server. The server expects you to send a file
+//! using multipart, a file_id on Telegram's server or a URL to the file. The biggest challenge was
+//! making sure you could send a file to the server using mulitpart and keeping it ergonomic at the
+//! same time. That's why these structs have a field called `file`, this field should contain the
+//! path to the file. Checking every field if it should be able to be a file is therefore impractical.
+//! Teleborg will read the file and make a multipart request to the server, just
+//! like so:
+//!
+//! ``` no_run
+//! use std::{sync::Arc};
+//! use teleborg::{methods::SendPhoto, spawn, types::Update, Bot, Future};
+//!
+//! fn test(bot: &Arc<Bot>, update: Update, _: Option<Vec<&str>>) {
+//!     let chat_id = update.message.unwrap().chat.id;
+//!
+//!     let msg =
+//!     SendPhoto::builder().chat_id(chat_id).file(Some("photos/crab.png".to_string())).build();
+//!     // example url/file_id sending
+//!     // let msg = SendPhoto::builder().chat_id(chat_id).photo("https://example.com/photo.png");
+//!     
+//!     spawn(bot.call(msg).then(|_| Ok(())));
+//! }
+//! ```
+//!
 
 pub use self::{
     bot::Bot,
