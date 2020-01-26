@@ -75,7 +75,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendPhoto::builder()
                 .chat_id(chat_id)
-                .file("test_media/photos/crab.png".to_string())
+                .photo("test_media/photos/crab.png".to_string())
                 .caption("Test SendPhoto".to_string())
                 .build();
 
@@ -93,7 +93,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendAudio::builder()
                 .chat_id(chat_id)
-                .file("test_media/audio/audio.mp3".to_string())
+                .audio("test_media/audio/audio.mp3".to_string())
                 .caption("Test SendAudio".to_string())
                 .build();
 
@@ -111,7 +111,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendDocument::builder()
                 .chat_id(chat_id)
-                .file("test_media/document.pdf".to_string())
+                .document("test_media/document.pdf".to_string())
                 .caption("Test SendDocument".to_string())
                 .build();
 
@@ -129,7 +129,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendVideo::builder()
                 .chat_id(chat_id)
-                .file("test_media/video/crab.mp4".to_string())
+                .video("test_media/video/crab.mp4".to_string())
                 .caption("Test SendVideo".to_string())
                 .build();
 
@@ -147,7 +147,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendAnimation::builder()
                 .chat_id(chat_id)
-                .file("test_media/video/crab.gif".to_string())
+                .animation("test_media/video/crab.gif".to_string())
                 .caption("Test SendAnimation".to_string())
                 .build();
 
@@ -165,7 +165,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendVoice::builder()
                 .chat_id(chat_id)
-                .file("test_media/audio/voice_message.ogg".to_string())
+                .voice("test_media/audio/voice_message.ogg".to_string())
                 .caption("Test SendVoice".to_string())
                 .build();
 
@@ -183,7 +183,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendVideoNote::builder()
                 .chat_id(chat_id)
-                .file("test_media/video/crab.mp4".to_string())
+                .video_note("test_media/video/crab.mp4".to_string())
                 .build();
 
             spawn(bot.call(msg).then(move |result| {
@@ -398,7 +398,7 @@ mod tests {
         tokio::run(futures::lazy(move || {
             let msg = SendPhoto::builder()
                 .chat_id(chat_id)
-                .file("test_media/photos/crab.png".to_string())
+                .photo("test_media/photos/crab.png".to_string())
                 .caption("Test SendPhoto".to_string())
                 .build();
 
