@@ -1,5 +1,5 @@
+use crate::types::PhotoSize;
 use serde::Deserialize;
-use crate::types::{PhotoSize};
 
 /// This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
 #[derive(Clone, Deserialize, Debug)]
@@ -23,4 +23,3 @@ pub struct Animation {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
-

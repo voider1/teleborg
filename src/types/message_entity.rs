@@ -1,5 +1,5 @@
+use crate::types::User;
 use serde::Deserialize;
-use crate::types::{User};
 
 /// This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
 #[derive(Clone, Deserialize, Debug)]
@@ -18,4 +18,3 @@ pub struct MessageEntity {
     /// Optional. For “pre” only, the programming language of the entity text
     pub language: Option<String>,
 }
-

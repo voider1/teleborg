@@ -12,4 +12,3 @@ pub struct PassportFile {
     /// Unix time when the file was uploaded
     pub file_date: i64,
 }
-

@@ -22,4 +22,3 @@ pub struct User {
     /// Optional. True, if the bot supports inline queries. Returned only in getMe.
     pub supports_inline_queries: Option<bool>,
 }
-

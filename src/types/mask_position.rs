@@ -13,4 +13,3 @@ pub struct MaskPosition {
     /// Mask scaling coefficient. For example, 2.0 means double size.
     pub scale: f64,
 }
-

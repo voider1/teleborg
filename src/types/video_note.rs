@@ -1,5 +1,5 @@
+use crate::types::PhotoSize;
 use serde::Deserialize;
-use crate::types::{PhotoSize};
 
 /// This object represents a video message (available in Telegram apps as of v.4.0).
 #[derive(Clone, Deserialize, Debug)]
@@ -17,4 +17,3 @@ pub struct VideoNote {
     /// Optional. File size
     pub file_size: Option<i64>,
 }
-

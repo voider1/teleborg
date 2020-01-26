@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::types::{Location, User};
+use serde::Deserialize;
 
 /// Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 #[derive(Clone, Deserialize, Debug)]
@@ -15,4 +15,3 @@ pub struct ChosenInlineResult {
     /// The query that was used to obtain the result
     pub query: String,
 }
-

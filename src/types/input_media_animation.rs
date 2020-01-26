@@ -1,5 +1,5 @@
+use crate::types::ParseMode;
 use serde::Deserialize;
-use crate::types::{ParseMode};
 
 /// Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -25,4 +25,3 @@ pub struct InputMediaAnimation {
     /// Optional. Animation duration
     pub duration: Option<i64>,
 }
-

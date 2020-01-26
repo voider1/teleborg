@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::types::{Location, User};
+use serde::Deserialize;
 
 /// This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 #[derive(Clone, Deserialize, Debug)]
@@ -15,4 +15,3 @@ pub struct InlineQuery {
     /// Offset of the results to be returned, can be controlled by the bot
     pub offset: String,
 }
-

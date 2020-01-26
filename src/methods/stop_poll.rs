@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{ReplyMarkup, Poll};
+use crate::types::{Poll, ReplyMarkup};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

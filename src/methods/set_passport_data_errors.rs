@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{PassportElementError};
+use crate::types::PassportElementError;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

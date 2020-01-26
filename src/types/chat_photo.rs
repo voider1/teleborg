@@ -12,4 +12,3 @@ pub struct ChatPhoto {
     /// Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     pub big_file_unique_id: String,
 }
-

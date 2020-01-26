@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{MaskPosition};
+use crate::types::MaskPosition;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

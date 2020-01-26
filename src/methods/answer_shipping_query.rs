@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{ShippingOption};
+use crate::types::ShippingOption;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 

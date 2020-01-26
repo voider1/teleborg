@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{UserProfilePhotos};
+use crate::types::UserProfilePhotos;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -19,4 +19,8 @@ pub struct GetUserProfilePhotos {
     pub limit: Option<u8>,
 }
 
-impl_method!(GetUserProfilePhotos, UserProfilePhotos, "getUserProfilePhotos");
+impl_method!(
+    GetUserProfilePhotos,
+    UserProfilePhotos,
+    "getUserProfilePhotos"
+);

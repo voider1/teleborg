@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{ChatPermissions};
+use crate::types::ChatPermissions;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
