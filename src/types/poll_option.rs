@@ -8,3 +8,4 @@ pub struct PollOption {
     /// Number of users that voted for this option
     pub voter_count: i64,
 }
+

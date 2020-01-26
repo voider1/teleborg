@@ -1,5 +1,5 @@
-use crate::types::{ShippingAddress, User};
 use serde::Deserialize;
+use crate::types::{ShippingAddress, User};
 
 /// This object contains information about an incoming shipping query.
 #[derive(Clone, Deserialize, Debug)]
@@ -13,3 +13,4 @@ pub struct ShippingQuery {
     /// User specified shipping address
     pub shipping_address: ShippingAddress,
 }
+

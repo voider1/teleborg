@@ -1,5 +1,5 @@
 use super::Method;
-use crate::types::{ChatPermissions};
+use crate::types::ChatPermissions;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
@@ -13,4 +13,4 @@ pub struct SetChatPermissions {
     pub permissions: ChatPermissions,
 }
 
-impl_method!(SetChatPermissions, <replace>, "setChatPermissions");
+impl_method!(SetChatPermissions, bool, "setChatPermissions");

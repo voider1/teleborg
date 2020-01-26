@@ -1,5 +1,5 @@
-use crate::types::{OrderInfo, User};
 use serde::Deserialize;
+use crate::types::{OrderInfo, User};
 
 /// This object contains information about an incoming pre-checkout query.
 #[derive(Clone, Deserialize, Debug)]
@@ -19,3 +19,4 @@ pub struct PreCheckoutQuery {
     /// Optional. Order info provided by the user
     pub order_info: Option<OrderInfo>,
 }
+

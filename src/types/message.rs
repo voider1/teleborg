@@ -1,9 +1,5 @@
-use crate::types::{
-    Animation, Audio, Chat, Contact, Document, Game, Invoice, Location, MessageEntity,
-    PassportData, PhotoSize, Poll, ReplyMarkup, Sticker, SuccessfulPayment, User, Venue, Video,
-    VideoNote, Voice,
-};
 use serde::Deserialize;
+use crate::types::{Chat, User, PhotoSize, Audio, Animation, Contact, Invoice, Game, Video, Location, Poll, Voice, SuccessfulPayment, MessageEntity, ReplyMarkup, PassportData, VideoNote, Sticker, Venue, Document};
 
 /// This object represents a message.
 #[derive(Clone, Deserialize, Debug)]
@@ -103,3 +99,4 @@ pub struct Message {
     /// Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
     pub reply_markup: Option<ReplyMarkup>,
 }
+

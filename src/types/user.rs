@@ -15,4 +15,11 @@ pub struct User {
     pub username: Option<String>,
     /// Optional. IETF language tag of the user's language
     pub language_code: Option<String>,
+    /// Optional. True, if the bot can be invited to groups. Returned only in getMe.
+    pub can_join_groups: Option<bool>,
+    /// Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
+    pub can_read_all_group_messages: Option<bool>,
+    /// Optional. True, if the bot supports inline queries. Returned only in getMe.
+    pub supports_inline_queries: Option<bool>,
 }
+

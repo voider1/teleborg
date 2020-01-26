@@ -8,3 +8,4 @@ pub struct Location {
     /// Latitude as defined by sender
     pub latitude: f64,
 }
+

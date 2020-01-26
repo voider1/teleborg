@@ -1,5 +1,5 @@
-use crate::types::ShippingAddress;
 use serde::Deserialize;
+use crate::types::{ShippingAddress};
 
 /// This object represents information about an order.
 #[derive(Clone, Deserialize, Debug)]
@@ -13,3 +13,4 @@ pub struct OrderInfo {
     /// Optional. User shipping address
     pub shipping_address: Option<ShippingAddress>,
 }
+

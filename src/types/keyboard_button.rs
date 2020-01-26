@@ -1,3 +1,4 @@
+use crate::types::KeyboardButtonPollType;
 use serde::{Deserialize, Serialize};
 
 /// This struct represents one button of the `ReplyKeyboard`.
@@ -14,4 +15,7 @@ pub struct KeyboardButton {
     /// pressed. Only available in private chats.
     #[serde(skip_serializing_if = "Option::is_none")]
     request_location: Option<bool>,
+    /// If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    request_poll: Option<KeyboardButtonPollType>,
 }

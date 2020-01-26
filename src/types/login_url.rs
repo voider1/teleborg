@@ -12,3 +12,4 @@ pub struct LoginUrl {
     /// Optional. Pass True to request the permission for your bot to send messages to the user.
     pub request_write_access: Option<bool>,
 }
+

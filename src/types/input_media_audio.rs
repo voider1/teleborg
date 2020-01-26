@@ -1,5 +1,5 @@
-use crate::types::ParseMode;
 use serde::Deserialize;
+use crate::types::{ParseMode};
 
 /// Represents an audio file to be treated as music to be sent.
 #[derive(Clone, Deserialize, Debug)]
@@ -25,3 +25,4 @@ pub struct InputMediaAudio {
     /// Optional. Title of the audio
     pub title: Option<String>,
 }
+
