@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::MaskPosition;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to add a new sticker to a set created by the bot. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct AddStickerToSet {

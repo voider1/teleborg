@@ -1,4 +1,5 @@
 use crate::types::{Animation, MessageEntity, PhotoSize};
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.

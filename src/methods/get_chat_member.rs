@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::ChatMember;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to get information about a member of a chat. Returns a ChatMember object on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetChatMember {

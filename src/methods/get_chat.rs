@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::Chat;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetChat {

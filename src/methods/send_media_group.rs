@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::{Message};
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SendMediaGroup {

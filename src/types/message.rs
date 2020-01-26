@@ -3,6 +3,7 @@ use crate::types::{
     PassportData, PhotoSize, Poll, ReplyMarkup, Sticker, SuccessfulPayment, User, Venue, Video,
     VideoNote, Voice,
 };
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// This object represents a message.

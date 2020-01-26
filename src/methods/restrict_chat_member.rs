@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::ChatPermissions;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct RestrictChatMember {

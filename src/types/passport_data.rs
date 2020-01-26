@@ -1,4 +1,5 @@
 use crate::types::{EncryptedCredentials, EncryptedPassportElement};
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// Contains information about Telegram Passport data shared with the bot by the user.

@@ -1,4 +1,5 @@
 use crate::types::{Location, User};
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// Represents a result of an inline query that was chosen by the user and sent to their chat partner.

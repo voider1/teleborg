@@ -1,4 +1,5 @@
 use crate::types::{Location, User};
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.

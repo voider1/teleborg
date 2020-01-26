@@ -2,7 +2,6 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct ExportChatInviteLink {

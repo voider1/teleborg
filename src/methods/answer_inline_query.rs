@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::InlineQueryResult;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to send answers to an inline query. On success, True is returned.No more than 50 results per query are allowed.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct AnswerInlineQuery {

@@ -2,7 +2,6 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to get the number of members in a chat. Returns Int on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetChatMembersCount {

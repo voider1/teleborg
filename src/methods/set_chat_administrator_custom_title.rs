@@ -2,7 +2,6 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct SetChatAdministratorCustomTitle {

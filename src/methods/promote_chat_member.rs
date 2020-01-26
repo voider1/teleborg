@@ -2,7 +2,6 @@ use super::Method;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct PromoteChatMember {

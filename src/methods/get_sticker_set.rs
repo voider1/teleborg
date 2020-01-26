@@ -1,9 +1,9 @@
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use super::Method;
 use crate::types::StickerSet;
 use serde::Serialize;
 use typed_builder::TypedBuilder;
 
-/// This code is generated using teleborg-api-validator
 /// Use this method to get a sticker set. On success, a StickerSet object is returned.
 #[derive(Debug, TypedBuilder, Serialize)]
 pub struct GetStickerSet {

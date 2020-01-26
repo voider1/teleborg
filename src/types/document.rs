@@ -1,4 +1,5 @@
 use crate::types::PhotoSize;
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// This object represents a general file (as opposed to photos, voice messages and audio files).

@@ -1,4 +1,5 @@
 use crate::types::PassportFile;
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// Contains information about documents or other Telegram Passport elements shared with the bot by the user.

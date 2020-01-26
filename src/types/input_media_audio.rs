@@ -1,4 +1,5 @@
 use crate::types::ParseMode;
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// Represents an audio file to be treated as music to be sent.

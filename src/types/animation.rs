@@ -1,4 +1,5 @@
 use crate::types::PhotoSize;
+/// This code is generated using teleborg-api-validator (https://gitlab.com/b.wisman155/teleborg-api-validater)
 use serde::Deserialize;
 
 /// This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
